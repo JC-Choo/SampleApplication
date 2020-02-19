@@ -11,14 +11,27 @@ import com.bumptech.glide.request.RequestOptions
 object BindingAdapter {
     @BindingAdapter("android:srcGlideCircle")
     @JvmStatic
-    fun setImageViewCircle(imageView: ImageView, imageUri: String?) {
-        Glide.with(imageView.context)
+    fun setImageViewCircle(view: ImageView, imageUri: String?) {
+        Glide.with(view.context)
             .load(imageUri)
             .apply(
                 RequestOptions()
                     .transforms(CenterCrop(), CircleCrop())
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             )
-            .into(imageView)
+            .into(view)
+    }
+
+    @BindingAdapter("android:srcGlide")
+    @JvmStatic
+    fun setImageView(view: ImageView, imageUri: String?) {
+        Glide.with(view.context)
+            .load(imageUri)
+            .apply(
+                RequestOptions()
+                    .transform(CenterCrop())
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            )
+            .into(view)
     }
 }

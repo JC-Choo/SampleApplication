@@ -2,21 +2,21 @@ package dev.chu.memo.data.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import dev.chu.memo.data.local.Bookmark
-import dev.chu.memo.data.local.BookmarkDB
-import dev.chu.memo.data.local.BookmarkDao
+import dev.chu.memo.data.local.Memo
+import dev.chu.memo.data.local.MemoDB
+import dev.chu.memo.data.local.MemoDao
 
 class MainRepository(application: Application) {
 
-    private val bookmarkDao: BookmarkDao by lazy {
-        val db = BookmarkDB.getInstance(application)!!
+    private val memoDao: MemoDao by lazy {
+        val db = MemoDB.getInstance(application)!!
         db.getBookmarkDao()
     }
 
-    private val bookmarks: LiveData<List<Bookmark>> by lazy { bookmarkDao.getAll() }
+    private val bookmarks: LiveData<List<Memo>> by lazy { memoDao.getAll() }
 
-    fun getAllBookmarks(): LiveData<List<Bookmark>> = bookmarks
-    fun insert(bookmark: Bookmark) = bookmarkDao.insert(bookmark)
-    fun delete(bookmark: Bookmark) = bookmarkDao.delete(bookmark)
-    fun delete(userId: String) = bookmarkDao.deleteById(userId)
+    fun getAllBookmarks(): LiveData<List<Memo>> = bookmarks
+    fun insert(memo: Memo) = memoDao.insert(memo)
+    fun delete(memo: Memo) = memoDao.delete(memo)
+//    fun delete(userId: String) = memoDao.deleteById(userId)
 }

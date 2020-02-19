@@ -5,17 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Bookmark::class], version = 5)
-abstract class BookmarkDB : RoomDatabase() {
-    abstract fun getBookmarkDao(): BookmarkDao
+@Database(entities = [Memo::class], version = 5)
+abstract class MemoDB : RoomDatabase() {
+    abstract fun getBookmarkDao(): MemoDao
 
     companion object {
-        private var instance: BookmarkDB? = null
-        fun getInstance(context: Context): BookmarkDB? {
+        private var instance: MemoDB? = null
+        fun getInstance(context: Context): MemoDB? {
             if(instance == null) {
-                synchronized(BookmarkDB::class) {
+                synchronized(MemoDB::class) {
                     instance = Room.databaseBuilder(context.applicationContext,
-                        BookmarkDB::class.java, "bookmark.db")
+                        MemoDB::class.java, "bookmark.db")
                         .fallbackToDestructiveMigration()
                         .build()
                 }
