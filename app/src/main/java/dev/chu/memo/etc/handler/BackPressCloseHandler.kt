@@ -1,7 +1,8 @@
-package dev.chu.memo.etc
+package dev.chu.memo.etc.handler
 
 import android.app.Activity
 import dev.chu.memo.R
+import dev.chu.memo.etc.extension.showToast
 
 class BackPressCloseHandler(private val context: Activity) {
     private var backKeyPressedTime = 0L

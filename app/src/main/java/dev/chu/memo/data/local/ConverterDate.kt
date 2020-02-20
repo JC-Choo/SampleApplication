@@ -3,7 +3,7 @@ package dev.chu.memo.data.local
 import androidx.room.TypeConverter
 import java.util.*
 
-class DateConverter {
+class ConverterDate {
     @TypeConverter
     fun toDate(value: Long): Date = Date(value)
 

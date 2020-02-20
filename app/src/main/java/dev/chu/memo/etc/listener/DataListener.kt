@@ -1,4 +1,4 @@
-package dev.chu.memo.etc
+package dev.chu.memo.etc.listener
 
 interface DataListener<T> {
     fun onSuccess(t: T)

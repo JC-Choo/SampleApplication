@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dev.chu.memo">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -19,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.WriteActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.ReadActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

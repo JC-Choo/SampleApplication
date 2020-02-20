@@ -1,29 +1,63 @@
 package dev.chu.memo.data.local
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import dev.chu.memo.data.ItemMemo
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
+import dev.chu.memo.common.Const
 import java.util.*
 
-@Entity(tableName = "Memo")
-@TypeConverters(DateConverter::class)
-data class Memo(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
-    @ColumnInfo(name = "title") var title: String?,
-    @ColumnInfo(name = "content") var content: String?,
-    @ColumnInfo(name = "image_url") var image_url: String?,
-    @ColumnInfo(name = "created") val created: Date
+@Entity(tableName = Const.TABLE_NAME_1)
+//@TypeConverters(ConverterDate::class)
+data class MemoData(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = MEMO_ID)
+    var memo_id: Int = 0,
+    @ColumnInfo(name = MEMO_TITLE)
+    var title: String?,
+    @ColumnInfo(name = MEMO_CONTENT)
+    var content: String?,
+    @ColumnInfo(name = MEMO_IMAGE_URL)
+    var listImageData: List<ImageData>?,
+    @ColumnInfo(name = MEMO_DATA)
+    val created: Date
 ) {
     companion object {
-        fun to(item: ItemMemo): Memo {
-            return Memo(
-                title = item.title,
-                content = item.content,
-                image_url = item.imageUrl,
-                created = Date()
-            )
-        }
+        const val MEMO_ID = "memo_id"
+        const val MEMO_TITLE = "title"
+        const val MEMO_CONTENT = "content"
+        const val MEMO_IMAGE_URL = "image_url"
+        const val MEMO_DATA = "created"
+
+//        fun to(item: ItemMemo): MemoData {
+//            return MemoData(
+//                title = item.title,
+//                content = item.content,
+//                listImageData = item.imageUrl,
+//                created = Date()
+//            )
+//        }
+    }
+}
+
+@Entity(
+    tableName = Const.TABLE_NAME_2,
+    foreignKeys = [
+        ForeignKey(
+            entity = MemoData::class,
+            parentColumns = ["memo_id"],
+            childColumns = ["image_id"],
+            onDelete = CASCADE
+        )
+    ]
+)
+data class ImageData(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = IMAGE_ID)
+    var image_id: Int = 0,
+    @ColumnInfo(name = IMAGE_URL)
+    var imageUrl: String? = null
+) {
+    companion object {
+        const val IMAGE_ID = "image_id"
+        const val IMAGE_URL = "image_url"
     }
 }

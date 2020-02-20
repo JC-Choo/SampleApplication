@@ -1,22 +1,66 @@
 package dev.chu.memo.data.repository
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import dev.chu.memo.data.local.Memo
-import dev.chu.memo.data.local.MemoDB
+import android.util.Log
 import dev.chu.memo.data.local.MemoDao
+import dev.chu.memo.data.local.MemoData
+import dev.chu.memo.data.local.MemoDatabase
+import dev.chu.memo.etc.listener.DataListener
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MainRepository(application: Application) {
+    private val TAG = MainRepository::class.java.simpleName
 
     private val memoDao: MemoDao by lazy {
-        val db = MemoDB.getInstance(application)!!
-        db.getBookmarkDao()
+        val db = MemoDatabase.getInstance(application)
+        db.getMemoDao()
     }
 
-    private val bookmarks: LiveData<List<Memo>> by lazy { memoDao.getAll() }
+    fun saveDataIntoDb(data: MemoData) =
+        memoDao.insertMemoData(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.i(TAG, "saveDataIntoDb onSuccess")
+            }, {
+                Log.e(TAG, "saveDataIntoDb onError")
+                it.printStackTrace()
+            })
 
-    fun getAllBookmarks(): LiveData<List<Memo>> = bookmarks
-    fun insert(memo: Memo) = memoDao.insert(memo)
-    fun delete(memo: Memo) = memoDao.delete(memo)
-//    fun delete(userId: String) = memoDao.deleteById(userId)
+    fun getAll(listener: DataListener<List<MemoData>>) =
+        memoDao.getAllRecords()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.i(TAG, "getAll onSuccess")
+
+                listener.onSuccess(it)
+
+            }, {
+                Log.e(TAG, "getAll onError")
+                it.printStackTrace()
+            })
+
+    fun deleteMemo(data: MemoData) =
+        memoDao.deleteMemoData(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.i(TAG, "deleteMemo onSuccess")
+            }, {
+                Log.e(TAG, "deleteMemo onError")
+                it.printStackTrace()
+            })
+
+    fun updateMemo(data: MemoData) =
+        memoDao.updateMemoData(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.i(TAG, "updateMemo onSuccess")
+            }, {
+                Log.e(TAG, "updateMemo onError")
+                it.printStackTrace()
+            })
 }

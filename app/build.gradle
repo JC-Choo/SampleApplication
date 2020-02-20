@@ -48,13 +48,20 @@ dependencies {
 
     // lifecycle : https://developer.android.com/jetpack/androidx/releases/lifecycle
     def lifecycleVersion = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
 
     // room : https://developer.android.com/jetpack/androidx/releases/room
-    def roomVersion = "2.2.2"
-    implementation "android.arch.persistence.room:runtime:$roomVersion"
-    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    def roomVersion = "2.2.4"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // gson : https://github.com/google/gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // paging : https://developer.android.com/jetpack/androidx/releases/paging
     def pagingVersion = "2.1.1"

@@ -9,7 +9,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Window
 import dev.chu.memo.R
-import dev.chu.memo.etc.getColorById
+import dev.chu.memo.etc.extension.getColorById
 import kotlinx.android.synthetic.main.dialog_loading_progress_server.view.*
 
 class UtilDialog {
