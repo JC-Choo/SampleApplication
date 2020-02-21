@@ -1,4 +1,4 @@
-package dev.chu.memo.data
+package dev.chu.memo.view.adapter.item
 
 data class ItemMemo(
     val title: String,

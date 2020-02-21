@@ -16,7 +16,7 @@ data class MemoData(
     @ColumnInfo(name = MEMO_CONTENT)
     var content: String?,
     @ColumnInfo(name = MEMO_IMAGE_URL)
-    var listImageData: List<ImageData>?,
+    var imageUrls: List<ImageData>?,
     @ColumnInfo(name = MEMO_DATA)
     val created: Date
 ) {
@@ -24,7 +24,7 @@ data class MemoData(
         const val MEMO_ID = "memo_id"
         const val MEMO_TITLE = "title"
         const val MEMO_CONTENT = "content"
-        const val MEMO_IMAGE_URL = "image_url"
+        const val MEMO_IMAGE_URL = "image_urls"
         const val MEMO_DATA = "created"
 
 //        fun to(item: ItemMemo): MemoData {
