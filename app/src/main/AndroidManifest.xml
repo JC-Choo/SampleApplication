@@ -24,10 +24,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.WriteActivity"
-            android:screenOrientation="portrait"/>
+<!--        <activity android:name=".view.MemoActivity"-->
+<!--            android:screenOrientation="portrait"/>-->
 
         <activity android:name=".view.ReadActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.AddActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -8,7 +8,7 @@
         <import type="android.text.TextUtils"/>
         <variable
             name="activity"
-            type="dev.chu.memo.view.WriteActivity" />
+            type="dev.chu.memo.view.AddActivity" />
 
         <variable
             name="viewModel"
@@ -83,6 +83,15 @@
             tools:listitem="@layout/item_image" />
 
         <Button
+            android:id="@+id/write_bt_cancel"
+            style="@style/custom_bt"
+            android:onClick="@{() -> viewModel.onClickSave()}"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/write_bt_save"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
             android:id="@+id/write_bt_save"
             style="@style/custom_bt"
             android:enabled="@{!TextUtils.isEmpty(viewModel.title) &amp;&amp; !TextUtils.isEmpty(viewModel.content)}"
@@ -90,7 +99,7 @@
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/write_bt_cancel"
             tools:enabled="false" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

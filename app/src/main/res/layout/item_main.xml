@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
-                android:srcGlide="@{item.imageUrls[0]}"
+                android:srcGlide="@{item.imageUrls[0].imageUrl}"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

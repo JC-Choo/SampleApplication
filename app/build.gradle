@@ -30,7 +30,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // For Kotlin use paging-runtime-ktx
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -65,5 +66,5 @@ dependencies {
 
     // paging : https://developer.android.com/jetpack/androidx/releases/paging
     def pagingVersion = "2.1.1"
-    implementation "androidx.paging:paging-runtime:$pagingVersion" // For Kotlin use paging-runtime-ktx
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
 }

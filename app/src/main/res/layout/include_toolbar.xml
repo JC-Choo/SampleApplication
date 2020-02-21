@@ -31,22 +31,25 @@
                         android:id="@+id/toolbar_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/save" />
 
-                    <ImageView
-                        android:id="@+id/toolbar_iv_camera"
+                    <TextView
+                        android:id="@+id/toolbar_tv_etc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/camera_white"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/save" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,9 @@ class MainRepository(application: Application) {
                 it.printStackTrace()
             })
 
+    fun getDataById(memoId: Int, listener: DataListener<MemoData>) =
+        memoDao.getDataById(memoId, )
+
     fun deleteMemo(data: MemoData) =
         memoDao.deleteMemoData(data)
             .subscribeOn(Schedulers.io())

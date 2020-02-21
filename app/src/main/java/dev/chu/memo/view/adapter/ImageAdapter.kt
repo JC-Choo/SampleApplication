@@ -9,7 +9,7 @@ import dev.chu.memo.R
 import dev.chu.memo.databinding.ItemImageBinding
 import dev.chu.memo.view.adapter.item.ItemImage
 
-class WriteAdapter(private val items: MutableList<ItemImage>): RecyclerView.Adapter<WriteAdapter.ViewHolder>() {
+class ImageAdapter(private val items: MutableList<ItemImage>): RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     fun setItems(item: List<ItemImage>) {
         items.clear()

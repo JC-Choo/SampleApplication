@@ -27,16 +27,85 @@ fun Context.showToast(@StringRes messageRes: Int) {
     Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
 }
 
-fun Context.showAlert(
-    title: String? = null,
+// region Dialog or Message
+fun Context.alertDialog(@StringRes messageId: Int, listener: DialogInterface.OnClickListener? = null) {
+    alertDialog(getString(messageId), listener)
+}
+
+fun Context.alertDialog(
     message: String,
-    positiveMsg: String = getString(R.string.ok),
-    positiveBtn: DialogInterface.OnClickListener? = null,
-    negativeMsg: String? = null,
-    negativeBtn: DialogInterface.OnClickListener? = null
-) = AlertDialog.Builder(this).apply {
-    if (title != null) setTitle(title)
-    setMessage(message)
-    setPositiveButton(positiveMsg, positiveBtn)
-    if (negativeMsg != null) setNegativeButton(negativeMsg, negativeBtn)
-}.create()
+    listener: DialogInterface.OnClickListener? = null,
+    positiveTextResId: Int? = null,
+    positiveTextString: String? = null
+) {
+    val positiveText =
+        if (positiveTextResId != null) getString(positiveTextResId)
+        else positiveTextString ?: getString(android.R.string.ok)
+
+    AlertDialog.Builder(this)
+        .setCancelable(false)
+        .setMessage(message)
+        .setPositiveButton(positiveText, listener)
+        .show()
+}
+
+fun Context.confirmDialog(
+    @StringRes messageId: Int,
+    okListener: DialogInterface.OnClickListener? = null,
+    cancelListener: DialogInterface.OnClickListener? = null
+) {
+    confirmDialog(getString(messageId), okListener, cancelListener)
+}
+
+fun Context.confirmDialog(
+    @StringRes messageId: Int,
+    okListener: DialogInterface.OnClickListener? = null,
+    cancelListener: DialogInterface.OnClickListener? = null,
+    positiveTextResId: Int? = null,
+    negativeTextResId: Int? = null
+) {
+    confirmDialog(
+        getString(messageId),
+        okListener,
+        cancelListener,
+        positiveTextResId,
+        negativeTextResId
+    )
+}
+
+fun Context.confirmDialog(
+    message: String,
+    okListener: DialogInterface.OnClickListener? = null,
+    cancelListener: DialogInterface.OnClickListener? = null,
+    positiveTextResId: Int? = null,
+    negativeTextResId: Int? = null
+) {
+    AlertDialog.Builder(this)
+        .setCancelable(false)
+        .setMessage(message)
+        .setPositiveButton(positiveTextResId ?: android.R.string.ok, okListener)
+        .setNegativeButton(negativeTextResId ?: android.R.string.cancel, cancelListener)
+        .show()
+}
+
+fun Context.confirmDialogCustom(
+    @StringRes messageId: Int, okText: String, noText: String,
+    okListener: DialogInterface.OnClickListener? = null,
+    cancelListener: DialogInterface.OnClickListener? = null
+) {
+    confirmDialogCustom(getString(messageId), okText, noText, okListener, cancelListener)
+}
+
+fun Context.confirmDialogCustom(
+    message: String, okText: String, noText: String,
+    okListener: DialogInterface.OnClickListener? = null,
+    cancelListener: DialogInterface.OnClickListener? = null
+) {
+    AlertDialog.Builder(this)
+        .setCancelable(false)
+        .setMessage(message)
+        .setPositiveButton(okText, okListener)
+        .setNegativeButton(noText, cancelListener)
+        .create().show()
+}
+// endregion

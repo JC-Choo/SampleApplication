@@ -8,9 +8,14 @@
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
 
+    <string name="memo">메모</string>
+    <string name="add">추가</string>
+    <string name="modify">수정</string>
+    <string name="delete">삭제</string>
+
+    <string name="write">write</string>
+    <string name="read">read</string>
+
     <string name="back_pressed_message">한번 더 누르면 종료됩니다.</string>
     <string name="back_memo">저장하지 않고 뒤로 가시겠습니까?</string>
-    <string name="memo_modify">메모 수정</string>
-    <string name="memo_write">메모 작성</string>
-    <string name="memo">메모</string>
 </resources>
