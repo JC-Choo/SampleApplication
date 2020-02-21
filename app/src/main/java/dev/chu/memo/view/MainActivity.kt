@@ -44,6 +44,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             })
         }
 
+        roomVM.getAll()
+
         setRecyclerView()
         observeViewModel()
     }
@@ -53,7 +55,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun observeViewModel() {
-        roomVM.getAll()
         roomVM.memoList.observe(this, Observer {
             if(!it.isNullOrEmpty()) {
                 adapter.setItems(it)

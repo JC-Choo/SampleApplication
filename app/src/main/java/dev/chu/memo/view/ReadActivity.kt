@@ -4,10 +4,12 @@ import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
+import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityReadBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.setActionBarHome
@@ -20,6 +22,7 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
 
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
+    private var memoId: Int = 0
 
     override fun initView() {
         Log.i(TAG, "initView")
@@ -35,6 +38,8 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
             })
         }
 
+        memoId = intent.getIntExtra(Const.EXTRA.MEMO_ID, 0)
+
         setRecyclerView()
         observeViewModel()
     }
@@ -45,7 +50,14 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
     }
 
     private fun observeViewModel() {
-//        roomVM.personList
+        roomVM.getDataById(memoId)
+        roomVM.memo.observe(this, Observer {
+            binding.readTvTitle.text = it.title
+            binding.readTvContent.text = it.content
+
+            if(!it.imageUrls.isNullOrEmpty())
+                adapter.setItems(it.imageUrls!!)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
