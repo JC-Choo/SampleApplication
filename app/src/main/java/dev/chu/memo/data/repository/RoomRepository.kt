@@ -9,8 +9,8 @@ import dev.chu.memo.etc.listener.DataListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainRepository(application: Application) {
-    private val TAG = MainRepository::class.java.simpleName
+class RoomRepository(application: Application) {
+    private val TAG = RoomRepository::class.java.simpleName
 
     private val memoDao: MemoDao by lazy {
         val db = MemoDatabase.getInstance(application)
@@ -43,7 +43,16 @@ class MainRepository(application: Application) {
             })
 
     fun getDataById(memoId: Int, listener: DataListener<MemoData>) =
-        memoDao.getDataById(memoId, )
+        memoDao.getDataById(memoId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.i(TAG, "getDataById onSuccess")
+                listener.onSuccess(it)
+            }, {
+                Log.e(TAG, "getDataById onError")
+                it.printStackTrace()
+            })
 
     fun deleteMemo(data: MemoData) =
         memoDao.deleteMemoData(data)

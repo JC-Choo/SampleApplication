@@ -45,7 +45,7 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
     }
 
     private fun observeViewModel() {
-        roomVM.personList
+//        roomVM.personList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {

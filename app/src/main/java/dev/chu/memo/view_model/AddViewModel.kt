@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.chu.memo.base.BaseAndroidViewModel
 import dev.chu.memo.etc.extension.showToast
 
-class WriteViewModel(application: Application) : BaseAndroidViewModel(application) {
+class AddViewModel(application: Application) : BaseAndroidViewModel(application) {
 
     private val context = application.applicationContext
 

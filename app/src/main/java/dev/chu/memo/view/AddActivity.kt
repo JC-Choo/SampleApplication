@@ -4,16 +4,20 @@ import android.content.DialogInterface
 import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
+import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.ActivityWriteBinding
 import dev.chu.memo.etc.extension.confirmDialog
 import dev.chu.memo.etc.extension.setActionBarHome
 import dev.chu.memo.etc.extension.showToast
 import dev.chu.memo.view.adapter.ImageAdapter
-import dev.chu.memo.view_model.WriteViewModel
+import dev.chu.memo.view_model.RoomViewModel
+import dev.chu.memo.view_model.AddViewModel
+import java.util.*
 
 class AddActivity : BaseActivity<ActivityWriteBinding>() {
     @LayoutRes
@@ -21,14 +25,17 @@ class AddActivity : BaseActivity<ActivityWriteBinding>() {
 
     private val TAG = AddActivity::class.java.simpleName
 
-    private val writeVm by lazy { ViewModelProvider(this).get(WriteViewModel::class.java) }
+    private val addVm by lazy { ViewModelProvider(this).get(AddViewModel::class.java) }
+    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
+    private var title: String? = null
+    private var content: String? = null
 
     override fun initView() {
         Log.i(TAG, "initView")
 
         binding.activity = this
-        binding.viewModel = writeVm
+        binding.viewModel = addVm
 
         setActionBarHome(binding.includeToolbar.toolbar, R.drawable.arrow_back_white)
         binding.includeToolbar.toolbarTv.text = ""
@@ -47,7 +54,18 @@ class AddActivity : BaseActivity<ActivityWriteBinding>() {
     }
 
     private fun observeViewModel() {
+        addVm.title.observe(this, Observer {
+            title = it
+        })
 
+        addVm.content.observe(this, Observer {
+            content = it
+        })
+    }
+
+    fun onClickSave() {
+        roomVM.saveMemo(MemoData(title = title, content = content, created = Date()))
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {

@@ -53,7 +53,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun observeViewModel() {
-        roomVM.personList.observe(this, Observer {
+        roomVM.getAll()
+        roomVM.memoList.observe(this, Observer {
             if(!it.isNullOrEmpty()) {
                 adapter.setItems(it)
             }

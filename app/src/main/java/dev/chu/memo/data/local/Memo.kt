@@ -12,11 +12,11 @@ data class MemoData(
     @ColumnInfo(name = MEMO_ID)
     var memo_id: Int = 0,
     @ColumnInfo(name = MEMO_TITLE)
-    var title: String?,
+    var title: String? = null,
     @ColumnInfo(name = MEMO_CONTENT)
-    var content: String?,
+    var content: String? = null,
     @ColumnInfo(name = MEMO_IMAGE_URL)
-    var imageUrls: List<ImageData>?,
+    var imageUrls: List<ImageData>? = null,
     @ColumnInfo(name = MEMO_DATA)
     val created: Date
 ) {
