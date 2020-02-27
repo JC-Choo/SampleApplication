@@ -13,9 +13,15 @@
     <string name="modify">수정</string>
     <string name="delete">삭제</string>
 
+    <string name="camera">카메라</string>
+    <string name="gallery">갤러리</string>
+
     <string name="write">write</string>
     <string name="read">read</string>
 
     <string name="back_pressed_message">한번 더 누르면 종료됩니다.</string>
     <string name="back_memo">저장하지 않고 뒤로 가시겠습니까?</string>
+
+    <string name="get_image">이미지 가져오기</string>
+    <string name="save_image">이미지가 등록되었습니다.</string>
 </resources>

@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.chu.memo.R
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ItemImageBinding
-import dev.chu.memo.view.adapter.item.ItemImage
 
 class ImageAdapter(private val items: MutableList<ImageData>): RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+
+    fun addItem(item: ImageData) {
+        items.add(item)
+        notifyDataSetChanged()
+    }
 
     fun setItems(item: List<ImageData>) {
         items.clear()
