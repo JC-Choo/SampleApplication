@@ -30,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private val adapter by lazy { MainAdapter(mutableListOf(), this) }
 
+    // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
@@ -43,8 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 putExtra(Const.EXTRA.MEMO, getString(R.string.write))
             })
         }
-
-        roomVM.getAll()
 
         setRecyclerView()
         observeViewModel()
@@ -63,6 +62,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
+
+        roomVM.getAll()
     }
 
     override fun onPause() {
@@ -79,6 +80,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onDestroy()
         Log.i(TAG, "onDestroy")
     }
+    // endregion
 
     private fun setRecyclerView() {
         binding.mainRv.adapter = adapter

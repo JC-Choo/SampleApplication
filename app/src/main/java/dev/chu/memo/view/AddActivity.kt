@@ -3,7 +3,6 @@ package dev.chu.memo.view
 import android.Manifest
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -11,10 +10,10 @@ import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.databinding.library.BuildConfig
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.chu.memo.BuildConfig
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
@@ -30,7 +29,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent as Intent1
-import android.graphics.Bitmap as Bitmap1
 
 class AddActivity : BaseActivity<ActivityAddBinding>() {
     @LayoutRes
@@ -52,8 +50,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private var photoFile: File? = null
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
+    private var listImageUrls: MutableList<ImageData> = mutableListOf()
 
-    // region lifecycle
+    // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
@@ -103,7 +102,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     // endregion
 
     private fun showPermissionDialog() {
-        if (!hasPermissions(*usingPermissions)) {
+        if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
             checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
             return
         }
@@ -160,24 +159,15 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     // region 앨범에 사진 저장
     private fun galleryAddPicture() {
-//        imageViewVisibility()
-
         val mediaScanIntent = Intent1(Intent1.ACTION_MEDIA_SCANNER_SCAN_FILE)
         val file = File("file:" + makeImageFile().absolutePath)
         val contentUri = Uri.fromFile(file) as Uri
         mediaScanIntent.data = contentUri
         sendBroadcast(mediaScanIntent)
 
+        listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
         showToast(R.string.save_image)
-    }
-    // endregion
-
-    // region image rotate
-    private fun rotateImage(source: Bitmap1, angle: Float): Bitmap1 {
-        val matrix = Matrix()
-        matrix.postRotate(angle)
-        return Bitmap1.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
     // endregion
 
@@ -198,7 +188,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     // region onClickEvent
     fun onClickSave() {
-        roomVM.saveMemo(MemoData(title = title, content = content, created = Date()))
+        roomVM.saveMemo(MemoData(title = title, content = content, imageUrls = listImageUrls, created = Date()))
         finish()
     }
     // endregion
@@ -209,17 +199,26 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         grantResults: IntArray
     ) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Const.REQUEST_CODE_PERMISSIONS &&
-            grantResults.isNotEmpty()
-        ) {
-            for (i in grantResults.indices) {
-                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-//                    checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
-                    showToast("이 기능을 사용하려면 권한을 허용하셔야 합니다.")
-                    return
+        when(requestCode) {
+            Const.REQUEST_CODE_PERMISSIONS -> {
+                if(grantResults.isNotEmpty() && grantResults.size == permissions.size) {
+                    var isPermissionGranted = true
+                    for (i in grantResults.indices) {
+                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                            isPermissionGranted = false
+                            break
+                        }
+                    }
+
+                    if(isPermissionGranted) {
+                        showPermissionDialog()
+                    } else {
+                        alertDialog("이 기능을 사용하기 위해선 권한이 필요합니다. \"다시 보지 않기\"를 클릭하셨을 경우엔, 설정(앱 정보)에서 퍼미션을 허용해주세요.")
+                    }
                 }
+
+                return
             }
-            showPermissionDialog()
         }
     }
 
@@ -249,6 +248,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                 } else
                     null
 
+                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
             }
         }

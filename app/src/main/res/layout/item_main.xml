@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="dev.chu.memo.data.local.MemoData" />
@@ -57,18 +56,24 @@
                 app:layout_constraintTop_toBottomOf="@id/item_main_tv_title"
                 tools:text="@string/app_name" />
 
+            <View
+                android:id="@+id/item_main_view"
+                style="@style/custom_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_main_tv_content"/>
+
             <ImageView
                 android:id="@+id/item_main_iv"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
-                android:srcGlide="@{item.imageUrls[0].imageUrl}"
-                android:visibility="gone"
+                android:srcGlide="@{item.imageUrls}"
+                android:isVisibility="@{item.imageUrls}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_main_tv_content"
-                tools:src="@drawable/ic_launcher_foreground"
-                tools:visibility="visible" />
+                app:layout_constraintTop_toBottomOf="@id/item_main_view"
+                tools:src="@drawable/ic_launcher_foreground" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
