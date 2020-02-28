@@ -24,4 +24,6 @@
 
     <string name="get_image">이미지 가져오기</string>
     <string name="save_image">이미지가 등록되었습니다.</string>
+
+    <string name="please_need_permissions">이 기능을 사용하기 위해선 권한이 필요합니다. "다시 보지 않기"를 클릭하셨을 경우엔, 설정(앱 정보)에서 퍼미션을 허용해주세요.</string>
 </resources>

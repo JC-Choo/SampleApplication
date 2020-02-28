@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
 
     <application
         android:name=".GlobalApplication"
@@ -16,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,10 +28,10 @@
 <!--        <activity android:name=".view.MemoActivity"-->
 <!--            android:screenOrientation="portrait"/>-->
 
-        <activity android:name=".view.ReadActivity"
+        <activity android:name=".view.activity.read.ReadActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.AddActivity"
+        <activity android:name=".view.activity.AddActivity"
             android:screenOrientation="portrait"/>
     </application>
 

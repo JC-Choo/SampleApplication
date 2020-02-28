@@ -1,4 +1,4 @@
-package dev.chu.memo.view
+package dev.chu.memo.view.activity
 
 import android.content.Intent
 import android.util.Log
@@ -37,6 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.activity = this
 
         setActionBarHome(binding.includeToolbar.toolbar, null)
+
         binding.includeToolbar.toolbarTv.text = getString(R.string.memo)
         binding.includeToolbar.toolbarTvEtc.text = getString(R.string.add)
         binding.includeToolbar.toolbarTvEtc.setOnClickListener {

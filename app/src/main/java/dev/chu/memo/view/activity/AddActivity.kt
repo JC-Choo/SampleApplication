@@ -1,7 +1,8 @@
-package dev.chu.memo.view
+package dev.chu.memo.view.activity
 
 import android.Manifest
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
@@ -28,13 +29,10 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Intent as Intent1
 
 class AddActivity : BaseActivity<ActivityAddBinding>() {
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_add
-
-    private val TAG = AddActivity::class.java.simpleName
 
     private val addVm by lazy { ViewModelProvider(this).get(AddViewModel::class.java) }
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
@@ -45,7 +43,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private var usingPermissions = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.ACCESS_MEDIA_LOCATION
     )
     private var photoFile: File? = null
     private var photoUri: Uri? = null
@@ -63,7 +62,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         binding.includeToolbar.toolbarTv.text = ""
         binding.includeToolbar.toolbarTvEtc.text = getString(R.string.picture)
         binding.includeToolbar.toolbarTvEtc.setOnClickListener {
-            showPermissionDialog()
+            showCameraAndGalleryDialog()
         }
 
         setRecyclerView()
@@ -101,7 +100,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
     // endregion
 
-    private fun showPermissionDialog() {
+    private fun showCameraAndGalleryDialog() {
         if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
             checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
             return
@@ -115,8 +114,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
                 when (which) {
-                    0 -> doTakePhotoAction()
-                    1 -> doTakeAlbumAction()
+                    0 -> doTakeCameraAction()
+                    1 -> doTakeGalleryAction()
                 }
                 dialogInterface.dismiss()
             }
@@ -125,10 +124,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     // region 사진 찍기
-    private fun doTakePhotoAction() {
-        val intent = Intent1(MediaStore.ACTION_IMAGE_CAPTURE)
+    private fun doTakeCameraAction() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
-//            var photoFile: File? = null
             try {
                 photoFile = makeImageFile()
             } catch (e: IOException) {
@@ -149,21 +147,22 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     // endregion
 
     // region 앨범에서 가져오기
-    private fun doTakeAlbumAction() {
-        val intent = Intent1(Intent1.ACTION_PICK)
-        intent.type = "image/*"
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        startActivityForResult(intent, Const.REQUEST_CODE_GALLERY_PERMISSION)
+    private fun doTakeGalleryAction() {
+        startActivityForResult(Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+            type = MediaStore.Images.Media.CONTENT_TYPE
+        }, Const.REQUEST_CODE_GALLERY_PERMISSION)
     }
     // endregion
 
     // region 앨범에 사진 저장
     private fun galleryAddPicture() {
-        val mediaScanIntent = Intent1(Intent1.ACTION_MEDIA_SCANNER_SCAN_FILE)
         val file = File("file:" + makeImageFile().absolutePath)
         val contentUri = Uri.fromFile(file) as Uri
-        mediaScanIntent.data = contentUri
-        sendBroadcast(mediaScanIntent)
+
+        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
+            data = contentUri
+        })
 
         listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
@@ -191,6 +190,10 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         roomVM.saveMemo(MemoData(title = title, content = content, imageUrls = listImageUrls, created = Date()))
         finish()
     }
+
+    fun onClickFinish() {
+        onBackPressed()
+    }
     // endregion
 
     override fun onRequestPermissionsResult(
@@ -211,9 +214,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                     }
 
                     if(isPermissionGranted) {
-                        showPermissionDialog()
+                        showCameraAndGalleryDialog()
                     } else {
-                        alertDialog("이 기능을 사용하기 위해선 권한이 필요합니다. \"다시 보지 않기\"를 클릭하셨을 경우엔, 설정(앱 정보)에서 퍼미션을 허용해주세요.")
+                        alertDialog(R.string.please_need_permissions)
                     }
                 }
 
@@ -225,7 +228,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        data: android.content.Intent?
+        data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
 

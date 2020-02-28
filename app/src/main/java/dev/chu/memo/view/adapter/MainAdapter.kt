@@ -5,15 +5,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import dev.chu.memo.R
 import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.ItemMainBinding
-import dev.chu.memo.view.ReadActivity
-import dev.chu.memo.view.adapter.item.ItemMain
+import dev.chu.memo.view.activity.read.ReadActivity
 
 class MainAdapter(
     private val items: MutableList<MemoData>,

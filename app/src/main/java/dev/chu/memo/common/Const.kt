@@ -13,4 +13,8 @@ object Const {
 
         const val MEMO_ID = "MEMO_ID"
     }
+
+    object ARGS {
+        const val MEMO_ID = "MEMO_ID"
+    }
 }

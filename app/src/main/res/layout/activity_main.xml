@@ -7,7 +7,7 @@
 
         <variable
             name="activity"
-            type="dev.chu.memo.view.MainActivity" />
+            type="dev.chu.memo.view.activity.MainActivity" />
     </data>
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@android:color/holo_blue_light"
-        tools:context=".view.MainActivity">
+        tools:context=".view.activity.MainActivity">
 
         <include
             android:id="@+id/include_toolbar"
