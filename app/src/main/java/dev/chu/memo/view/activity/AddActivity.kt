@@ -1,17 +1,18 @@
 package dev.chu.memo.view.activity
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import androidx.databinding.library.BuildConfig
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +26,7 @@ import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.AddViewModel
 import dev.chu.memo.view_model.RoomViewModel
-import java.io.File
-import java.io.IOException
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -114,7 +114,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
                 when (which) {
-                    0 -> doTakeCameraAction()
+                    0 -> dispatchTakePictureIntent()
                     1 -> doTakeGalleryAction()
                 }
                 dialogInterface.dismiss()
@@ -124,23 +124,47 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     // region 사진 찍기
-    private fun doTakeCameraAction() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null) {
-            try {
-                photoFile = makeImageFile()
-            } catch (e: IOException) {
-                Log.e(TAG, "error = $e")
-            }
+    private fun dispatchTakePictureIntent() {
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        if (intent.resolveActivity(packageManager) != null) {
+//            try {
+//                photoFile = makeImageFile()
+//            } catch (e: IOException) {
+//                Log.e(TAG, "error = $e")
+//            }
+//
+//            if (photoFile != null) {
+//                photoUri = FileProvider.getUriForFile(
+//                    this,
+//                    "dev.chu.memo.fileprovider",
+//                    photoFile!!
+//                )
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+//                startActivityForResult(intent, Const.REQUEST_CODE_CAMERA_PERMISSION)
+//            }
+//        }
 
-            if (photoFile != null) {
-                photoUri = FileProvider.getUriForFile(
-                    this,
-                    BuildConfig.APPLICATION_ID + ".fileprovider",
-                    photoFile!!
-                )
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                startActivityForResult(intent, Const.REQUEST_CODE_CAMERA_PERMISSION)
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    ex.printStackTrace()
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    photoUri = FileProvider.getUriForFile(
+                        this,
+                        "dev.chu.memo.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    startActivityForResult(takePictureIntent, Const.REQUEST_CODE_CAMERA_PERMISSION)
+                }
             }
         }
     }
@@ -157,12 +181,45 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     // region 앨범에 사진 저장
     private fun galleryAddPicture() {
-        val file = File("file:" + makeImageFile().absolutePath)
-        val contentUri = Uri.fromFile(file) as Uri
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.Audio.Media.RELATIVE_PATH, "DCIM/Camera")     // 파일이 저장되는 위치
+                put(MediaStore.Images.Media.DISPLAY_NAME, File(getCurrentPhotoPath()).name)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+                put(MediaStore.Images.Media.IS_PENDING, 1)      // 이 속성은 아직 내가 파일을 write하지 않았으니, 다른 곳에서 이 데이터를 요구하면 무시하라는 의미입니다. 파일을 모두 write한 뒤에 이 속성을 0으로 update해줘야 합니다.
+            }
 
-        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
-            data = contentUri
-        })
+            val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            val item = contentResolver.insert(collection, values)!!
+
+            contentResolver.openFileDescriptor(item, "w", null).use {
+                // write something to OutputStream
+                FileOutputStream(it!!.fileDescriptor).use { outputStream ->
+//                    val imageInputStream = resources.openRawResource(R.raw.my_image)
+                    val imageInputStream: InputStream = FileInputStream(getCurrentPhotoPath())
+//                    while (true) {
+                        val data = imageInputStream.read()
+//                        if (data == -1) {
+//                            break
+//                        }
+                        outputStream.write(data)
+//                    }
+                    imageInputStream.close()
+                    outputStream.close()
+                }
+            }
+
+            values.clear()
+            values.put(MediaStore.Images.Media.IS_PENDING, 0)
+            contentResolver.update(item, values, null, null)
+        } else {
+            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+                val f = File(getCurrentPhotoPath())
+                mediaScanIntent.data = Uri.fromFile(f)
+                sendBroadcast(mediaScanIntent)
+            }
+        }
+
 
         listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
