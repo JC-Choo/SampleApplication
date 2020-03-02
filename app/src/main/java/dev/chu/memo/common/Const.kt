@@ -1,6 +1,8 @@
 package dev.chu.memo.common
 
 object Const {
+    const val BASE_URL = "BASE_URL"
+
     const val TABLE_NAME_1 = "MEMO_DATA"
     const val TABLE_NAME_2 = "IMAGE_DATA"
 

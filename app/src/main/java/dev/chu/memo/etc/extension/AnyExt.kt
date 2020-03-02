@@ -2,6 +2,7 @@ package dev.chu.memo.etc.extension
 
 import android.content.Context
 import android.os.Environment
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.IOException
@@ -30,6 +31,13 @@ fun Context.makeImageFile(): File {
 private var currentPhotoPath: String = ""
 @Throws(IOException::class)
 fun AppCompatActivity.createImageFile(): File {
+    // External public storage
+    Log.d(TAG, "External public root dir: " + Environment.getExternalStorageDirectory())
+    Log.d(TAG, "External public file dir: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))
+    Log.d(TAG, "External public file dir: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM))
+    Log.d(TAG, "External public root dir: " + getExternalFilesDir(Environment.DIRECTORY_DCIM))
+    Log.d(TAG, "External public root dir: " + getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+
     // Create an image file name
     val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("ko")).format(Date())
     val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -44,3 +52,6 @@ fun AppCompatActivity.createImageFile(): File {
 }
 
 fun getCurrentPhotoPath() = currentPhotoPath
+
+val <T> T.exhaustive: T
+    get() = this

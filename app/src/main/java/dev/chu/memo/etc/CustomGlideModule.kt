@@ -1,4 +1,4 @@
-package dev.chu.memo
+package dev.chu.memo.etc
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

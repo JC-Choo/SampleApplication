@@ -183,13 +183,14 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private fun galleryAddPicture() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val values = ContentValues().apply {
-                put(MediaStore.Audio.Media.RELATIVE_PATH, "DCIM/Camera")     // 파일이 저장되는 위치
+//                put(MediaStore.Audio.Media.RELATIVE_PATH, "DCIM/Camera")     // 파일이 저장되는 위치
                 put(MediaStore.Images.Media.DISPLAY_NAME, File(getCurrentPhotoPath()).name)
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
                 put(MediaStore.Images.Media.IS_PENDING, 1)      // 이 속성은 아직 내가 파일을 write하지 않았으니, 다른 곳에서 이 데이터를 요구하면 무시하라는 의미입니다. 파일을 모두 write한 뒤에 이 속성을 0으로 update해줘야 합니다.
             }
 
             val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             val item = contentResolver.insert(collection, values)!!
 
             contentResolver.openFileDescriptor(item, "w", null).use {
