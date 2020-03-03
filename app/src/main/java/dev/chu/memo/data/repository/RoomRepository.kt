@@ -54,12 +54,13 @@ class RoomRepository(application: Application) {
                 it.printStackTrace()
             })
 
-    fun deleteMemo(data: MemoData) =
+    fun deleteMemo(data: MemoData, listener: DataListener<List<MemoData>>) =
         memoDao.deleteMemoData(data)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.i(TAG, "deleteMemo onSuccess")
+                getAll(listener)
             }, {
                 Log.e(TAG, "deleteMemo onError")
                 it.printStackTrace()

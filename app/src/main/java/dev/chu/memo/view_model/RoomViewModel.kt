@@ -36,6 +36,14 @@ class RoomViewModel(application: Application) : BaseAndroidViewModel(application
     }))
 
     fun saveMemo(data: MemoData) = disposable.add(repository.saveDataIntoDb(data))
-    fun deleteMemo(data: MemoData) = disposable.add(repository.deleteMemo(data))
+    fun deleteMemo(data: MemoData) = disposable.add(repository.deleteMemo(data, object : DataListener<List<MemoData>> {
+        override fun onSuccess(t: List<MemoData>) {
+            if(!t.isNullOrEmpty()) {
+                _memoList.postValue(t.reversed())
+            } else {
+                _memoList.postValue(listOf())
+            }
+        }
+    }))
     fun updateMemo(data: MemoData) = disposable.add(repository.updateMemo(data))
 }

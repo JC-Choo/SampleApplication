@@ -27,7 +27,7 @@ class ReadFragment : BaseFragment<FragmentReadBinding>() {
         }
     }
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
+    private lateinit var roomVM: RoomViewModel
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
     private var memoId: Int = 0
 
@@ -36,9 +36,15 @@ class ReadFragment : BaseFragment<FragmentReadBinding>() {
 
         binding.fragment = this
 
+        roomVM = activity?.let {
+            ViewModelProvider(this)[RoomViewModel::class.java]
+        } ?: throw Exception("Activity is null")
+
         arguments?.let {
             memoId = it.getInt(Const.ARGS.MEMO_ID, 0)
         }
+
+        roomVM.getDataById(memoId)
 
         setRecyclerView()
         observeViewModel()
@@ -50,7 +56,6 @@ class ReadFragment : BaseFragment<FragmentReadBinding>() {
     }
 
     private fun observeViewModel() {
-        roomVM.getDataById(memoId)
         roomVM.memo.observe(this, Observer {
             binding.readFlTvTitle.text = it.title
             binding.readFlTvContent.text = it.content

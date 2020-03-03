@@ -1,6 +1,7 @@
 package dev.chu.memo.view.adapter
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,14 @@ import dev.chu.memo.R
 import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.ItemMainBinding
+import dev.chu.memo.etc.extension.confirmDialog
 import dev.chu.memo.view.activity.read.ReadActivity
+import dev.chu.memo.view_model.RoomViewModel
 
 class MainAdapter(
+    val context: Context,
     private val items: MutableList<MemoData>,
-    val context: Context
+    private val roomVm: RoomViewModel
 ) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     fun setItems(item: List<MemoData>) {
@@ -42,6 +46,11 @@ class MainAdapter(
                 context.startActivity(Intent(context, ReadActivity::class.java).apply {
                     putExtra(Const.EXTRA.MEMO_ID, item.memo_id)
                 })
+            }
+
+            binding.container.setOnLongClickListener {
+                context.confirmDialog(R.string.do_you_delete_this_memo, DialogInterface.OnClickListener { dialog, which -> roomVm.deleteMemo(item) })
+                return@setOnLongClickListener false
             }
         }
     }

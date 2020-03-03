@@ -28,7 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_main
 
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
-    private val adapter by lazy { MainAdapter(mutableListOf(), this) }
+    private val adapter by lazy { MainAdapter(this, mutableListOf(), roomVM) }
 
     // region lifeCycle
     override fun initView() {
