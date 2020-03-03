@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="dev.chu.memo.view_model.AddViewModel" />
+            type="dev.chu.memo.view_model.RoomViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +95,7 @@
             android:id="@+id/write_bt_save"
             style="@style/custom_bt"
             android:enabled="@{!TextUtils.isEmpty(viewModel.title) &amp;&amp; !TextUtils.isEmpty(viewModel.content)}"
-            android:onClick="@{() -> activity.onClickSave()}"
+            android:onClick="@{() -> viewModel.saveMemo()}"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

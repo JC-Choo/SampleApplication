@@ -20,11 +20,9 @@ import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.ImageData
-import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view.adapter.ImageAdapter
-import dev.chu.memo.view_model.AddViewModel
 import dev.chu.memo.view_model.RoomViewModel
 import java.io.*
 import java.text.SimpleDateFormat
@@ -34,11 +32,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_add
 
-    private val addVm by lazy { ViewModelProvider(this).get(AddViewModel::class.java) }
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
-    private var title: String? = null
-    private var content: String? = null
 
     private var usingPermissions = arrayOf(
         Manifest.permission.CAMERA,
@@ -49,14 +44,13 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private var photoFile: File? = null
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
-    private var listImageUrls: MutableList<ImageData> = mutableListOf()
 
     // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
         binding.activity = this
-        binding.viewModel = addVm
+        binding.viewModel = roomVM
 
         setActionBarHome(binding.includeToolbar.toolbar, R.drawable.arrow_back_white)
         binding.includeToolbar.toolbarTv.text = ""
@@ -222,7 +216,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         }
 
 
-        listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
+        roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
         showToast(R.string.save_image)
     }
@@ -234,24 +228,17 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     private fun observeViewModel() {
-        addVm.title.observe(this, Observer {
-            title = it
-        })
-
-        addVm.content.observe(this, Observer {
-            content = it
+        roomVM.isSave.observe(this, Observer {
+            if(it) {
+                finish()
+                roomVM.isSave.value = false
+                showToast(R.string.save_memo)
+            }
         })
     }
 
     // region onClickEvent
-    fun onClickSave() {
-        roomVM.saveMemo(MemoData(title = title, content = content, imageUrls = listImageUrls, created = Date()))
-        finish()
-    }
-
-    fun onClickFinish() {
-        onBackPressed()
-    }
+    fun onClickFinish() { onBackPressed() }
     // endregion
 
     override fun onRequestPermissionsResult(
@@ -309,7 +296,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                 } else
                     null
 
-                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
+                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
             }
         }
