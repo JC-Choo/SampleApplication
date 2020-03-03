@@ -2,6 +2,7 @@ package dev.chu.memo.etc.extension
 
 import android.content.pm.PackageManager
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -56,4 +57,28 @@ fun FragmentActivity.replaceFragment(@IdRes res: Int, fragment: Fragment, tag: S
     fragmentTransaction.addToBackStack(null)
 //    fragmentTransaction.commit()
     fragmentTransaction.commitAllowingStateLoss()
+}
+
+
+
+
+
+fun AppCompatActivity.showToast(msg: CharSequence, isLong: Boolean = false) {
+    Toast.makeText(applicationContext, msg, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.showToast(msgId: Int, isLong: Boolean = false) {
+    showToast(getString(msgId), isLong)
+}
+
+fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int) {
+    supportFragmentManager.transact {
+        replace(frameId, fragment)
+    }
+}
+
+fun AppCompatActivity.addFragmentInActivity(@IdRes frameId: Int, fragment: Fragment) {
+    supportFragmentManager.transact {
+        add(frameId, fragment)
+    }
 }

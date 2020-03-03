@@ -7,7 +7,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import dev.chu.memo.GlideApp
 import dev.chu.memo.data.local.ImageData
 
 object BindingAdapter {

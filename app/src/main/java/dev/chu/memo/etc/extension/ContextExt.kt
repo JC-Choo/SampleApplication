@@ -1,15 +1,20 @@
 package dev.chu.memo.etc.extension
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import dev.chu.memo.R
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 fun Context.getDrawableById(@DrawableRes res: Int): Drawable =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) getDrawable(res)!! else resources.getDrawable(
@@ -19,13 +24,13 @@ fun Context.getDrawableById(@DrawableRes res: Int): Drawable =
 fun Context.getColorById(@ColorRes res: Int): Int =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) getColor(res) else resources.getColor(res)
 
-fun Context.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-}
-
-fun Context.showToast(@StringRes messageRes: Int) {
-    Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
-}
+//fun Context.showToast(message: String, isLong: Boolean = false) {
+//    Toast.makeText(this, message, if(isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+//}
+//
+//fun Context.showToast(@StringRes messageRes: Int, isLong: Boolean = false) {
+//    showToast(getString(messageRes, isLong))
+//}
 
 // region Dialog or Message
 fun Context.alertDialog(@StringRes messageId: Int, listener: DialogInterface.OnClickListener? = null) {
@@ -109,3 +114,31 @@ fun Context.confirmDialogCustom(
         .create().show()
 }
 // endregion
+
+
+fun Context.callPhone(phoneNumber: String) {
+    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+    startActivity(intent)
+}
+
+fun Context.showPlayStore() {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+    startActivity(intent)
+}
+
+fun Context.showKeyboard() {
+    GlobalScope.launch {
+        delay(100)
+        (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+            InputMethodManager.SHOW_FORCED,
+            0
+        )
+    }
+}
+
+fun Context.hideKeyboard() {
+    (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+        InputMethodManager.HIDE_IMPLICIT_ONLY,
+        0
+    )
+}
