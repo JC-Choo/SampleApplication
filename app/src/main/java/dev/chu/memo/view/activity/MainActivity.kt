@@ -3,7 +3,6 @@ package dev.chu.memo.view.activity
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
@@ -11,7 +10,6 @@ import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.setActionBarHome
-import dev.chu.memo.view.adapter.MainAdapter
 import dev.chu.memo.view_model.RoomViewModel
 
 /**

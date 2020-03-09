@@ -35,7 +35,7 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
         binding.includeToolbar.toolbarTvDelete.setOnClickListener {
             data?.let {
                 confirmDialog(R.string.do_you_delete_this_memo, DialogInterface.OnClickListener { dialog, which ->
-                    roomVM.deleteMemo(it)
+                    roomVM.deleteMemo(it, false)
                     finish()
                 })
             } ?: run {
@@ -46,6 +46,7 @@ class ReadActivity : BaseActivity<ActivityReadBinding>() {
         binding.includeToolbar.toolbarTvEtc.setOnClickListener {
             replaceFragment(binding.readFl.id, ModifyFragment.newInstance(memoId), ModifyFragment.TAG)
             binding.includeToolbar.toolbarTvDelete.visibility = View.GONE
+            binding.includeToolbar.toolbarTvEtc.isEnabled = false
         }
 
         initData()

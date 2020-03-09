@@ -31,28 +31,34 @@ class RoomViewModel(application: Application) : BaseAndroidViewModel(application
         }
     }))
 
-    fun getDataById(memberId: Int) = disposable.add(repository.getDataById(memberId, object : DataListener<MemoData> {
-        override fun onSuccess(t: MemoData) {
-            _memo.postValue(t)
-        }
-    }))
-
-    fun saveMemo(data: MemoData) = disposable.add(repository.saveDataIntoDb(data))
-    fun deleteMemo(data: MemoData) = disposable.add(repository.deleteMemo(data, object : DataListener<List<MemoData>> {
-        override fun onSuccess(t: List<MemoData>) {
-            if(!t.isNullOrEmpty()) {
-                _memoList.postValue(t.reversed())
-            } else {
-                _memoList.postValue(listOf())
+    fun getDataById(memoId: Int) {
+        this.memoId.value = memoId
+        disposable.add(repository.getDataById(memoId, object : DataListener<MemoData> {
+            override fun onSuccess(t: MemoData) {
+                _memo.postValue(t)
             }
-        }
-    }))
-    fun updateMemo(data: MemoData) = disposable.add(repository.updateMemo(data))
+        }))
+    }
+
+    fun deleteMemo(data: MemoData, isGetAll: Boolean = true) = disposable.add(if(isGetAll) {
+        repository.deleteMemo(data, object : DataListener<List<MemoData>> {
+            override fun onSuccess(t: List<MemoData>) {
+                if(!t.isNullOrEmpty()) {
+                    _memoList.postValue(t.reversed())
+                } else {
+                    _memoList.postValue(listOf())
+                }
+            }
+        })
+    } else {
+        repository.deleteMemo(data)
+    })
 
 
 
 
 
+    var memoId: MutableLiveData<Int> = MutableLiveData(-1)
     var isSave: MutableLiveData<Boolean> = MutableLiveData(false)
     var isUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
     var title = MutableLiveData<String>()
@@ -73,7 +79,7 @@ class RoomViewModel(application: Application) : BaseAndroidViewModel(application
         isSave.value = true
     }
     fun updateMemo() {
-        disposable.add(repository.updateMemo(MemoData(title = title.value, content = content.value, imageUrls = _listImageUrls, created = Date())))
+        disposable.add(repository.updateMemo(MemoData(memo_id = memoId.value!!, title = title.value, content = content.value, imageUrls = _listImageUrls, created = Date())))
         isUpdate.value = true
     }
 }

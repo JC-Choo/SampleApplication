@@ -5,13 +5,12 @@ import android.util.Log
 import dev.chu.memo.data.local.MemoDao
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.data.local.MemoDatabase
+import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.listener.DataListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class RoomRepository(application: Application) {
-    private val TAG = RoomRepository::class.java.simpleName
-
     private val memoDao: MemoDao by lazy {
         val db = MemoDatabase.getInstance(application)
         db.getMemoDao()
@@ -34,9 +33,7 @@ class RoomRepository(application: Application) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.i(TAG, "getAll onSuccess")
-
                 listener.onSuccess(it)
-
             }, {
                 Log.e(TAG, "getAll onError")
                 it.printStackTrace()
@@ -54,13 +51,13 @@ class RoomRepository(application: Application) {
                 it.printStackTrace()
             })
 
-    fun deleteMemo(data: MemoData, listener: DataListener<List<MemoData>>) =
+    fun deleteMemo(data: MemoData, listener: DataListener<List<MemoData>>? = null) =
         memoDao.deleteMemoData(data)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.i(TAG, "deleteMemo onSuccess")
-                getAll(listener)
+                listener?.let { getAll(it) }
             }, {
                 Log.e(TAG, "deleteMemo onError")
                 it.printStackTrace()

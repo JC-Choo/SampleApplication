@@ -37,11 +37,12 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
     override fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?) {
         Log.i(TAG, "setView")
 
-        binding.fragment = this
-
         roomVM = activity?.let {
             ViewModelProvider(this)[RoomViewModel::class.java]
         } ?: throw Exception("Activity is null")
+
+        binding.fragment = this
+        binding.viewModel = roomVM
 
         arguments?.let {
             memoId = it.getInt(Const.ARGS.MEMO_ID, 0)
@@ -60,11 +61,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
 
     private fun observeViewModel() {
         roomVM.memo.observe(this, Observer {
-            binding.modifyFlEtTitle.setText(it.title)
-            binding.modifyFlEtContent.setText(it.content)
-
-//            roomVM.title.value = it.title
-//            roomVM.content.value = it.content
+            roomVM.title.value = it.title
+            roomVM.content.value = it.content
 
             if(!it.imageUrls.isNullOrEmpty()) {
                 adapter.setItems(it.imageUrls!!)
@@ -74,9 +72,9 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
 
         roomVM.isUpdate.observe(this, Observer {
             if(it) {
-                activity?.finish()
                 roomVM.isUpdate.value = false
                 showToast(R.string.save_memo)
+                activity?.finish()
             }
         })
     }
