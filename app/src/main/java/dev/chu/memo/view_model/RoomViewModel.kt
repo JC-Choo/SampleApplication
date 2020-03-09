@@ -13,7 +13,7 @@ import java.util.*
 class RoomViewModel(application: Application) : BaseAndroidViewModel(application) {
     private val repository by lazy { RoomRepository(application) }
 
-    private var _memoList: MutableLiveData<List<MemoData>> = MutableLiveData()
+    private var _memoList: MutableLiveData<List<MemoData>> = MutableLiveData(arrayListOf())
     val memoList: LiveData<List<MemoData>>
         get() = _memoList
 

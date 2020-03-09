@@ -28,13 +28,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_main
 
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
-    private val adapter by lazy { MainAdapter(this, mutableListOf(), roomVM) }
 
     // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
         binding.activity = this
+        binding.roomVM = roomVM
 
         setActionBarHome(binding.includeToolbar.toolbar, null)
 
@@ -45,9 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 putExtra(Const.EXTRA.MEMO, getString(R.string.write))
             })
         }
-
-        setRecyclerView()
-        observeViewModel()
     }
 
     override fun onRestart() {
@@ -82,16 +79,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i(TAG, "onDestroy")
     }
     // endregion
-
-    private fun setRecyclerView() {
-        binding.mainRv.adapter = adapter
-    }
-
-    private fun observeViewModel() {
-        roomVM.memoList.observe(this, Observer {
-            if(!it.isNullOrEmpty()) {
-                adapter.setItems(it)
-            }
-        })
-    }
 }

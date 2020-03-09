@@ -8,6 +8,10 @@
         <variable
             name="activity"
             type="dev.chu.memo.view.activity.MainActivity" />
+
+        <variable
+            name="roomVM"
+            type="dev.chu.memo.view_model.RoomViewModel" />
     </data>
 
     <LinearLayout
@@ -27,6 +31,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:data="@{roomVM.memoList}"
+            android:vm="@{roomVM}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_main" />
 
