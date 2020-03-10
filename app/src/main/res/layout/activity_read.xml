@@ -15,15 +15,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/include_toolbar"
-            layout="@layout/include_toolbar"/>
+<!--        <include-->
+<!--            android:id="@+id/include_toolbar"-->
+<!--            layout="@layout/include_toolbar"/>-->
 
-        <View
-            android:id="@+id/read_view_1"
-            style="@style/custom_view"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+<!--        <View-->
+<!--            android:id="@+id/read_view_1"-->
+<!--            style="@style/custom_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="10dp" />-->
 
         <FrameLayout
             android:id="@+id/read_fl"
