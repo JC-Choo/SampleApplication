@@ -13,10 +13,9 @@ object Const {
     const val REQUEST_CODE_GALLERY_PERMISSION = 1002
 
     val usingPermissions = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_MEDIA_LOCATION
+//        Manifest.permission.CAMERA,
+//        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
     object PREF {

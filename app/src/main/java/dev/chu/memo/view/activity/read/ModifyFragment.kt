@@ -147,7 +147,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
         roomVM.isUpdate.observe(this, Observer {
             if(it) {
                 roomVM.isUpdate.value = false
-                showToast(R.string.save_memo)
+                showToast(R.string.modify_memo)
+                galleryAddPicture()
                 activity?.finish()
             }
         })
@@ -166,9 +167,13 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
         val builder = AlertDialog.Builder(context!!).apply {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
-                when (which) {
-                    0 -> doTakePictureIntent()
-                    1 -> doTakeGalleryAction()
+                if (isExternalStorageWritable()) {
+                    when (which) {
+                        0 -> dispatchTakePictureIntent()
+                        1 -> doTakeGalleryAction()
+                    }
+                } else {
+                    doTakeGalleryAction()
                 }
                 dialogInterface.dismiss()
             }
@@ -177,19 +182,15 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
     }
 
     // region 사진 찍기
-    private fun doTakePictureIntent() {
+    private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
-                // Create the File where the photo should go
                 val photoFile: File? = try {
                     (activity as AppCompatActivity).createImageFile()
                 } catch (ex: IOException) {
-                    // Error occurred while creating the File
                     ex.printStackTrace()
                     null
                 }
-                // Continue only if the File was successfully created
                 photoFile?.also {
                     photoUri = FileProvider.getUriForFile(context!!, "dev.chu.memo.fileprovider", it)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -211,43 +212,11 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
 
     // region 앨범에 사진 저장
     private fun galleryAddPicture() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues().apply {
-//                put(MediaStore.Audio.Media.RELATIVE_PATH, "DCIM/Camera")     // 파일이 저장되는 위치
-                put(MediaStore.Images.Media.DISPLAY_NAME, File(getCurrentPhotoPath()).name)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-                put(MediaStore.Images.Media.IS_PENDING, 1)      // 이 속성은 아직 내가 파일을 write하지 않았으니, 다른 곳에서 이 데이터를 요구하면 무시하라는 의미입니다. 파일을 모두 write한 뒤에 이 속성을 0으로 update해줘야 합니다.
-            }
-
-            val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            val item = activity?.contentResolver?.insert(collection, values)!!
-
-            activity?.contentResolver?.openFileDescriptor(item, "w", null).use {
-                // write something to OutputStream
-                FileOutputStream(it!!.fileDescriptor).use { outputStream ->
-                    val imageInputStream: InputStream = FileInputStream(getCurrentPhotoPath())
-                    val data = imageInputStream.read()
-                    outputStream.write(data)
-                    imageInputStream.close()
-                    outputStream.close()
-                }
-            }
-
-            values.clear()
-            values.put(MediaStore.Images.Media.IS_PENDING, 0)
-            activity?.contentResolver?.update(item, values, null, null)
-        } else {
-            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-                val f = File(getCurrentPhotoPath())
-                mediaScanIntent.data = Uri.fromFile(f)
-                activity?.sendBroadcast(mediaScanIntent)
-            }
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(getCurrentPhotoPath())
+            mediaScanIntent.data = Uri.fromFile(f)
+            activity?.sendBroadcast(mediaScanIntent)
         }
-
-        roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
-        adapter.addItem(ImageData(imageUrl = photoUri.toString()))
-        showToast(R.string.save_image)
     }
     // endregion
 
@@ -294,7 +263,9 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
         when (requestCode) {
             Const.REQUEST_CODE_CAMERA_PERMISSION -> {
                 timeStamp = SimpleDateFormat("yyyy_MM_dd", Locale("ko")).format(Date())
-                galleryAddPicture()
+
+                adapter.addItem(ImageData(imageUrl = photoUri.toString()))
+                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
             }
 
             Const.REQUEST_CODE_GALLERY_PERMISSION -> {

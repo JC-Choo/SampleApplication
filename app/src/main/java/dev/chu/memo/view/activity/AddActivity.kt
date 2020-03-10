@@ -1,11 +1,9 @@
 package dev.chu.memo.view.activity
 
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
@@ -24,7 +22,8 @@ import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
-import java.io.*
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,6 +37,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
     private var isBackPress: Boolean = false
+    private var isSave: Boolean = false
 
     // region lifeCycle
     override fun initView() {
@@ -54,7 +54,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         }
 
         val isWritingMemo = intent.getBooleanExtra(Const.EXTRA.IS_WRITING_MEMO, false)
-        if(isWritingMemo) {
+        if (isWritingMemo) {
             roomVM.title.value = getPrefString(Const.PREF.MEMO_TITLE, "")
             roomVM.content.value = getPrefString(Const.PREF.MEMO_CONTENT, "")
         }
@@ -66,6 +66,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     override fun onRestart() {
         super.onRestart()
         Log.i(TAG, "onRestart")
+        removePref(Const.PREF.MEMO_TITLE)
+        removePref(Const.PREF.MEMO_CONTENT)
     }
 
     override fun onStart() {
@@ -85,9 +87,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     override fun onStop() {
         super.onStop()
-        Log.i(TAG, "onStop")
+        Log.i(TAG, "onStop isBackPress = $isBackPress")
 
-        if(!isBackPress) {
+        if (!isBackPress && !isSave) {
             setPrefString(Const.PREF.MEMO_TITLE, roomVM.title.value)
             setPrefString(Const.PREF.MEMO_CONTENT, roomVM.content.value)
         }
@@ -106,14 +108,17 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         }
 
         val info =
-            if(isExternalStorageWritable()) arrayOf<CharSequence>(getString(R.string.camera), getString(R.string.gallery))
+            if (isExternalStorageWritable()) arrayOf<CharSequence>(
+                getString(R.string.camera),
+                getString(R.string.gallery)
+            )
             else arrayOf<CharSequence>(getString(R.string.gallery))
         val builder = AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
-                if(isExternalStorageWritable()) {
+                if (isExternalStorageWritable()) {
                     when (which) {
-                        0 -> doTakePictureIntent()
+                        0 -> dispatchTakePictureIntent()
                         1 -> doTakeGalleryAction()
                     }
                 } else {
@@ -126,7 +131,18 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     // region 사진 찍기
-    private fun doTakePictureIntent() {
+    private fun dispatchTakePictureIntent() {
+        /**
+         * 카메라 앱으로 사진 촬영
+         * startActivityForResult() 메서드는 resolveActivity()를 호출하는 조건에 의해 보호되며 이 함수는 인텐트를 처리할 수 있는 첫 번째 활동 구성요소를 반환합니다.
+         * 이 확인 절차가 중요한 이유는 앱이 처리할 수 없는 인텐트를 사용하여 startActivityForResult()를 호출하면 앱이 비정상 종료되기 때문입니다.
+         */
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            takePictureIntent.resolveActivity(packageManager)?.also {
+//                startActivityForResult(takePictureIntent, Const.REQUEST_CODE_CAMERA_PERMISSION)
+//            }
+//        }
+
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -140,7 +156,15 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                 }
                 // Continue only if the File was successfully created
                 photoFile?.also {
-                    photoUri = FileProvider.getUriForFile(this, "dev.chu.memo.fileprovider", it)
+                    /**
+                     * getUriForFile() -> content:// URI를 반환
+                     * Android 7.0(API 레벨 24) 이상을 타겟팅하는 앱이 패키지 경계를 넘어 file:// URI를 전달하면 FileUriExposedException 이 발생합니다.
+                     * 따라서 FileProvider 를 사용하여 이미지를 저장하는 방법인 manifest 에 FileProvider 를 구성해야 한다.
+                     *
+                     * 구성 후 권한 문자열 두번째 인수는 getUriForFile() 에 일치시켜야 함
+                     * 제공자 정의의 meta-data 섹션에서 제공자가 전용 리소스 파일(res/xml/file_paths.xml)에 적합한 경로 구성
+                     */
+                    photoUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", it)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                     startActivityForResult(takePictureIntent, Const.REQUEST_CODE_CAMERA_PERMISSION)
                 }
@@ -160,59 +184,33 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     // region 앨범에 사진 저장
     private fun galleryAddPicture() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues().apply {
-//                put(MediaStore.Audio.Media.RELATIVE_PATH, "DCIM/Camera")     // 파일이 저장되는 위치
-                put(MediaStore.Images.Media.DISPLAY_NAME, File(getCurrentPhotoPath()).name)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-                put(MediaStore.Images.Media.IS_PENDING, 1)      // 이 속성은 아직 내가 파일을 write하지 않았으니, 다른 곳에서 이 데이터를 요구하면 무시하라는 의미입니다. 파일을 모두 write한 뒤에 이 속성을 0으로 update해줘야 합니다.
-            }
-
-            val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            val item = contentResolver.insert(collection, values)!!
-
-            contentResolver.openFileDescriptor(item, "w", null).use {
-                // write something to OutputStream
-                FileOutputStream(it!!.fileDescriptor).use { outputStream ->
-                    val imageInputStream: InputStream = FileInputStream(getCurrentPhotoPath())
-                    val data = imageInputStream.read()
-                    outputStream.write(data)
-                    imageInputStream.close()
-                    outputStream.close()
-                }
-            }
-
-            values.clear()
-            values.put(MediaStore.Images.Media.IS_PENDING, 0)
-            contentResolver.update(item, values, null, null)
-        } else {
-            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-                val f = File(getCurrentPhotoPath())
-                mediaScanIntent.data = Uri.fromFile(f)
-                sendBroadcast(mediaScanIntent)
-            }
+        /**
+         * 갤러리에 사진 추가
+         * 사진을 getExternalFilesDir()에서 제공한 디렉터리에 저장했다면 미디어 스캐너는 파일이 앱 이외에는 비공개이기 때문에 파일에 액세스할 수 없습니다.
+         */
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(getCurrentPhotoPath())
+            mediaScanIntent.data = Uri.fromFile(f)
+            sendBroadcast(mediaScanIntent)
         }
-
-        roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
-        adapter.addItem(ImageData(imageUrl = photoUri.toString()))
-        showToast(R.string.save_image)
     }
     // endregion
 
     private fun setRecyclerView() {
-        binding.writeRvImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.writeRvImage.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.writeRvImage.adapter = adapter
     }
 
     private fun observeViewModel() {
         roomVM.isSave.observe(this, Observer {
-            if(it) {
+            isSave = it
+            if (it) {
                 removePref(Const.PREF.MEMO_TITLE)
                 removePref(Const.PREF.MEMO_CONTENT)
-
                 roomVM.isSave.value = false
                 showToast(R.string.save_memo)
+                galleryAddPicture()
                 finish()
             }
         })
@@ -224,9 +222,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         grantResults: IntArray
     ) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
+        when (requestCode) {
             Const.REQUEST_CODE_PERMISSIONS -> {
-                if(grantResults.isNotEmpty() && grantResults.size == permissions.size) {
+                if (grantResults.isNotEmpty() && grantResults.size == permissions.size) {
                     var isPermissionGranted = true
                     for (i in grantResults.indices) {
                         if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
@@ -235,7 +233,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                         }
                     }
 
-                    if(isPermissionGranted) {
+                    if (isPermissionGranted) {
                         showCameraAndGalleryDialog()
                     } else {
                         alertDialog(R.string.please_need_permissions)
@@ -261,17 +259,25 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
         when (requestCode) {
             Const.REQUEST_CODE_CAMERA_PERMISSION -> {
+                /**
+                 * 미리 보기 이미지 가져오기
+                 * "data"에서 가져온 미리보기 이미지는 아이콘으로 사용하기에는 좋지만, 그 이상은 아닙니다. 원본 크기의 이미지를 처리하려면 추가 작업이 필요합니다.
+                 */
+//                val imageBitmap = data?.extras?.get("data") as Bitmap
+//                imageView.setImageBitmap(imageBitmap)
+
                 timeStamp = SimpleDateFormat("yyyy_MM_dd", Locale("ko")).format(Date())
-                galleryAddPicture()
+
+                adapter.addItem(ImageData(imageUrl = photoUri.toString()))
+                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
             }
 
             Const.REQUEST_CODE_GALLERY_PERMISSION -> {
                 timeStamp = SimpleDateFormat("yyyy_MM_dd", Locale("ko")).format(Date())
 
-                photoUri = if (data?.data != null) {
-                    data.data
-                } else
-                    null
+                photoUri =
+                    if (data?.data != null) data.data
+                    else null
 
                 roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
@@ -280,7 +286,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     // region onClickEvent
-    fun onClickFinish() { onBackPressed() }
+    fun onClickFinish() {
+        onBackPressed()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
@@ -292,7 +300,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     override fun onBackPressed() {
         if (!roomVM.title.value.isNullOrEmpty() ||
-            !roomVM.content.value.isNullOrEmpty()) {
+            !roomVM.content.value.isNullOrEmpty()
+        ) {
             confirmDialog(
                 getString(R.string.back_memo),
                 DialogInterface.OnClickListener { _, _ ->

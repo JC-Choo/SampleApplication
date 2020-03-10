@@ -32,6 +32,22 @@ private var currentPhotoPath: String = ""
 @Throws(IOException::class)
 fun AppCompatActivity.createImageFile(): File {
     // External public storage
+    /**
+     * 원본 크기의 사진 저장
+     * 일반적으로 사용자가 기기 카메라로 캡처한 사진은 기기의 공용 외부 저장소에 저장되므로 모든 앱에서 액세스할 수 있습니다.
+     * 사진을 공유하기 위한 적절한 디렉터리는 DIRECTORY_PICTURES를 인수로 사용하여 getExternalStoragePublicDirectory()에서 제공합니다.
+     * 이 메서드에서 제공하는 디렉터리는 모든 앱에서 공유하기 때문에 이 디렉터리를 읽고 쓰려면 READ_EXTERNAL_STORAGE와 WRITE_EXTERNAL_STORAGE 권한이 각각 필요합니다.
+     * 쓰기 권한은 암시적으로 읽기를 허용하므로 외부 저장소에 쓰려면 다음과 같이 하나의 권한만 요청하면 됩니다.
+     *
+     * 그러나 사진을 앱 이외에는 비공개로 두려면 대신 getExternalFilesDir()에서 제공하는 디렉터리를 사용
+     * Android 4.3 이하 버전에서는 이 디렉터리에 쓸 때도 WRITE_EXTERNAL_STORAGE 권한이 필요합니다.
+     * Android 4.4부터는 이 디렉터리를 다른 앱에서 액세스할 수 없으므로 더 이상 권한이 필요 없으며 다음과 같이 maxSdkVersion 속성을 추가하여 Android 이전 버전에서만 권한이 요청되도록 선언할 수 있습니다.
+     *
+     * 참고 : getExternalFilesDir() 또는 getFilesDir()에서 제공한 디렉터리에 저장한 파일은 사용자가 앱을 제거할 때 삭제
+     *
+     * 즉, 공용 외부 저장소에 저장하기 위해선 READ_EXTERNAL_STORAGE와 WRITE_EXTERNAL_STORAGE 권한이 각각 필요하며, getExternalStoragePublicDirectory()를 통해 구성되고,
+     * 비공개로 두기 위해선 getExternalFilesDir()에서 제공하는 디렉터리(앱 내부 패키지)를 사용하며, 4.4 이후 부터는 WRITE_EXTERNAL_STORAGE 권한 조차 필요 없다.
+     */
     Log.d(TAG, "External public root dir: " + Environment.getExternalStorageDirectory())
     Log.d(TAG, "External public file dir: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))
     Log.d(TAG, "External public file dir: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM))
@@ -40,7 +56,8 @@ fun AppCompatActivity.createImageFile(): File {
 
     // Create an image file name
     val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("ko")).format(Date())
-    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DCIM)
+//    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    val storageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera")
     return File.createTempFile(
         "JPEG_${timeStamp}_", /* prefix */
         ".jpg", /* suffix */

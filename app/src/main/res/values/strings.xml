@@ -28,6 +28,7 @@
     <string name="please_need_permissions">이 기능을 사용하기 위해선 권한이 필요합니다. "다시 보지 않기"를 클릭하셨을 경우엔, 설정(앱 정보)에서 퍼미션을 허용해주세요.</string>
     <string name="do_you_delete_this_memo">이 메모를 삭제하기겠습니까?</string>
     <string name="save_memo">저장되었습니다.</string>
+    <string name="modify_memo">수정되었습니다.</string>
     <string name="Please_check_writing_memo">작성 중인 메모가 있습니다. 계속 진행하시겠습니까?</string>
     <string name="delete_writing_memo">작성 중인 메모가 삭제되었습니다.</string>
 </resources>
