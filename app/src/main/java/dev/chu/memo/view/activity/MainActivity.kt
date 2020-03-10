@@ -1,5 +1,6 @@
 package dev.chu.memo.view.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
@@ -8,17 +9,8 @@ import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
-import dev.chu.memo.etc.extension.TAG
-import dev.chu.memo.etc.extension.setActionBarHome
+import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view_model.RoomViewModel
-
-/**
- * 메인 화면에서 하는 일
- *
- * 1. 저장된 메모(제목, 내용, 이미지 첫번째꺼) 보여주기
- * 2. "추가" 클릭 시 메모 쓰는 화면(AddActivity) 로 이동
- * 3. 메모 클릭 시 메모 확인하는 화면(ReadActivity) 이동
- */
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -40,7 +32,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.includeToolbar.toolbarTvEtc.text = getString(R.string.add)
         binding.includeToolbar.toolbarTvEtc.setOnClickListener {
             startActivity(Intent(this, AddActivity::class.java).apply {
-                putExtra(Const.EXTRA.MEMO, getString(R.string.write))
+                putExtra(Const.EXTRA.IS_WRITING_MEMO, false)
+            })
+        }
+
+        val title = getPrefString(Const.PREF.MEMO_TITLE, "")
+        val content = getPrefString(Const.PREF.MEMO_CONTENT, "")
+
+        if(title != "" || content != "") {
+            confirmDialog(R.string.Please_check_writing_memo, DialogInterface.OnClickListener { _, _ ->
+                startActivity(Intent(this, AddActivity::class.java).apply {
+                    putExtra(Const.EXTRA.IS_WRITING_MEMO, true)
+                })
+            }, DialogInterface.OnClickListener { _, _ ->
+                showToast(R.string.delete_writing_memo)
+                removePref(Const.PREF.MEMO_TITLE)
+                removePref(Const.PREF.MEMO_CONTENT)
             })
         }
     }

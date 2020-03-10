@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import dev.chu.memo.etc.listener.OnBackPressedListener
 
 
 fun AppCompatActivity.setActionBarHome(toolbar: Toolbar, @DrawableRes res: Int? = null) {
@@ -80,5 +81,14 @@ fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int
 fun AppCompatActivity.addFragmentInActivity(@IdRes frameId: Int, fragment: Fragment) {
     supportFragmentManager.transact {
         add(frameId, fragment)
+    }
+}
+
+fun AppCompatActivity.onBackPressedFragment() {
+    val fragmentList = supportFragmentManager.fragments
+    for (fragment in fragmentList) {
+        if (fragment is OnBackPressedListener) {
+            (fragment as OnBackPressedListener).onBackPressed()
+        }
     }
 }

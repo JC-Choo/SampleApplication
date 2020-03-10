@@ -19,10 +19,14 @@ object Const {
         Manifest.permission.ACCESS_MEDIA_LOCATION
     )
 
-    object EXTRA {
-        const val MEMO = "MEMO"
+    object PREF {
+        const val MEMO_TITLE = "MEMO_TITLE"
+        const val MEMO_CONTENT = "MEMO_CONTENT"
+    }
 
+    object EXTRA {
         const val MEMO_ID = "MEMO_ID"
+        const val IS_WRITING_MEMO = "IS_WRITING_MEMO"
     }
 
     object ARGS {

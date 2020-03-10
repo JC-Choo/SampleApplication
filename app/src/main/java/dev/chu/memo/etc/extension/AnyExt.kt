@@ -40,7 +40,7 @@ fun AppCompatActivity.createImageFile(): File {
 
     // Create an image file name
     val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("ko")).format(Date())
-    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DCIM)
     return File.createTempFile(
         "JPEG_${timeStamp}_", /* prefix */
         ".jpg", /* suffix */
@@ -48,10 +48,18 @@ fun AppCompatActivity.createImageFile(): File {
     ).apply {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = absolutePath
+        Log.d(TAG, "External public root dir: $currentPhotoPath")
     }
 }
 
 fun getCurrentPhotoPath() = currentPhotoPath
 
-val <T> T.exhaustive: T
-    get() = this
+/* Checks if external storage is available for read and write */
+// 반환된 상태가 MEDIA_MOUNTED 라면 파일을 읽고 쓸 수 있습니다.
+fun isExternalStorageWritable(): Boolean =
+    Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+
+/* Checks if external storage is available to at least read */
+// 반환된 상태가 MEDIA_MOUNTED_READ_ONLY 라면 파일을 읽을 수만 있습니다.
+fun isExternalStorageReadable(): Boolean =
+    Environment.getExternalStorageState() in setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)

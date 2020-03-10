@@ -17,10 +17,11 @@ import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.FragmentReadBinding
 import dev.chu.memo.etc.extension.*
+import dev.chu.memo.etc.listener.OnBackPressedListener
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
 
-class ReadFragment : BaseFragment<FragmentReadBinding>() {
+class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener {
     @LayoutRes
     override fun layoutRes(): Int = R.layout.fragment_read
 
@@ -115,5 +116,9 @@ class ReadFragment : BaseFragment<FragmentReadBinding>() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        activity?.finish()
     }
 }

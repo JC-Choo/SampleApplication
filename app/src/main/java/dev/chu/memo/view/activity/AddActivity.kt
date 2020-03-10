@@ -1,6 +1,5 @@
 package dev.chu.memo.view.activity
 
-import android.Manifest
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
+import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
@@ -35,15 +35,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
 
-    private var usingPermissions = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_MEDIA_LOCATION
-    )
-    private var photoFile: File? = null
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
+    private var isBackPress: Boolean = false
 
     // region lifeCycle
     override fun initView() {
@@ -57,6 +51,12 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         binding.includeToolbar.toolbarTvEtc.text = getString(R.string.picture)
         binding.includeToolbar.toolbarTvEtc.setOnClickListener {
             showCameraAndGalleryDialog()
+        }
+
+        val isWritingMemo = intent.getBooleanExtra(Const.EXTRA.IS_WRITING_MEMO, false)
+        if(isWritingMemo) {
+            roomVM.title.value = getPrefString(Const.PREF.MEMO_TITLE, "")
+            roomVM.content.value = getPrefString(Const.PREF.MEMO_CONTENT, "")
         }
 
         setRecyclerView()
@@ -86,6 +86,11 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     override fun onStop() {
         super.onStop()
         Log.i(TAG, "onStop")
+
+        if(!isBackPress) {
+            setPrefString(Const.PREF.MEMO_TITLE, roomVM.title.value)
+            setPrefString(Const.PREF.MEMO_CONTENT, roomVM.content.value)
+        }
     }
 
     override fun onDestroy() {
@@ -100,16 +105,19 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
             return
         }
 
-        val info = arrayOf<CharSequence>(
-            getString(R.string.camera),
-            getString(R.string.gallery)
-        )
+        val info =
+            if(isExternalStorageWritable()) arrayOf<CharSequence>(getString(R.string.camera), getString(R.string.gallery))
+            else arrayOf<CharSequence>(getString(R.string.gallery))
         val builder = AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
-                when (which) {
-                    0 -> dispatchTakePictureIntent()
-                    1 -> doTakeGalleryAction()
+                if(isExternalStorageWritable()) {
+                    when (which) {
+                        0 -> doTakePictureIntent()
+                        1 -> doTakeGalleryAction()
+                    }
+                } else {
+                    doTakeGalleryAction()
                 }
                 dialogInterface.dismiss()
             }
@@ -118,26 +126,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     // region 사진 찍기
-    private fun dispatchTakePictureIntent() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent.resolveActivity(packageManager) != null) {
-//            try {
-//                photoFile = makeImageFile()
-//            } catch (e: IOException) {
-//                Log.e(TAG, "error = $e")
-//            }
-//
-//            if (photoFile != null) {
-//                photoUri = FileProvider.getUriForFile(
-//                    this,
-//                    "dev.chu.memo.fileprovider",
-//                    photoFile!!
-//                )
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-//                startActivityForResult(intent, Const.REQUEST_CODE_CAMERA_PERMISSION)
-//            }
-//        }
-
+    private fun doTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -151,11 +140,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                 }
                 // Continue only if the File was successfully created
                 photoFile?.also {
-                    photoUri = FileProvider.getUriForFile(
-                        this,
-                        "dev.chu.memo.fileprovider",
-                        it
-                    )
+                    photoUri = FileProvider.getUriForFile(this, "dev.chu.memo.fileprovider", it)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                     startActivityForResult(takePictureIntent, Const.REQUEST_CODE_CAMERA_PERMISSION)
                 }
@@ -190,15 +175,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
             contentResolver.openFileDescriptor(item, "w", null).use {
                 // write something to OutputStream
                 FileOutputStream(it!!.fileDescriptor).use { outputStream ->
-//                    val imageInputStream = resources.openRawResource(R.raw.my_image)
                     val imageInputStream: InputStream = FileInputStream(getCurrentPhotoPath())
-//                    while (true) {
-                        val data = imageInputStream.read()
-//                        if (data == -1) {
-//                            break
-//                        }
-                        outputStream.write(data)
-//                    }
+                    val data = imageInputStream.read()
+                    outputStream.write(data)
                     imageInputStream.close()
                     outputStream.close()
                 }
@@ -215,7 +194,6 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
             }
         }
 
-
         roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
         showToast(R.string.save_image)
@@ -230,16 +208,15 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private fun observeViewModel() {
         roomVM.isSave.observe(this, Observer {
             if(it) {
-                finish()
+                removePref(Const.PREF.MEMO_TITLE)
+                removePref(Const.PREF.MEMO_CONTENT)
+
                 roomVM.isSave.value = false
                 showToast(R.string.save_memo)
+                finish()
             }
         })
     }
-
-    // region onClickEvent
-    fun onClickFinish() { onBackPressed() }
-    // endregion
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -302,6 +279,9 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
         }
     }
 
+    // region onClickEvent
+    fun onClickFinish() { onBackPressed() }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
             onBackPressed()
@@ -311,12 +291,17 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     }
 
     override fun onBackPressed() {
-        if (!binding.writeEtTitle.text.isNullOrEmpty()) {
+        if (!roomVM.title.value.isNullOrEmpty() ||
+            !roomVM.content.value.isNullOrEmpty()) {
             confirmDialog(
                 getString(R.string.back_memo),
-                DialogInterface.OnClickListener { _, _ -> finish() },
+                DialogInterface.OnClickListener { _, _ ->
+                    isBackPress = true
+                    finish()
+                },
                 negativeTextResId = R.string.cancel
             )
         } else finish()
     }
+    // endregion
 }

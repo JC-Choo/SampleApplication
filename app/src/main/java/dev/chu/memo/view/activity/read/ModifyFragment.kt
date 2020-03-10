@@ -25,13 +25,14 @@ import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.FragmentModifyBinding
 import dev.chu.memo.etc.extension.*
+import dev.chu.memo.etc.listener.OnBackPressedListener
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
+class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListener {
     @LayoutRes
     override fun layoutRes(): Int = R.layout.fragment_modify
 
@@ -44,11 +45,17 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
     }
 
     private val adapter by lazy { ImageAdapter(mutableListOf()) }
+
     private lateinit var roomVM: RoomViewModel
+
     private var memoId: Int = 0
+    private var title: String? = null
+    private var content: String? = null
+
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
 
+    // lifecycle
     override fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?) {
         Log.i(TAG, "setView")
 
@@ -77,6 +84,47 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
         observeViewModel()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.i(TAG, "onActivityCreated")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i(TAG, "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.i(TAG, "onDetach")
+    }
+    // endregion
+
     private fun setRecyclerView() {
         binding.modifyFlRvImage.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.modifyFlRvImage.adapter = adapter
@@ -84,6 +132,9 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
 
     private fun observeViewModel() {
         roomVM.memo.observe(this, Observer {
+            title = it.title
+            content = it.content
+
             roomVM.title.value = it.title
             roomVM.content.value = it.content
 
@@ -116,7 +167,7 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
             setTitle(getString(R.string.get_image))
             setItems(info) { dialogInterface, which ->
                 when (which) {
-                    0 -> dispatchTakePictureIntent()
+                    0 -> doTakePictureIntent()
                     1 -> doTakeGalleryAction()
                 }
                 dialogInterface.dismiss()
@@ -126,7 +177,7 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
     }
 
     // region 사진 찍기
-    private fun dispatchTakePictureIntent() {
+    private fun doTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
@@ -175,15 +226,9 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
             activity?.contentResolver?.openFileDescriptor(item, "w", null).use {
                 // write something to OutputStream
                 FileOutputStream(it!!.fileDescriptor).use { outputStream ->
-//                    val imageInputStream = resources.openRawResource(R.raw.my_image)
                     val imageInputStream: InputStream = FileInputStream(getCurrentPhotoPath())
-//                    while (true) {
                     val data = imageInputStream.read()
-//                        if (data == -1) {
-//                            break
-//                        }
                     outputStream.write(data)
-//                    }
                     imageInputStream.close()
                     outputStream.close()
                 }
@@ -199,7 +244,6 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
                 activity?.sendBroadcast(mediaScanIntent)
             }
         }
-
 
         roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
         adapter.addItem(ImageData(imageUrl = photoUri.toString()))
@@ -268,10 +312,13 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
     }
 
     fun onClickFinish() {
-        if (!binding.modifyFlEtTitle.text.isNullOrEmpty()) {
+        if (title != roomVM.title.value ||
+            content != roomVM.content.value) {
             context?.confirmDialog(
                 getString(R.string.back_memo),
-                DialogInterface.OnClickListener { _, _ -> activity?.finish() },
+                DialogInterface.OnClickListener { _, _ ->
+                    activity?.finish()
+                },
                 negativeTextResId = R.string.cancel
             )
         } else activity?.finish()
@@ -279,9 +326,13 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
         android.R.id.home -> {
-            activity?.finish()
+            onClickFinish()
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        onClickFinish()
     }
 }

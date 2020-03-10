@@ -3,14 +3,15 @@ package dev.chu.memo
 import android.app.Application
 
 class GlobalApplication : Application() {
-    private var instance: GlobalApplication? = null
+    companion object {
+        private var instance: GlobalApplication? = null
+        fun getInstance(): GlobalApplication {
+            if (instance == null) {
+                instance = GlobalApplication()
+            }
 
-    fun getInstance(): GlobalApplication {
-        if (instance == null) {
-            instance = GlobalApplication()
+            return instance!!
         }
-
-        return instance!!
     }
 
     override fun onCreate() {
