@@ -23,7 +23,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView() {
         Log.i(TAG, "initView")
 
-        binding.activity = this
         binding.roomVM = roomVM
 
         setActionBarHome(binding.includeToolbar.toolbar, null)

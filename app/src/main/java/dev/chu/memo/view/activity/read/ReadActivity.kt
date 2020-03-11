@@ -23,7 +23,6 @@ class ReadActivity : BaseActivity<ActivityReadBinding>(), ReadFragment.FCallback
     override fun initView() {
         Log.i(TAG, "initView")
 
-        binding.activity = this
         memoId = intent.getIntExtra(Const.EXTRA.MEMO_ID, 0)
         replaceFragment(binding.readFl.id, ReadFragment.newInstance(memoId), ReadFragment.TAG)
     }

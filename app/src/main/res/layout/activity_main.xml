@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="activity"
-            type="dev.chu.memo.view.activity.MainActivity" />
-
-        <variable
             name="roomVM"
             type="dev.chu.memo.view_model.RoomViewModel" />
     </data>

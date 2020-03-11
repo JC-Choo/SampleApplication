@@ -61,7 +61,7 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
             ViewModelProvider(this)[RoomViewModel::class.java]
         } ?: throw Exception("Activity is null")
 
-        binding.fragment = this
+        binding.viewModel = roomVM
 
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setActionBarHome(binding.includeToolbar.toolbar, R.drawable.arrow_back_white)
@@ -102,8 +102,8 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
     private fun observeViewModel() {
         roomVM.memo.observe(this, Observer {
             data = it
-            binding.readFlTvTitle.text = it.title
-            binding.readFlTvContent.text = it.content
+            roomVM.title.value = it.title
+            roomVM.content.value = it.content
 
             if(!it.imageUrls.isNullOrEmpty())
                 adapter.setItems(it.imageUrls!!)

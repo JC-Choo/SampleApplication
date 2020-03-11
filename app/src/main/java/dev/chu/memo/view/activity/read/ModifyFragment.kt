@@ -1,11 +1,9 @@
 package dev.chu.memo.view.activity.read
 
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -28,7 +26,8 @@ import dev.chu.memo.etc.extension.*
 import dev.chu.memo.etc.listener.OnBackPressedListener
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
-import java.io.*
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 

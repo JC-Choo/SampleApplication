@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="dev.chu.memo.view.activity.read.ReadFragment" />
+            name="viewModel"
+            type="dev.chu.memo.view_model.RoomViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +33,7 @@
             android:id="@+id/read_fl_tv_title"
             style="@style/custom_et"
             android:padding="10dp"
+            android:text="@{viewModel.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/read_view"/>
@@ -48,6 +49,7 @@
             android:id="@+id/read_fl_tv_content"
             style="@style/custom_et"
             android:layout_height="0dp"
+            android:text="@{viewModel.content}"
             android:gravity="top"
             android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@id/read_fl_view_3"
