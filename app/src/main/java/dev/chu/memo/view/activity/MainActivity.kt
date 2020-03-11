@@ -4,20 +4,24 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.ViewModelProvider
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
+import dev.chu.memo.di_koin.BusinessService
+import dev.chu.memo.di_koin.MyPresenter
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view_model.RoomViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_main
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
+//    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
+    private val roomVM: RoomViewModel by viewModel()
 
     // region lifeCycle
     override fun initView() {
