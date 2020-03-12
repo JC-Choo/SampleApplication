@@ -12,7 +12,8 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:background="@color/color_ffbfb9">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

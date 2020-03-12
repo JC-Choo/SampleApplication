@@ -20,6 +20,8 @@ import dev.chu.memo.etc.extension.*
 import dev.chu.memo.etc.listener.OnBackPressedListener
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener {
     @LayoutRes
@@ -33,8 +35,9 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
         }
     }
 
-    private lateinit var roomVM: RoomViewModel
-    private val adapter by lazy { ImageAdapter(mutableListOf()) }
+    private val roomVM: RoomViewModel by viewModel()
+    private val adapter: ImageAdapter by inject()
+
     private var memoId: Int = 0
     private var data: MemoData? = null
 
@@ -57,9 +60,6 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
 
     override fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?) {
         Log.i(TAG, "setView")
-        roomVM = activity?.let {
-            ViewModelProvider(this)[RoomViewModel::class.java]
-        } ?: throw Exception("Activity is null")
 
         binding.viewModel = roomVM
 

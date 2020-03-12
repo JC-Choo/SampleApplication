@@ -11,17 +11,17 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
-import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view_model.RoomViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -31,8 +31,8 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_add
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
-    private val adapter by lazy { ImageAdapter(mutableListOf()) }
+    private val roomVM: RoomViewModel by viewModel()
+    private val adapter: ImageAdapter by inject()
 
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
@@ -87,7 +87,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     override fun onStop() {
         super.onStop()
-        Log.i(TAG, "onStop isBackPress = $isBackPress")
+        Log.i(TAG, "onStop isBackPress = $isBackPress, isSave = $isSave")
 
         if (!isBackPress && !isSave) {
             setPrefString(Const.PREF.MEMO_TITLE, roomVM.title.value)
@@ -102,10 +102,10 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     // endregion
 
     private fun showCameraAndGalleryDialog() {
-        if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
-            checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
-            return
-        }
+//        if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
+//            checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
+//            return
+//        }
 
         val info =
             if (isExternalStorageWritable()) arrayOf<CharSequence>(
@@ -204,13 +204,13 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     private fun observeViewModel() {
         roomVM.isSave.observe(this, Observer {
-            isSave = it
             if (it) {
+                isSave = it
                 removePref(Const.PREF.MEMO_TITLE)
                 removePref(Const.PREF.MEMO_CONTENT)
-                roomVM.isSave.value = false
-                showToast(R.string.save_memo)
                 galleryAddPicture()
+                showToast(R.string.save_memo)
+                roomVM.isSave.value = false
                 finish()
             }
         })
