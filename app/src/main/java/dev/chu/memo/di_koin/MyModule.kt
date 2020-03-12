@@ -8,10 +8,12 @@ import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.data.remote.BooleanTypeConverter
 import dev.chu.memo.data.remote.NullOrEmptyConverterFactory
 import dev.chu.memo.data.repository.RoomRepository
+import dev.chu.memo.data.repository.StoreRepository
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view.adapter.ImageModifyAdapter
 import dev.chu.memo.view_model.RoomViewModel
 import dev.chu.memo.view_model.StoreViewModel
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
@@ -39,19 +41,6 @@ import java.util.concurrent.TimeUnit
  * get : 컴포넌트내에서 알맞은 의존성을 주입함
  */
 
-val roomModule = module {
-    factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
-}
-
-val repositoryModule = module {
-    factory { RoomRepository(get()) }
-}
-
-val viewModelModule = module {
-    viewModel { RoomViewModel(get()) }
-    viewModel { StoreViewModel(get()) }
-}
-
 val networkModule = module {
     single {
         HttpLoggingInterceptor().apply { if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY }
@@ -77,15 +66,38 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .client(get())
-            .baseUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1")
+            .baseUrl(Const.BASE_URL)
+            .addConverterFactory(NullOrEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(get()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+    }
+
+    single {
+        Interceptor { chain ->
+            chain.proceed(chain.request().newBuilder().apply {
+                header("Accept", "application/json")
+            }.build())
+        }
     }
 }
 
 val apiModule = module {
     single(createdAtStart = false) { get<Retrofit>().create(ApiService::class.java) }
+}
+
+val roomModule = module {
+    factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
+}
+
+val repositoryModule = module {
+    factory { RoomRepository(get()) }
+    factory { StoreRepository(get()) }
+}
+
+val viewModelModule = module {
+    viewModel { RoomViewModel(get()) }
+    viewModel { StoreViewModel(get()) }
 }
 
 val adapterModule = module {

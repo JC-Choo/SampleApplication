@@ -23,6 +23,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     dataBinding {
         enabled = true
     }
@@ -74,8 +78,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
-//    // Koin for Kotlin
-//    implementation "org.koin:koin-core:$koin_version"
+    // Koin for Kotlin
+    implementation "org.koin:koin-core:$koin_version"
 //    // Koin extended & experimental features
 //    implementation "org.koin:koin-core-ext:$koin_version"
     // Koin for Unit tests

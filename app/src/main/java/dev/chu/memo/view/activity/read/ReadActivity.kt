@@ -18,7 +18,6 @@ class ReadActivity : BaseActivity<ActivityReadBinding>(), ReadFragment.FCallback
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_read
 
-    private val roomVM: RoomViewModel by viewModel()
     private var memoId: Int = 0
 
     override fun initView() {
