@@ -71,7 +71,8 @@ dependencies {
     def retrofitVersion = '2.6.2'
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
 //    // Koin for Kotlin
 //    implementation "org.koin:koin-core:$koin_version"

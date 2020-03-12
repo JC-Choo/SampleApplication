@@ -1,21 +1,24 @@
 package dev.chu.memo.di_koin
 
 import com.google.gson.GsonBuilder
+import dev.chu.memo.BuildConfig
 import dev.chu.memo.common.Const
+import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.data.remote.BooleanTypeConverter
 import dev.chu.memo.data.remote.NullOrEmptyConverterFactory
-import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.repository.RoomRepository
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view.adapter.ImageModifyAdapter
 import dev.chu.memo.view_model.RoomViewModel
+import dev.chu.memo.view_model.StoreViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -36,18 +39,22 @@ import java.util.concurrent.TimeUnit
  * get : 컴포넌트내에서 알맞은 의존성을 주입함
  */
 
-val repositoryModule = module {
+val roomModule = module {
     factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
+}
+
+val repositoryModule = module {
     factory { RoomRepository(get()) }
 }
 
 val viewModelModule = module {
     viewModel { RoomViewModel(get()) }
+    viewModel { StoreViewModel(get()) }
 }
 
 val networkModule = module {
     single {
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        HttpLoggingInterceptor().apply { if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY }
     }
 
     single {
@@ -70,12 +77,15 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .client(get())
-            .baseUrl(Const.BASE_URL)
-            .addConverterFactory(NullOrEmptyConverterFactory())
+            .baseUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1")
             .addConverterFactory(GsonConverterFactory.create(get()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
-            .create(ApiService::class.java)
     }
+}
+
+val apiModule = module {
+    single(createdAtStart = false) { get<Retrofit>().create(ApiService::class.java) }
 }
 
 val adapterModule = module {
@@ -83,4 +93,4 @@ val adapterModule = module {
     factory { ImageModifyAdapter(mutableListOf()) }
 }
 
-val myDiModule = listOf(repositoryModule, viewModelModule, adapterModule)
+val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)

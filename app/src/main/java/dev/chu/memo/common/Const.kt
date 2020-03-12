@@ -3,7 +3,7 @@ package dev.chu.memo.common
 import android.Manifest
 
 object Const {
-    const val BASE_URL = "BASE_URL"
+    const val BASE_URL = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1"
 
     const val TABLE_NAME_1 = "MEMO_DATA"
     const val TABLE_NAME_2 = "IMAGE_DATA"

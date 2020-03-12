@@ -10,6 +10,7 @@ import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view_model.RoomViewModel
+import dev.chu.memo.view_model.StoreViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -18,6 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_main
 
     private val roomVM: RoomViewModel by viewModel()
+    private val storeVM: StoreViewModel by viewModel()
 
     // region lifeCycle
     override fun initView() {
@@ -49,6 +51,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 removePref(Const.PREF.MEMO_CONTENT)
             })
         }
+
+        storeVM.getStore(400)
     }
 
     override fun onRestart() {

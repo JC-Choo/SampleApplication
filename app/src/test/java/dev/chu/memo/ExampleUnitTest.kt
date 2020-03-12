@@ -19,5 +19,8 @@ class ExampleUnitTest {
         println("true && false = ${isTrue && isFalse}")
         println("true || false = ${isTrue || isFalse}")
         println("false || false = ${isFalse || isFalse}")
+
+        println("600/500 = ${600/500}")
+        println("600%500 = ${600%500}")
     }
 }

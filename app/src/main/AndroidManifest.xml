@@ -9,6 +9,8 @@
     <!-- 애플리케이션의 필수 기능이 사진 촬영이라면 required="true", 사용하기는 하지만 꼭 핑료한 것이 아니라면 "false" 설정-->
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <!-- Android 10(API 29) 이상을 타겟팅하는 경우 앱의 manifest 파일에서 requestLegacyExternalStorage의 값을 true로 설정합니다. -->
     <!-- 기본은 false 이며, Android 9이하를 타케팅하는 앱이 범위 지정 저장소를 사용할 때 어떻게 동작하는지 테스트할 수 있다. -->
