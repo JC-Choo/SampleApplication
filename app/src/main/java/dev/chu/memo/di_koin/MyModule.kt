@@ -2,15 +2,17 @@ package dev.chu.memo.di_koin
 
 import com.google.gson.GsonBuilder
 import dev.chu.memo.common.Const
-import dev.chu.memo.data.ApiService
-import dev.chu.memo.data.BooleanTypeConverter
-import dev.chu.memo.data.NullOrEmptyConverterFactory
+import dev.chu.memo.data.remote.ApiService
+import dev.chu.memo.data.remote.BooleanTypeConverter
+import dev.chu.memo.data.remote.NullOrEmptyConverterFactory
+import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.repository.RoomRepository
 import dev.chu.memo.view.adapter.ImageAdapter
 import dev.chu.memo.view.adapter.ImageModifyAdapter
 import dev.chu.memo.view_model.RoomViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -34,30 +36,9 @@ import java.util.concurrent.TimeUnit
  * get : 컴포넌트내에서 알맞은 의존성을 주입함
  */
 
-// 여기서 Koin DSL을 이용하여 모듈을 만들어줍니다.
-val appModule = module {
-    single<Repository> { RepositoryImpl() }   // 싱글톤으로 생성
-    factory { MyPresenter(get()) }   // 의존성 주입때마다 인스턴스 생성, get()을 이용하면 위에서 선언된 적절한 클래스가 주입됩니다.
-}
-
-// region github
-// Given some classes
-class Controller(private val service: BusinessService) {
-    fun hello() = service.sayHello()
-}
-class BusinessService() {
-    fun sayHello() = "Hello Koin $this"
-}
-
-// just declare it
-val myModule = module {
-    single { Controller(get()) }
-    single { BusinessService() }
-}
-// endregion
-
 val repositoryModule = module {
-    factory { RoomRepository() }
+    factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
+    factory { RoomRepository(get()) }
 }
 
 val viewModelModule = module {
@@ -80,7 +61,9 @@ val networkModule = module {
 
     single {
         GsonBuilder()
-            .registerTypeAdapter(Boolean::class.java, BooleanTypeConverter())
+            .registerTypeAdapter(Boolean::class.java,
+                BooleanTypeConverter()
+            )
             .create()
     }
 

@@ -1,4 +1,4 @@
-package dev.chu.memo.data
+package dev.chu.memo.data.remote
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

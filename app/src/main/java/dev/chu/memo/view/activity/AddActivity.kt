@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
+import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
@@ -102,10 +103,10 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     // endregion
 
     private fun showCameraAndGalleryDialog() {
-//        if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
-//            checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
-//            return
-//        }
+        if (isPermissionsVersion() && !hasPermissions(*usingPermissions)) {
+            checkUsingPermission(usingPermissions, Const.REQUEST_CODE_PERMISSIONS)
+            return
+        }
 
         val info =
             if (isExternalStorageWritable()) arrayOf<CharSequence>(

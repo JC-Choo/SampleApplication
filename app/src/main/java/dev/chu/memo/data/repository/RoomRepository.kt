@@ -1,20 +1,14 @@
 package dev.chu.memo.data.repository
 
 import android.util.Log
-import dev.chu.memo.GlobalApplication
 import dev.chu.memo.data.local.MemoDao
 import dev.chu.memo.data.local.MemoData
-import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.listener.DataListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class RoomRepository {
-    private val memoDao: MemoDao by lazy {
-        val db = MemoDatabase.getInstance(GlobalApplication.getInstance())
-        db.getMemoDao()
-    }
+class RoomRepository(private val memoDao: MemoDao) {
 
     fun saveDataIntoDb(data: MemoData) =
         memoDao.insertMemoData(data)

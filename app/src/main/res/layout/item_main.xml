@@ -56,13 +56,6 @@
                 app:layout_constraintTop_toBottomOf="@id/item_main_tv_title"
                 tools:text="@string/app_name" />
 
-            <View
-                android:id="@+id/item_main_view"
-                style="@style/custom_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_main_tv_content"/>
-
             <ImageView
                 android:id="@+id/item_main_iv"
                 android:layout_width="0dp"
@@ -72,7 +65,7 @@
                 android:isVisibility="@{item.imageUrls}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_main_view"
+                app:layout_constraintTop_toBottomOf="@id/item_main_tv_content"
                 tools:src="@drawable/ic_launcher_foreground" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
