@@ -39,4 +39,7 @@
     <string name="toast_impossible_gps_service">지오코더 서비스 사용불가</string>
     <string name="toast_incorrect_gps">잘못된 GPS 좌표</string>
     <string name="toast_undiscovered_gps">주소 미발견</string>
+    <string name="alert_dialog_title_gps">위치 서비스 비활성화</string>
+    <string name="alert_dialog_message_gps">앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n위치 설정을 수정하실래요?</string>
+    <string name="setting">설정</string>
 </resources>

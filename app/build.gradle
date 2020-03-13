@@ -217,4 +217,6 @@ dependencies {
     def googleMapVersion = "17.0.0"
     implementation "com.google.android.gms:play-services-maps:$googleMapVersion"
     implementation "com.google.android.gms:play-services-location:$googleMapVersion"
+
+    implementation 'gun0912.ted:tedpermission:2.1.0'
 }

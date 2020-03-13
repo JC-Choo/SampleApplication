@@ -1,6 +1,7 @@
 package dev.chu.memo.view.activity
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -9,13 +10,14 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
+import androidx.lifecycle.Observer
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,12 +26,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMapsBinding
-import dev.chu.memo.etc.extension.TAG
-import dev.chu.memo.etc.extension.getDrawableById
-import dev.chu.memo.etc.extension.showToast
+import dev.chu.memo.etc.extension.*
+import dev.chu.memo.view_model.StoreViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
 
@@ -37,6 +41,11 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_maps
+
+    private val storeVM: StoreViewModel by viewModel()
+
+    private val UPDATE_INTERVAL_MS = 60_000  // 60초
+    private val FASTEST_UPDATE_INTERVAL_MS = 10_000 // 10초
 
     private lateinit var mMap: GoogleMap
 
@@ -65,6 +74,7 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
 
                 val markerTitle = getCurrentAddress(currentPosition)
                 val markerSnippet = "위도 : ${location.latitude}, 경도 : ${location.longitude}"
+                storeVM.getStoresByGeo(location.latitude, location.longitude, 1000)
 
                 Log.i(TAG, "지도 현재 위치 onLocationResult : $markerSnippet")
 
@@ -82,6 +92,59 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        )
+
+        locationRequest = LocationRequest()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(UPDATE_INTERVAL_MS.toLong())
+            .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS.toLong())
+
+        val builder = LocationSettingsRequest.Builder()
+        builder.addLocationRequest(locationRequest)
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        storeVM.storeByGeoList.observe(this, Observer {
+            val stores = it.stores
+            if (stores.isNotEmpty()) {
+                for (i in stores.indices) {
+                    val point = LatLng(stores[i].lat, stores[i].lng)       // 좌표(위도, 경도) 생성
+                    val mOptions = MarkerOptions()     // 마커 생성
+                        .title(stores[i].name + "]" + stores[i].addr + "]" + stores[i].stock_at + "]" + stores[i].remain_stat + "]" + stores[i].created_at+"]"+stores[i].type)
+                        .snippet("거리")
+                        .position(point)
+
+                    if (!stores[i].remain_stat.isNullOrBlank()) {
+                        when (stores[i].remain_stat) {
+                            "some" -> {
+                                mOptions.icon(bitmapDescriptorFromVector(R.drawable.location_some))
+                                mMap.addMarker(mOptions)
+                            }
+
+                            "few" -> {
+                                mOptions.icon(bitmapDescriptorFromVector(R.drawable.location_few))
+                                mMap.addMarker(mOptions)
+                            }
+
+                            "plenty" -> {
+                                mOptions.icon(bitmapDescriptorFromVector(R.drawable.location_plenty))
+                                mMap.addMarker(mOptions)
+                            }
+                            else -> {
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
     /**
@@ -98,39 +161,23 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
 
         // 런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에 지도의 초기위치를 서울로 이동
         initLocation()
-//        requestPermission()
+        requestPermission()
+//        setMarkerToMaskPosition()
 
         mMap.apply {
-            uiSettings?.isMyLocationButtonEnabled = false    // 우측 상단에 위치 버튼
+            uiSettings?.isMyLocationButtonEnabled = true    // 우측 상단에 위치 버튼
             uiSettings?.isZoomControlsEnabled = false     // +,- 버튼
             animateCamera(CameraUpdateFactory.zoomTo(15f))
             setOnMarkerClickListener {
                 // 마커 클릭 리스너
                 Log.i(TAG, "marker = ${it.title}, ${it.position}, ${it.id}")
-//                bottom_tv_name.text = it.title
-//                bottom_tv_address.text = it.title
-//
-//                bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-//                main_bt.visibility = View.VISIBLE
-//
-//                // recyclerView 적용
-//                bottom_rv_left.apply {
-//                    this.adapter = MainAdapter(getMonToThur(), this@MainActivity)
-//                    this.layoutManager = LinearLayoutManager(this@MainActivity)
-//                }
-//                bottom_rv_right.apply {
-//                    this.adapter = MainAdapter(getFriToSun(), this@MainActivity)
-//                    this.layoutManager = LinearLayoutManager(this@MainActivity)
-//                }
-
+                val text = it.title.split("]")
+                val remainState = if(text[3] == "plenty") "100개 이상" else if(text[3] == "some") "30개 이상 100개 미만" else "2개 이상 30개 미만"
+//                val type = if(text[5])
+                alertDialog("이름 : ${text[0]}\n주소 : ${text[1]}\n입고 시간 : ${text[2]}\n수량 : $remainState")
                 true
             }
         }
-
-//        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     // region 초기 위치 설정
@@ -152,13 +199,36 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
             icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
         }
 
-        currentMarker = mMap.addMarker(markerOptions)
+//        currentMarker = mMap.addMarker(markerOptions)
 
         val cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15f)
         mMap.moveCamera(cameraUpdate)
     }
-    // endregion 
-    
+    // endregion
+
+    // region ted permission
+    private fun requestPermission() {
+        val permissionListener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                startLocationUpdates()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: ArrayList<String>?) {
+                showToast("권한 거부\n${deniedPermissions.toString()}")
+            }
+        }
+
+        TedPermission.with(this)
+            .setPermissionListener(permissionListener)
+            .setDeniedMessage("왜 거부하셨어요...\n하지만 [설정] > [권한] 에서 권한을 허용할 수 있어요.")
+            .setPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            .check()
+    }
+    // endregion
+
     // region 현재 위치 설정
     private fun setCurrentLocation(location: Location, markerTitle: String, markerSnippet: String) {
         if (currentMarker != null) currentMarker?.remove()
@@ -171,13 +241,8 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
             snippet(markerSnippet)
             draggable(true)
             icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-
-//            val bitmapDraw = getDrawableById(R.drawable.ic_avaliable) as BitmapDrawable
-//            val bitmap = bitmapDraw.bitmap
-//            val smallMarker = Bitmap.createScaledBitmap(bitmap, 32.toDp, 41.toDp, false)
-//            icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
         }
-        currentMarker = mMap.addMarker(markerOptions)
+//        currentMarker = mMap.addMarker(markerOptions)
 
         val cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng)
         mMap.moveCamera(cameraUpdate)
@@ -185,7 +250,7 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     // endregion
 
     // 현재 위치 받아오기
-   private fun getCurrentAddress(latlng: LatLng): String {
+    private fun getCurrentAddress(latlng: LatLng): String {
         // 지오코더... GPS를 주소로 변환
         val geoCoder = Geocoder(this, Locale.getDefault())
         val addresses: List<Address>?
@@ -213,27 +278,44 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     // region 현재 위치 업데이트
     private fun startLocationUpdates() {
         if (!checkLocationServicesStatus()) {
-//            presenter.showDialogForLocationServiceSetting(this)
+            AlertDialog.Builder(this).apply {
+                setTitle(R.string.alert_dialog_title_gps)
+                setMessage(R.string.alert_dialog_message_gps)
+                setCancelable(true)
+                setPositiveButton(R.string.setting) { _, _ ->
+                    startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1000)
+                }
+                setNegativeButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
+            }.create().show()
         } else {
-            val hasFineLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            val hasFineLocationPermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            val hasCoarseLocationPermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED ||
-                hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED
+            ) {
                 Log.i(TAG, "startLocationUpdates : 퍼미션 안가지고 있음")
                 return
             }
 
             Log.i(TAG, "현재 위치 업데이트")
-            mFusedLocationClient?.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+            mFusedLocationClient?.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.myLooper()
+            )
             if (checkPermission())
-                mMap?.isMyLocationEnabled = true
+                mMap.isMyLocationEnabled = true
         }
     }
     // endregion
 
     private fun checkPermission(): Boolean {
-        val hasFineLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val hasFineLocationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val hasCoarseLocationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
 
         val result = hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
                 hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
@@ -248,4 +330,8 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
+
+//    private fun setMarkerToMaskPosition() {
+//        storeVM.getStore(50)
+//    }
 }
