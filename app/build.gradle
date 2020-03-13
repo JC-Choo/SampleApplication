@@ -3,6 +3,103 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def readVersion() {
+    def versionFile = new File(project.rootDir, 'version.properties')
+    def version = new Properties()
+    def stream
+    try {
+        stream = new FileInputStream(versionFile)
+        version.load(stream)
+    } catch (FileNotFoundException ignore) {
+    } finally {
+        if (stream != null) stream.close()
+    }
+    if (!version['major']) version['major'] = "1"
+    if (!version['minor']) version['minor'] = "0"
+    if (!version['patch']) version['patch'] = "0"
+    if (!version['code']) version['code'] = "1"
+    return version
+}
+
+def readVersionName() {
+    def version = readVersion()
+    return "${version['major']}.${version['minor']}.${version['patch']}"
+}
+
+def readVersionCode() {
+    def version = readVersion()
+    def code = version['code'] as int
+    return code
+}
+
+// region 버전 자동 증가
+def incrementVersionNumber(def type = "build") {
+    def versionFile = new File(project.rootDir, 'version.properties')
+
+    def version = readVersion()
+
+    def major = version['major'] as int
+    def minor = version['minor'] as int
+    def patch = version['patch'] as int
+    def build = version['build'] as int
+
+    if (type == 'major') {
+        major++
+        minor = 0
+        patch = 0
+    } else if (type == 'minor') {
+        minor++
+        patch = 0
+    }else if (type == 'patch') {
+        patch++
+    }
+
+    build++
+
+    version['major'] = major.toString()
+    version['minor'] = minor.toString()
+    version['patch'] = patch.toString()
+    version['build'] = build.toString()
+
+    def stream = new FileOutputStream(versionFile)
+    try {
+        version.store(stream, null)
+    } finally {
+        stream.close()
+    }
+
+    return major + "." + minor
+}
+
+task doMajorVersionIncrement {
+    doLast {
+        println "Incrementing major version..."
+        incrementVersionNumber('major')
+    }
+}
+
+task doMinorVersionIncrement {
+    doLast {
+        println "Incrementing minor version..."
+        incrementVersionNumber('minor')
+    }
+}
+
+task doPatchVersionIncrement {
+    doLast {
+        println "Incrementing patch version..."
+        incrementVersionNumber('patch')
+    }
+}
+
+task doBuildNumberIncrement {
+    doLast {
+        println "Incrementing build number..."
+        incrementVersionNumber('build')
+    }
+}
+// endregion
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -11,8 +108,8 @@ android {
         applicationId "dev.chu.memo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        versionCode readVersionCode()
+        versionName readVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
