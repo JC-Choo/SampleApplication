@@ -9,10 +9,8 @@ import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.*
-import dev.chu.memo.view_model.RoomViewModel
 import dev.chu.memo.view_model.StoreViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -23,8 +21,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView() {
         Log.i(TAG, "initView")
 
+        binding.activity = this
         binding.roomVM = getViewModel()
-        getViewModel<StoreViewModel>().getStore(400)
 
         setActionBarHome(binding.includeToolbar.toolbar, null)
 
@@ -65,8 +63,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
-
-        getViewModel<RoomViewModel>().getAll()
     }
 
     override fun onPause() {
@@ -84,4 +80,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i(TAG, "onDestroy")
     }
     // endregion
+
+    fun onClickCorona() {
+        startActivity(Intent(this, MapsActivity::class.java))
+    }
 }
