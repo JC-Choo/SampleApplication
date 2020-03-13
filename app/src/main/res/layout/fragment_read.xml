@@ -20,15 +20,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <View
-            android:id="@+id/read_view"
-            style="@style/custom_view"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/include_toolbar" />
-
         <TextView
             android:id="@+id/read_fl_tv_title"
             style="@style/custom_et"
@@ -36,7 +27,7 @@
             android:text="@{viewModel.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/read_view"/>
+            app:layout_constraintTop_toBottomOf="@id/include_toolbar"/>
 
         <View
             android:id="@+id/read_fl_view_2"

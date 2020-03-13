@@ -3,6 +3,103 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def readVersion() {
+    def versionFile = new File(project.rootDir, 'version.properties')
+    def version = new Properties()
+    def stream
+    try {
+        stream = new FileInputStream(versionFile)
+        version.load(stream)
+    } catch (FileNotFoundException ignore) {
+    } finally {
+        if (stream != null) stream.close()
+    }
+    if (!version['major']) version['major'] = "1"
+    if (!version['minor']) version['minor'] = "0"
+    if (!version['patch']) version['patch'] = "0"
+    if (!version['code']) version['code'] = "1"
+    return version
+}
+
+def readVersionName() {
+    def version = readVersion()
+    return "${version['major']}.${version['minor']}.${version['patch']}"
+}
+
+def readVersionCode() {
+    def version = readVersion()
+    def code = version['code'] as int
+    return code
+}
+
+// region 버전 자동 증가
+def incrementVersionNumber(def type = "build") {
+    def versionFile = new File(project.rootDir, 'version.properties')
+
+    def version = readVersion()
+
+    def major = version['major'] as int
+    def minor = version['minor'] as int
+    def patch = version['patch'] as int
+    def build = version['build'] as int
+
+    if (type == 'major') {
+        major++
+        minor = 0
+        patch = 0
+    } else if (type == 'minor') {
+        minor++
+        patch = 0
+    }else if (type == 'patch') {
+        patch++
+    }
+
+    build++
+
+    version['major'] = major.toString()
+    version['minor'] = minor.toString()
+    version['patch'] = patch.toString()
+    version['build'] = build.toString()
+
+    def stream = new FileOutputStream(versionFile)
+    try {
+        version.store(stream, null)
+    } finally {
+        stream.close()
+    }
+
+    return major + "." + minor
+}
+
+task doMajorVersionIncrement {
+    doLast {
+        println "Incrementing major version..."
+        incrementVersionNumber('major')
+    }
+}
+
+task doMinorVersionIncrement {
+    doLast {
+        println "Incrementing minor version..."
+        incrementVersionNumber('minor')
+    }
+}
+
+task doPatchVersionIncrement {
+    doLast {
+        println "Incrementing patch version..."
+        incrementVersionNumber('patch')
+    }
+}
+
+task doBuildNumberIncrement {
+    doLast {
+        println "Incrementing build number..."
+        incrementVersionNumber('build')
+    }
+}
+// endregion
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -11,16 +108,31 @@ android {
         applicationId "dev.chu.memo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode readVersionCode()
+        versionName readVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        releaseWithSignedKey {
+            keyAlias SIGNED_KEY_ALIAS
+            keyPassword SIGNED_KEY_PASSWORD
+            storeFile file(SIGNED_STORE_FILE)
+            storePassword SIGNED_STORE_PASSWORD
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.releaseWithSignedKey
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     dataBinding {
@@ -31,7 +143,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // For Kotlin use paging-runtime-ktx
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // For Kotlin use paging-runtime-ktx
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -71,5 +184,29 @@ dependencies {
     def retrofitVersion = '2.6.2'
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    // Koin for Kotlin
+    implementation "org.koin:koin-core:$koin_version"
+//    // Koin extended & experimental features
+//    implementation "org.koin:koin-core-ext:$koin_version"
+    // Koin for Unit tests
+    testImplementation "org.koin:koin-test:$koin_version"
+
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    // Koin AndroidX ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+//    // Koin AndroidX Fragment features
+//    implementation "org.koin:koin-androidx-fragment:$koin_version"
+//    // Koin AndroidX Experimental features
+//    implementation "org.koin:koin-androidx-ext:$koin_version"
+
+    // google map
+    def googleMapVersion = "17.0.0"
+    implementation "com.google.android.gms:play-services-maps:$googleMapVersion"
+    implementation "com.google.android.gms:play-services-location:$googleMapVersion"
+
+    implementation 'gun0912.ted:tedpermission:2.1.0'
 }

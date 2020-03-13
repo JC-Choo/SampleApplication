@@ -4,26 +4,25 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.ViewModelProvider
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.*
-import dev.chu.memo.view_model.RoomViewModel
+import dev.chu.memo.view_model.StoreViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_main
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
-
     // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
-        binding.roomVM = roomVM
+        binding.activity = this
+        binding.roomVM = getViewModel()
 
         setActionBarHome(binding.includeToolbar.toolbar, null)
 
@@ -64,8 +63,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
-
-        roomVM.getAll()
     }
 
     override fun onPause() {
@@ -83,4 +80,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i(TAG, "onDestroy")
     }
     // endregion
+
+    fun onClickCorona() {
+        startActivity(Intent(this, MapsActivity::class.java))
+    }
 }

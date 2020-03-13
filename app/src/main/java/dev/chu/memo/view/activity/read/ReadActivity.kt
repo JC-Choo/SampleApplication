@@ -11,13 +11,13 @@ import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.onBackPressedFragment
 import dev.chu.memo.etc.extension.replaceFragment
 import dev.chu.memo.view_model.RoomViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReadActivity : BaseActivity<ActivityReadBinding>(), ReadFragment.FCallback {
 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_read
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
     private var memoId: Int = 0
 
     override fun initView() {

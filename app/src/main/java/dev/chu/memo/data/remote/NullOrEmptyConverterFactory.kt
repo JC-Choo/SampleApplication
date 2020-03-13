@@ -1,4 +1,4 @@
-package dev.chu.memo.data
+package dev.chu.memo.data.remote
 
 import okhttp3.ResponseBody
 import retrofit2.Converter

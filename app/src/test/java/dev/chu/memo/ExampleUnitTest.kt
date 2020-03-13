@@ -12,6 +12,15 @@ import java.util.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        val isTrue = true
+        val isFalse = false
 
+        println("true && true = ${isTrue && isTrue}")
+        println("true && false = ${isTrue && isFalse}")
+        println("true || false = ${isTrue || isFalse}")
+        println("false || false = ${isFalse || isFalse}")
+
+        println("600/500 = ${600/500}")
+        println("600%500 = ${600%500}")
     }
 }
