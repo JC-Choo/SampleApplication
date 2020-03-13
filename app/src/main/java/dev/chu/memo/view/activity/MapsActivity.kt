@@ -117,10 +117,14 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
             if (stores.isNotEmpty()) {
                 for (i in stores.indices) {
                     val point = LatLng(stores[i].lat, stores[i].lng)       // 좌표(위도, 경도) 생성
-                    val mOptions = MarkerOptions()     // 마커 생성
-                        .title(stores[i].name + "]" + stores[i].addr + "]" + stores[i].stock_at + "]" + stores[i].remain_stat + "]" + stores[i].created_at+"]"+stores[i].type)
-                        .snippet("거리")
-                        .position(point)
+                    // 마커 생성
+//                    val remainState = if(stores[i].remain_stat == "plenty") "100개 이상" else if(stores[i].remain_stat == "some") "30개 이상 100개 미만" else "2개 이상 30개 미만"
+
+                    val mOptions = MarkerOptions()
+                    mOptions.title(stores[i].name + "]" + stores[i].addr + "]" + stores[i].stock_at + "]" + stores[i].remain_stat + "]" + stores[i].created_at+"]"+stores[i].type)
+                    mOptions.snippet("거리")
+//                    mOptions.snippet("이름 : ${stores[i].name}\n주소 : ${stores[i].addr}\n입고 시간 : ${stores[i].stock_at}\n수량 : $remainState")
+                    mOptions.position(point)
 
                     if (!stores[i].remain_stat.isNullOrBlank()) {
                         when (stores[i].remain_stat) {
@@ -173,7 +177,6 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
                 Log.i(TAG, "marker = ${it.title}, ${it.position}, ${it.id}")
                 val text = it.title.split("]")
                 val remainState = if(text[3] == "plenty") "100개 이상" else if(text[3] == "some") "30개 이상 100개 미만" else "2개 이상 30개 미만"
-//                val type = if(text[5])
                 alertDialog("이름 : ${text[0]}\n주소 : ${text[1]}\n입고 시간 : ${text[2]}\n수량 : $remainState")
                 true
             }

@@ -29,7 +29,7 @@
             android:id="@+id/main_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="코로나 보러가기"
+            android:text="약국 보러가기"
             android:onClick="@{() -> activity.onClickCorona()}"
             android:textColor="@android:color/white"
             android:gravity="center"
