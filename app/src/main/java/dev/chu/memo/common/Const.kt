@@ -30,5 +30,6 @@ object Const {
 
     object ARGS {
         const val MEMO_ID = "MEMO_ID"
+        const val COUNT = "COUNT"
     }
 }

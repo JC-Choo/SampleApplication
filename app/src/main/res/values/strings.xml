@@ -42,4 +42,9 @@
     <string name="alert_dialog_title_gps">위치 서비스 비활성화</string>
     <string name="alert_dialog_message_gps">앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n위치 설정을 수정하실래요?</string>
     <string name="setting">설정</string>
+
+    <!-- bottom navigation -->
+    <string name="title_home">home</string>
+    <string name="title_notifications">notifications</string>
+    <string name="title_profile">profile</string>
 </resources>

@@ -1,16 +1,15 @@
 package dev.chu.memo.view.activity
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
-import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMainBinding
-import dev.chu.memo.etc.extension.*
-import dev.chu.memo.view_model.StoreViewModel
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import dev.chu.memo.etc.extension.TAG
+import dev.chu.memo.view.activity.bottom.BottomNavigationActivity
+import dev.chu.memo.view.activity.map.MapsActivity
+import dev.chu.memo.view.activity.memo.MemoActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -22,32 +21,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i(TAG, "initView")
 
         binding.activity = this
-        binding.roomVM = getViewModel()
-
-        setActionBarHome(binding.includeToolbar.toolbar, null)
-
-        binding.includeToolbar.toolbarTv.text = getString(R.string.memo)
-        binding.includeToolbar.toolbarTvEtc.text = getString(R.string.add)
-        binding.includeToolbar.toolbarTvEtc.setOnClickListener {
-            startActivity(Intent(this, AddActivity::class.java).apply {
-                putExtra(Const.EXTRA.IS_WRITING_MEMO, false)
-            })
-        }
-
-        val title = getPrefString(Const.PREF.MEMO_TITLE, "")
-        val content = getPrefString(Const.PREF.MEMO_CONTENT, "")
-
-        if(title != "" || content != "") {
-            confirmDialog(R.string.Please_check_writing_memo, DialogInterface.OnClickListener { _, _ ->
-                startActivity(Intent(this, AddActivity::class.java).apply {
-                    putExtra(Const.EXTRA.IS_WRITING_MEMO, true)
-                })
-            }, DialogInterface.OnClickListener { _, _ ->
-                showToast(R.string.delete_writing_memo)
-                removePref(Const.PREF.MEMO_TITLE)
-                removePref(Const.PREF.MEMO_CONTENT)
-            })
-        }
     }
 
     override fun onRestart() {
@@ -81,7 +54,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
     // endregion
 
+    fun onClickMemo() {
+        startActivity(Intent(this, MemoActivity::class.java))
+    }
+
     fun onClickCorona() {
         startActivity(Intent(this, MapsActivity::class.java))
+    }
+
+    fun onClickEtc() {
+        startActivity(Intent(this, BottomNavigationActivity::class.java))
     }
 }

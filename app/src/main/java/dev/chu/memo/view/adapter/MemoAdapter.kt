@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.chu.memo.R
 import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.MemoData
-import dev.chu.memo.databinding.ItemMainBinding
+import dev.chu.memo.databinding.ItemMemoBinding
 import dev.chu.memo.etc.extension.confirmDialog
-import dev.chu.memo.view.activity.read.ReadActivity
+import dev.chu.memo.view.activity.memo.read.ReadActivity
 import dev.chu.memo.view_model.RoomViewModel
 
-class MainAdapter(
+class MemoAdapter(
     val context: Context,
     private val items: MutableList<MemoData>,
     private val roomVm: RoomViewModel
-) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MemoAdapter.ViewHolder>() {
 
     fun setItems(item: List<MemoData>) {
         items.clear()
@@ -29,7 +29,7 @@ class MainAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false))
+        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_memo, parent, false))
 
     override fun getItemCount(): Int = items.size
 
@@ -39,7 +39,7 @@ class MainAdapter(
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = DataBindingUtil.bind<ItemMainBinding>(view)!!
+        val binding = DataBindingUtil.bind<ItemMemoBinding>(view)!!
 
         fun bind(item : MemoData) {
             binding.container.setOnClickListener {

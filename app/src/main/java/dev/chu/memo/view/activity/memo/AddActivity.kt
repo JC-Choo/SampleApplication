@@ -1,4 +1,4 @@
-package dev.chu.memo.view.activity
+package dev.chu.memo.view.activity.memo
 
 import android.content.DialogInterface
 import android.content.Intent

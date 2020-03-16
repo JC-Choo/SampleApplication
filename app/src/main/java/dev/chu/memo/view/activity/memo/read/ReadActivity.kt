@@ -1,8 +1,7 @@
-package dev.chu.memo.view.activity.read
+package dev.chu.memo.view.activity.memo.read
 
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.ViewModelProvider
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
@@ -10,8 +9,6 @@ import dev.chu.memo.databinding.ActivityReadBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.onBackPressedFragment
 import dev.chu.memo.etc.extension.replaceFragment
-import dev.chu.memo.view_model.RoomViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReadActivity : BaseActivity<ActivityReadBinding>(), ReadFragment.FCallback {
 

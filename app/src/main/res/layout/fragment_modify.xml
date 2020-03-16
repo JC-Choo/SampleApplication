@@ -9,7 +9,7 @@
 
         <variable
             name="fragment"
-            type="dev.chu.memo.view.activity.read.ModifyFragment" />
+            type="dev.chu.memo.view.activity.memo.read.ModifyFragment" />
 
         <variable
             name="viewModel"
