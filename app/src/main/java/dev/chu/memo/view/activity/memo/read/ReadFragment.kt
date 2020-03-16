@@ -1,4 +1,4 @@
-package dev.chu.memo.view.activity.read
+package dev.chu.memo.view.activity.memo.read
 
 import android.content.Context
 import android.content.DialogInterface
@@ -9,7 +9,6 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseFragment

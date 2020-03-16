@@ -61,17 +61,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.activity.memo.MemoActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
-            android:name=".view.activity.read.ReadActivity"
+            android:name="dev.chu.memo.view.activity.memo.read.ReadActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.activity.AddActivity"
+            android:name=".view.activity.memo.AddActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.activity.MapsActivity"
+            android:name=".view.activity.map.MapsActivity"
             android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.bottom.BottomNavigationActivity"
             android:screenOrientation="portrait"/>
     </application>
 

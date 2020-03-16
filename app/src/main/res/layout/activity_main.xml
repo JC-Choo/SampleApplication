@@ -18,33 +18,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/color_ffbfb9"
         tools:context=".view.activity.MainActivity">
 
-        <include
-            android:id="@+id/include_toolbar"
-            layout="@layout/include_toolbar" />
-
-        <TextView
-            android:id="@+id/main_tv"
+        <Button
+            android:id="@+id/main_bt_memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="약국 보러가기"
+            android:padding="10dp"
+            android:text="메모 화면"
+            android:onClick="@{() -> activity.onClickMemo()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/main_bt_corona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="구글 지도 테스트"
             android:onClick="@{() -> activity.onClickCorona()}"
             android:textColor="@android:color/white"
             android:gravity="center"
             android:textSize="20sp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_rv"
+        <Button
+            android:id="@+id/main_bt_etc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:data="@{roomVM.memoList}"
-            android:vm="@{roomVM}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_main" />
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="바텀네비 테스트"
+            android:onClick="@{() -> activity.onClickEtc()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 </layout>

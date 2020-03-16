@@ -1,10 +1,8 @@
-package dev.chu.memo.view.activity
+package dev.chu.memo.view.activity.map
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
