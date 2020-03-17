@@ -87,7 +87,7 @@
             android:id="@+id/write_bt_save"
             style="@style/custom_bt"
             android:enabled="@{!TextUtils.isEmpty(viewModel.title) &amp;&amp; !TextUtils.isEmpty(viewModel.content)}"
-            android:onClick="@{() -> viewModel.saveMemo()}"
+            android:onClick="@{() -> activity.onClickSaveMemo()}"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

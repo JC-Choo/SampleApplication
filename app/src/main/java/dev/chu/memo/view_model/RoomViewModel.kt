@@ -28,7 +28,6 @@ class RoomViewModel(application: Application) : BaseAndroidViewModel(application
     var isUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
     var title = MutableLiveData<String>()
     var content = MutableLiveData<String>()
-    private var _listImageUrls: MutableList<ImageData> = mutableListOf()
 
     fun getAll() = addDisposable(repository.getAll(object : DataListener<List<MemoData>> {
         override fun onSuccess(t: List<MemoData>) {
@@ -63,22 +62,12 @@ class RoomViewModel(application: Application) : BaseAndroidViewModel(application
         repository.deleteMemo(data)
     })
 
-    fun clearImageUrls() {
-        _listImageUrls.clear()
-    }
-    fun addImageUrl(data: ImageData) {
-        _listImageUrls.add(data)
-    }
-    fun setAllImageUrl(list: List<ImageData>) {
-        _listImageUrls.clear()
-        _listImageUrls.addAll(list)
-    }
-    fun saveMemo() {
-        addDisposable(repository.saveDataIntoDb(MemoData(title = title.value, content = content.value, imageUrls = _listImageUrls, created = Date())))
+    fun saveMemo(listImageUrls: MutableList<ImageData>) {
+        addDisposable(repository.saveDataIntoDb(MemoData(title = title.value, content = content.value, imageUrls = listImageUrls, created = Date())))
         isSave.value = true
     }
-    fun updateMemo() {
-        addDisposable(repository.updateMemo(MemoData(memo_id = memoId.value!!, title = title.value, content = content.value, imageUrls = _listImageUrls, created = Date())))
+    fun updateMemo(listImageUrls: MutableList<ImageData>) {
+        addDisposable(repository.updateMemo(MemoData(memo_id = memoId.value!!, title = title.value, content = content.value, imageUrls = listImageUrls, created = Date())))
         isUpdate.value = true
     }
 }
