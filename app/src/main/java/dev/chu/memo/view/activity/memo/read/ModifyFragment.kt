@@ -50,6 +50,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
     private var memoId: Int = 0
     private var title: String? = null
     private var content: String? = null
+    private var listImageUrls: MutableList<ImageData> = mutableListOf()
+    private var countOfImageUrls = 0
 
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
@@ -121,6 +123,14 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
     // endregion
 
     private fun setRecyclerView() {
+        adapter.setCallback(object : ImageModifyAdapter.ACallback {
+            override fun onClickDeleteImage(data: ImageData) {
+                activity?.confirmDialog("사진을 삭제하시겠습니까?", DialogInterface.OnClickListener { _, _ ->
+                    listImageUrls.remove(data)
+                    adapter.setItems(listImageUrls)
+                })
+            }
+        })
         binding.modifyFlRvImage.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.modifyFlRvImage.adapter = adapter
     }
@@ -134,8 +144,9 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
             roomVM.content.value = it.content
 
             if(!it.imageUrls.isNullOrEmpty()) {
-                adapter.setItems(it.imageUrls!!)
-                roomVM.setAllImageUrl(it.imageUrls!!)
+                listImageUrls.addAll(it.imageUrls!!)
+                adapter.setItems(listImageUrls)
+                countOfImageUrls = listImageUrls.size
             }
         })
 
@@ -259,8 +270,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
             Const.REQUEST_CODE_CAMERA_PERMISSION -> {
                 timeStamp = SimpleDateFormat("yyyy_MM_dd", Locale("ko")).format(Date())
 
+                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
-                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
             }
 
             Const.REQUEST_CODE_GALLERY_PERMISSION -> {
@@ -271,7 +282,7 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
                 } else
                     null
 
-                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
+                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
             }
         }
@@ -279,7 +290,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
 
     fun onClickFinish() {
         if (title != roomVM.title.value ||
-            content != roomVM.content.value) {
+            content != roomVM.content.value ||
+            countOfImageUrls != listImageUrls.size) {
             context?.confirmDialog(
                 getString(R.string.back_memo),
                 DialogInterface.OnClickListener { _, _ ->
@@ -288,6 +300,10 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
                 negativeTextResId = R.string.cancel
             )
         } else activity?.finish()
+    }
+
+    fun onClickUpdate() {
+        roomVM.updateMemo(listImageUrls)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {

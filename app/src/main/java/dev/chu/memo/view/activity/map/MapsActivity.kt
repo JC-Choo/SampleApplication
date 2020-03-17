@@ -29,7 +29,10 @@ import com.gun0912.tedpermission.TedPermission
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMapsBinding
-import dev.chu.memo.etc.extension.*
+import dev.chu.memo.etc.extension.TAG
+import dev.chu.memo.etc.extension.alertDialog
+import dev.chu.memo.etc.extension.bitmapDescriptorFromVector
+import dev.chu.memo.etc.extension.showToast
 import dev.chu.memo.view_model.StoreViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
@@ -46,15 +49,11 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     private val FASTEST_UPDATE_INTERVAL_MS = 10_000 // 10초
 
     private lateinit var mMap: GoogleMap
-
-    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     private lateinit var mCurrentLocation: Location
     private lateinit var currentPosition: LatLng
     private lateinit var location: Location
     private lateinit var locationRequest: LocationRequest
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private val geocoder: Geocoder by lazy { Geocoder(this) }
-
     private var currentMarker: Marker? = null
 
     // region location call back

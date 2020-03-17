@@ -19,7 +19,7 @@ import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ActivityAddBinding
 import dev.chu.memo.etc.extension.*
-import dev.chu.memo.view.adapter.ImageAdapter
+import dev.chu.memo.view.adapter.ImageModifyAdapter
 import dev.chu.memo.view_model.RoomViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,12 +33,13 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_add
 
     private val roomVM: RoomViewModel by viewModel()
-    private val adapter: ImageAdapter by inject()
+    private val adapter: ImageModifyAdapter by inject()
 
     private var photoUri: Uri? = null
     private var timeStamp: String? = null
     private var isBackPress: Boolean = false
     private var isSave: Boolean = false
+    private var listImageUrls: MutableList<ImageData> = mutableListOf()
 
     // region lifeCycle
     override fun initView() {
@@ -198,8 +199,15 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     // endregion
 
     private fun setRecyclerView() {
-        binding.writeRvImage.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        adapter.setCallback(object : ImageModifyAdapter.ACallback {
+            override fun onClickDeleteImage(data: ImageData) {
+                confirmDialog("사진을 삭제하시겠습니까?", DialogInterface.OnClickListener { _, _ ->
+                    listImageUrls.remove(data)
+                    adapter.setItems(listImageUrls)
+                })
+            }
+        })
+        binding.writeRvImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.writeRvImage.adapter = adapter
     }
 
@@ -270,7 +278,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                 timeStamp = SimpleDateFormat("yyyy_MM_dd", Locale("ko")).format(Date())
 
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
-                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
+                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
             }
 
             Const.REQUEST_CODE_GALLERY_PERMISSION -> {
@@ -280,16 +288,18 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
                     if (data?.data != null) data.data
                     else null
 
-                roomVM.addImageUrl(ImageData(imageUrl = photoUri.toString()))
                 adapter.addItem(ImageData(imageUrl = photoUri.toString()))
+                listImageUrls.add(ImageData(imageUrl = photoUri.toString()))
             }
         }
     }
 
     // region onClickEvent
-    fun onClickFinish() {
-        onBackPressed()
+    fun onClickSaveMemo() {
+        roomVM.saveMemo(listImageUrls)
     }
+
+    fun onClickFinish() { onBackPressed() }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
@@ -301,8 +311,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
 
     override fun onBackPressed() {
         if (!roomVM.title.value.isNullOrEmpty() ||
-            !roomVM.content.value.isNullOrEmpty()
-        ) {
+            !roomVM.content.value.isNullOrEmpty()) {
             confirmDialog(
                 getString(R.string.back_memo),
                 DialogInterface.OnClickListener { _, _ ->

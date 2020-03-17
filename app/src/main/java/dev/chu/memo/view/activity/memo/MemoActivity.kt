@@ -9,6 +9,7 @@ import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMemoBinding
 import dev.chu.memo.etc.extension.*
+import dev.chu.memo.view_model.RoomViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
@@ -62,6 +63,8 @@ class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
+
+        getViewModel<RoomViewModel>().getAll()
     }
 
     override fun onPause() {

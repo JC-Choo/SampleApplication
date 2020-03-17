@@ -1,12 +1,8 @@
 package dev.chu.memo.view.activity.bottom
 
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
 import androidx.annotation.LayoutRes
 import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
@@ -19,7 +15,6 @@ class BottomNavigationActivity: BaseActivity<ActivityBottomNavigationBinding>() 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_bottom_navigation
 
-    private var notificationsBadge : View?  = null
     private var count = 10
 
     override fun initView() {
@@ -58,5 +53,10 @@ class BottomNavigationActivity: BaseActivity<ActivityBottomNavigationBinding>() 
     private fun removeBadge() {
         binding.bottomNavigationBnv.removeBadge(R.id.navigation_notifications)
         count = 5
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        finish()
     }
 }
