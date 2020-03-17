@@ -46,7 +46,7 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     private val storeVM: StoreViewModel by viewModel()
 
     private val UPDATE_INTERVAL_MS = 60_000  // 60초
-    private val FASTEST_UPDATE_INTERVAL_MS = 10_000 // 10초
+    private val FASTEST_UPDATE_INTERVAL_MS = 60_000 // 10초
 
     private lateinit var mMap: GoogleMap
     private lateinit var mCurrentLocation: Location
@@ -100,8 +100,8 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
             .setInterval(UPDATE_INTERVAL_MS.toLong())
             .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS.toLong())
 
-        val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(locationRequest)
+//        val builder = LocationSettingsRequest.Builder()
+//        builder.addLocationRequest(locationRequest)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -109,6 +109,11 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     }
 
     private fun observeViewModel() {
+        storeVM.refresh.observe(this, Observer {
+            if(it) showProgress()
+            else hideProgress()
+        })
+
         storeVM.storeByGeoList.observe(this, Observer {
             val stores = it.stores
             if (stores.isNotEmpty()) {
