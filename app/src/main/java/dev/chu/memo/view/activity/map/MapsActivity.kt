@@ -15,6 +15,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -31,7 +32,6 @@ import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMapsBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view_model.StoreViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
 
@@ -40,7 +40,7 @@ class MapsActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_maps
 
-    private val storeVM: StoreViewModel by viewModel()
+    private val storeVM by lazy { ViewModelProvider(this)[StoreViewModel::class.java] }
 
     private val UPDATE_INTERVAL_MS = 60_000  // 60초
     private val FASTEST_UPDATE_INTERVAL_MS = 10_000 // 10초

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseFragment
@@ -25,8 +26,6 @@ import dev.chu.memo.etc.extension.*
 import dev.chu.memo.etc.listener.OnBackPressedListener
 import dev.chu.memo.view.adapter.ImageModifyAdapter
 import dev.chu.memo.view_model.RoomViewModel
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -44,8 +43,8 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
         }
     }
 
-    private val roomVM: RoomViewModel by viewModel()
-    private val adapter: ImageModifyAdapter by inject()
+    private lateinit var roomVM: RoomViewModel
+    private val adapter by lazy { ImageModifyAdapter(mutableListOf()) }
 
     private var memoId: Int = 0
     private var title: String? = null
@@ -57,6 +56,10 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
     // lifecycle
     override fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?) {
         Log.i(TAG, "setView")
+
+        roomVM = activity?.let {
+            ViewModelProvider(this)[RoomViewModel::class.java]
+        } ?: throw Exception("Activity is null")
 
         binding.fragment = this
         binding.viewModel = roomVM

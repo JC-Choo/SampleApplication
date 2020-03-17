@@ -4,18 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.chu.memo.base.BaseViewModel
-import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.data.repository.StoreRepository
 import dev.chu.memo.data.response.StoreRes
 import dev.chu.memo.data.response.StoresByGeoRes
 import dev.chu.memo.etc.extension.TAG
-import dev.chu.memo.etc.extension.with
 import dev.chu.memo.etc.listener.DataListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class StoreViewModel(private val repository: StoreRepository) : BaseViewModel() {
+class StoreViewModel : BaseViewModel() {
+    private val repository by lazy { StoreRepository() }
 
     private var _storeList: MutableLiveData<StoreRes> = MutableLiveData()
     val storeList: LiveData<StoreRes> get() = _storeList
