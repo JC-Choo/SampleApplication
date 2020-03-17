@@ -65,6 +65,8 @@ class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
+
+        roomVM.getAll()
     }
 
     override fun onPause() {
