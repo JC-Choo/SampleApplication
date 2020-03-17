@@ -54,4 +54,9 @@ class BottomNavigationActivity: BaseActivity<ActivityBottomNavigationBinding>() 
         binding.bottomNavigationBnv.removeBadge(R.id.navigation_notifications)
         count = 5
     }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        finish()
+    }
 }

@@ -4,27 +4,25 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.ViewModelProvider
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMemoBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.view_model.RoomViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
 
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_memo
 
-    private val roomVM by lazy { ViewModelProvider(this)[RoomViewModel::class.java] }
-
     // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
 
         binding.activity = this
-        binding.roomVM = roomVM
+        binding.roomVM = getViewModel()
 
         setActionBarHome(binding.includeToolbar.toolbar, null)
 
@@ -66,7 +64,7 @@ class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
         super.onResume()
         Log.i(TAG, "onResume")
 
-        roomVM.getAll()
+        getViewModel<RoomViewModel>().getAll()
     }
 
     override fun onPause() {

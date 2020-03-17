@@ -1,10 +1,7 @@
 package dev.chu.memo.view_model
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.chu.memo.GlobalApplication
-import dev.chu.memo.base.BaseAndroidViewModel
 import dev.chu.memo.base.BaseViewModel
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.data.local.MemoData
@@ -12,9 +9,7 @@ import dev.chu.memo.data.repository.RoomRepository
 import dev.chu.memo.etc.listener.DataListener
 import java.util.*
 
-class RoomViewModel(application: Application) : BaseAndroidViewModel(application) {
-    private val repository by lazy { RoomRepository(application) }
-
+class RoomViewModel(private val repository: RoomRepository) : BaseViewModel() {
     private var _memoList: MutableLiveData<List<MemoData>> = MutableLiveData(arrayListOf())
     val memoList: LiveData<List<MemoData>>
         get() = _memoList

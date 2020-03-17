@@ -9,11 +9,16 @@ import dev.chu.memo.R
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.ItemImageDeleteBinding
 
-class ImageModifyAdapter(private val items: MutableList<ImageData>, val callback: ACallback) :
+class ImageModifyAdapter(private val items: MutableList<ImageData>) :
     RecyclerView.Adapter<ImageModifyAdapter.ViewHolder>() {
 
     interface ACallback {
         fun onClickDeleteImage(data: ImageData)
+    }
+
+    private var callback: ACallback? = null
+    fun setCallback(callback: ACallback) {
+        this.callback = callback
     }
 
     fun addItem(item: ImageData) {
@@ -43,7 +48,7 @@ class ImageModifyAdapter(private val items: MutableList<ImageData>, val callback
         val binding = DataBindingUtil.bind<ItemImageDeleteBinding>(view)!!
         fun bind(item: ImageData) {
             binding.imageIvDelete.setOnClickListener {
-                callback.onClickDeleteImage(item)
+                callback?.onClickDeleteImage(item)
             }
         }
     }
