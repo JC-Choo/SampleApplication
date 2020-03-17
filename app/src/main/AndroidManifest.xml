@@ -53,16 +53,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".view.activity.memo.MemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.activity.memo.MemoActivity"
-            android:screenOrientation="portrait"/>
 
         <activity
             android:name="dev.chu.memo.view.activity.memo.read.ReadActivity"

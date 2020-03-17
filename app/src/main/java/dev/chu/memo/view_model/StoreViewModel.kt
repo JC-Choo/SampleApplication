@@ -10,7 +10,8 @@ import dev.chu.memo.data.response.StoresByGeoRes
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.listener.DataListener
 
-class StoreViewModel(private val repository: StoreRepository) : BaseViewModel() {
+class StoreViewModel : BaseViewModel() {
+    private val repository by lazy { StoreRepository() }
 
     private var _storeList: MutableLiveData<StoreRes> = MutableLiveData()
     val storeList: LiveData<StoreRes> get() = _storeList
