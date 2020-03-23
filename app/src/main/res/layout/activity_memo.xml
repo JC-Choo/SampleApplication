@@ -7,11 +7,11 @@
 
         <variable
             name="activity"
-            type="dev.chu.memo.view.activity.memo.MemoActivity" />
+            type="dev.chu.memo.ui.memo.MemoActivity" />
 
         <variable
             name="roomVM"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <LinearLayout

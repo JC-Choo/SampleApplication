@@ -8,11 +8,11 @@
 
         <variable
             name="activity"
-            type="dev.chu.memo.view.activity.memo.AddActivity" />
+            type="dev.chu.memo.ui.memo_add.AddActivity" />
 
         <variable
             name="viewModel"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

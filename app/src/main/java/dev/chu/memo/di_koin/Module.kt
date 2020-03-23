@@ -7,12 +7,17 @@ import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.data.remote.BooleanTypeConverter
 import dev.chu.memo.data.remote.NullOrEmptyConverterFactory
+import dev.chu.memo.data.repository.GithubRepository
 import dev.chu.memo.data.repository.RoomRepository
 import dev.chu.memo.data.repository.StoreRepository
-import dev.chu.memo.view.adapter.ImageAdapter
-import dev.chu.memo.view.adapter.ImageModifyAdapter
-import dev.chu.memo.view_model.RoomViewModel
-import dev.chu.memo.view_model.StoreViewModel
+import dev.chu.memo.ui.map.CoronaViewModel
+import dev.chu.memo.ui.memo.MemoViewModel
+import dev.chu.memo.ui.memo_add.ImageModifyAdapter
+import dev.chu.memo.ui.memo_read.ImageShowAdapter
+import dev.chu.memo.ui.rx_activity.repo.GithubRepoViewModel
+import dev.chu.memo.ui.rx_activity.repo.IssuesAdapter
+import dev.chu.memo.ui.rx_activity.repos.GithubReposAdapter
+import dev.chu.memo.ui.rx_activity.repos.GithubReposViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -66,7 +71,7 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .client(get())
-            .baseUrl(Const.BASE_URL)
+            .baseUrl(Const.URL_CORONA)
             .addConverterFactory(NullOrEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(get()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -93,16 +98,21 @@ val roomModule = module {
 val repositoryModule = module {
     factory { RoomRepository(get()) }
     factory { StoreRepository(get()) }
+    factory { GithubRepository() }
 }
 
 val viewModelModule = module {
-    viewModel { RoomViewModel(get()) }
-    viewModel { StoreViewModel(get()) }
+    viewModel { MemoViewModel(get()) }
+    viewModel { CoronaViewModel(get()) }
+    factory { GithubReposViewModel(get()) }
+    factory { GithubRepoViewModel(get()) }
 }
 
 val adapterModule = module {
-    factory { ImageAdapter(mutableListOf()) }
+    factory { ImageShowAdapter() }
     factory { ImageModifyAdapter(mutableListOf()) }
+    factory { GithubReposAdapter() }
+    factory { IssuesAdapter() }
 }
 
 val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)

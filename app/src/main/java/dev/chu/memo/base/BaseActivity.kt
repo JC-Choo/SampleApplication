@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import dev.chu.memo.view.dialog.UtilDialog
+import dev.chu.memo.ui.dialog.UtilDialog
 
 abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
 

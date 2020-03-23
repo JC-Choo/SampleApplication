@@ -9,11 +9,11 @@
 
         <variable
             name="fragment"
-            type="dev.chu.memo.view.activity.memo.read.ModifyFragment" />
+            type="dev.chu.memo.ui.memo_read.ModifyFragment" />
 
         <variable
             name="viewModel"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
