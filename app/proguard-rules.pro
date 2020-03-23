@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Report of R8 applies when building your projects
+-printconfiguration ~/tmp/full-r8-config.txt
+
+# Report of removed code by R8
+-printusage <output-dir>/usage.txt
+
+# Report of entry points that R8 determines from your project's keep rules
+-printseeds <output-dir>/seeds.txt
