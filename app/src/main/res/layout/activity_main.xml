@@ -64,5 +64,16 @@
             android:gravity="center"
             android:textSize="20sp"/>
 
+        <Button
+            android:id="@+id/main_bt_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="깃헙 유저 화면(코루틴)"
+            android:onClick="@{() -> activity.onClickUserActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </layout>

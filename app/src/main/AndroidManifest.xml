@@ -87,6 +87,9 @@
         <activity android:name=".ui.rx_activity.repo.GithubRepoActivity"
             android:launchMode="singleTop" />
 
+        <activity android:name=".ui.rv_coroutine.UserActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

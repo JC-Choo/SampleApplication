@@ -2,8 +2,8 @@ package dev.chu.memo.data.repository
 
 import android.util.Log
 import dev.chu.memo.data.remote.ApiService
-import dev.chu.memo.data.response.StoreRes
-import dev.chu.memo.data.response.StoresByGeoRes
+import dev.chu.memo.entity.StoreRes
+import dev.chu.memo.entity.StoresByGeoRes
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.with
 import dev.chu.memo.etc.listener.DataListener
