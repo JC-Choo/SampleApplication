@@ -2,6 +2,8 @@ package dev.chu.memo.etc
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -9,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import dev.chu.memo.R
+import dev.chu.memo.common.LoadingState
 import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.ui.memo.MemoAdapter
@@ -50,7 +53,7 @@ object BindingAdapter {
             .load(imageUri)
             .apply(
                 RequestOptions()
-                    .transforms(CenterCrop(), CircleCrop())
+                    .transform(CenterCrop(), CircleCrop())
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             )
             .into(view)
@@ -90,6 +93,27 @@ object BindingAdapter {
                 data,
                 vm
             )
+        }
+    }
+
+    @BindingAdapter(value = ["android:setAdapter"])
+    @JvmStatic
+    fun RecyclerView.bindRecyclerViewAdapter(adapter: RecyclerView.Adapter<*>) {
+        this.run {
+            this.setHasFixedSize(true)
+            this.adapter = adapter
+        }
+    }
+
+    @BindingAdapter(value = ["android:setupVisibility"])
+    @JvmStatic
+    fun ProgressBar.progressVisibility(loadingState: LoadingState?) {
+        loadingState?.let {
+            isVisible = when(it.status) {
+                LoadingState.Status.RUNNING -> true
+                LoadingState.Status.SUCCESS -> false
+                LoadingState.Status.FAILED -> false
+            }
         }
     }
 }

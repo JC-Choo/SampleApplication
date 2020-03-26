@@ -1,12 +1,14 @@
 package dev.chu.memo.di_koin
 
+import android.app.Application
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dev.chu.memo.BuildConfig
 import dev.chu.memo.common.Const
+import dev.chu.memo.data.local.AppDatabase
 import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
-import dev.chu.memo.data.remote.BooleanTypeConverter
-import dev.chu.memo.data.remote.NullOrEmptyConverterFactory
 import dev.chu.memo.data.repository.GithubRepository
 import dev.chu.memo.data.repository.RoomRepository
 import dev.chu.memo.data.repository.StoreRepository
@@ -14,15 +16,19 @@ import dev.chu.memo.ui.map.CoronaViewModel
 import dev.chu.memo.ui.memo.MemoViewModel
 import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import dev.chu.memo.ui.memo_read.ImageShowAdapter
+import dev.chu.memo.ui.rv_coroutine.UserAdapter
+import dev.chu.memo.ui.rv_coroutine.UserViewModel
 import dev.chu.memo.ui.rx_activity.repo.GithubRepoViewModel
 import dev.chu.memo.ui.rx_activity.repo.IssuesAdapter
 import dev.chu.memo.ui.rx_activity.repos.GithubReposAdapter
 import dev.chu.memo.ui.rx_activity.repos.GithubReposViewModel
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -46,64 +52,95 @@ import java.util.concurrent.TimeUnit
  * get : 컴포넌트내에서 알맞은 의존성을 주입함
  */
 
+
+private const val CORONA = "CORONA"
+private const val GITHUB = "GITHUB"
+private const val GITHUB_RX = "GITHUB_RX"
+
 val networkModule = module {
-    single {
-        HttpLoggingInterceptor().apply { if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY }
+    fun provideCache(application: Application): Cache {
+        val cacheSize = 10*1024*1024
+        return Cache(application.cacheDir, cacheSize.toLong())
     }
 
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(get() as HttpLoggingInterceptor)        // Retrofit 에서 통신 과정의 로그를 확인하기 위함. 로그의 level 을 지정
-            .connectTimeout(10000L, TimeUnit.SECONDS)       // 요청을 시작한 후 서버와의 TCP handshake가 완료되기까지 지속되는 시간. 즉, Retrofit이 설정된 연결 시간 제한 내에서 서버에 연결할 수 없는 경우 해당 요청을 실패한 것으로 계산.
-            .readTimeout(10000L, TimeUnit.SECONDS)          // 읽기 시간 초과는 연결이 설정되면 모든 바이트가 전송되는 속도를 감시. 서버로부터의 응답까지의 시간이 읽기 시간 초과보다 크면 요청이 실패로 계산.
-            .writeTimeout(10000L, TimeUnit.SECONDS)         // 읽기 타임 아웃의 반대 방향, 얼마나 빨리 서버에 바이트를 보낼 수 있는지 확인.
-            .build()
+    fun provideOkHttpClient(cache: Cache): OkHttpClient {
+        val okHttpClientBuilder = OkHttpClient.Builder().apply {
+            addInterceptor(HttpLoggingInterceptor().apply {
+                if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY
+            })        // Retrofit 에서 통신 과정의 로그를 확인하기 위함. 로그의 level 을 지정
+            connectTimeout(10000L, TimeUnit.SECONDS)       // 요청을 시작한 후 서버와의 TCP handshake가 완료되기까지 지속되는 시간. 즉, Retrofit이 설정된 연결 시간 제한 내에서 서버에 연결할 수 없는 경우 해당 요청을 실패한 것으로 계산.
+            readTimeout(10000L, TimeUnit.SECONDS)          // 읽기 시간 초과는 연결이 설정되면 모든 바이트가 전송되는 속도를 감시. 서버로부터의 응답까지의 시간이 읽기 시간 초과보다 크면 요청이 실패로 계산.
+            writeTimeout(10000L, TimeUnit.SECONDS)         // 읽기 타임 아웃의 반대 방향, 얼마나 빨리 서버에 바이트를 보낼 수 있는지 확인.
+            cache(cache)
+        }
+
+        return okHttpClientBuilder.build()
     }
 
-    single {
-        GsonBuilder()
-            .registerTypeAdapter(Boolean::class.java,
-                BooleanTypeConverter()
-            )
-            .create()
-    }
+    fun provideGson() : Gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
 
-    single {
+    fun provideRetrofitGitHub(factory: Gson, client: OkHttpClient, url: String): Retrofit.Builder =
         Retrofit.Builder()
-            .client(get())
-            .baseUrl(Const.URL_CORONA)
-            .addConverterFactory(NullOrEmptyConverterFactory())
-            .addConverterFactory(GsonConverterFactory.create(get()))
+            .client(client)
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create(factory))
+
+    single { provideCache(androidApplication()) }
+    single { provideOkHttpClient(get()) }
+    single { provideGson() }
+
+    single(named(CORONA)) {
+        provideRetrofitGitHub(get(), get(), Const.URL_CORONA)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-    single {
-        Interceptor { chain ->
-            chain.proceed(chain.request().newBuilder().apply {
-                header("Accept", "application/json")
+    single(named(GITHUB)) {
+        provideRetrofitGitHub(get(), get(), Const.URL_GITHUB)
+            .build()
+    }
+    single(named(GITHUB_RX)) {
+        Retrofit.Builder()
+            .baseUrl(Const.URL_GITHUB)
+            .client(OkHttpClient.Builder().apply {
+                addInterceptor( Interceptor { chain ->
+                    val requestBuilder = chain.request().newBuilder()
+                        .header("Authorization", "token a81942a386644698dc2a1eb3b6e5a8a2a00bbfe3")
+                    chain.proceed(requestBuilder.build())
+                })
+                addInterceptor(HttpLoggingInterceptor().apply {
+                    if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BODY
+                })
             }.build())
-        }
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
     }
 }
 
 val apiModule = module {
-    single(createdAtStart = false) { get<Retrofit>().create(ApiService::class.java) }
+    fun provideService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
+
+    single(named(CORONA)) { provideService(get(named(CORONA))) }
+    single(named(GITHUB)) { provideService(get(named(GITHUB))) }
+    single(named(GITHUB_RX)) { provideService(get(named(GITHUB_RX))) }
 }
 
 val roomModule = module {
     factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
-}
+    factory { AppDatabase.get().githubDao() }
 
+}
 val repositoryModule = module {
     factory { RoomRepository(get()) }
-    factory { StoreRepository(get()) }
-    factory { GithubRepository() }
+    factory { StoreRepository(get(named(CORONA))) }
+    factory { GithubRepository(get(named(GITHUB_RX)), get()) }
 }
 
 val viewModelModule = module {
     viewModel { MemoViewModel(get()) }
     viewModel { CoronaViewModel(get()) }
+    viewModel { UserViewModel(get(named(GITHUB))) }
     factory { GithubReposViewModel(get()) }
     factory { GithubRepoViewModel(get()) }
 }
@@ -113,6 +150,7 @@ val adapterModule = module {
     factory { ImageModifyAdapter(mutableListOf()) }
     factory { GithubReposAdapter() }
     factory { IssuesAdapter() }
+    factory { UserAdapter() }
 }
 
 val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)

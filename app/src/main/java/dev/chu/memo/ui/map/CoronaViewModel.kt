@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.chu.memo.base.BaseViewModel
 import dev.chu.memo.data.repository.StoreRepository
-import dev.chu.memo.data.response.StoreRes
-import dev.chu.memo.data.response.StoresByGeoRes
+import dev.chu.memo.entity.StoreRes
+import dev.chu.memo.entity.StoresByGeoRes
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.listener.DataListener
 
