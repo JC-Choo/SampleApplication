@@ -53,7 +53,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,24 +61,32 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.memo.MemoActivity"
+        <activity android:name="dev.chu.memo.ui.memo.MemoActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="dev.chu.memo.view.activity.memo.read.ReadActivity"
+            android:name="dev.chu.memo.ui.memo_read.ReadActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.activity.memo.AddActivity"
+            android:name="dev.chu.memo.ui.memo_add.AddActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.activity.map.MapsActivity"
+            android:name="dev.chu.memo.ui.map.CoronaActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.activity.bottom.BottomNavigationActivity"
+        <activity android:name="dev.chu.memo.ui.bottom.BottomNavigationActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:screenOrientation="portrait"/>
+
+        <activity android:name="dev.chu.memo.ui.rx_activity.repos.GithubReposActivity"
+            android:launchMode="singleTop" />
+
+        <activity android:name=".ui.rx_activity.repo.GithubRepoActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

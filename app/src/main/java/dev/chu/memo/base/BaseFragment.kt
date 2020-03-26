@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import dev.chu.memo.view.dialog.UtilDialog
+import dev.chu.memo.ui.dialog.UtilDialog
 
 abstract class BaseFragment<T : ViewDataBinding>: Fragment() {
     @LayoutRes

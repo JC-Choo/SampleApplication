@@ -7,18 +7,18 @@
 
         <variable
             name="activity"
-            type="dev.chu.memo.view.activity.memo.MemoActivity" />
+            type="dev.chu.memo.ui.memo.MemoActivity" />
 
         <variable
             name="roomVM"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/color_ffbfb9">
+        android:background="@color/colorPrimary">
 
         <include
             android:id="@+id/include_toolbar"

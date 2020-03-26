@@ -7,18 +7,18 @@
 
         <variable
             name="activity"
-            type="dev.chu.memo.view.activity.MainActivity" />
+            type="dev.chu.memo.ui.MainActivity" />
 
         <variable
             name="roomVM"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.activity.MainActivity">
+        tools:context=".ui.MainActivity">
 
         <Button
             android:id="@+id/main_bt_memo"
@@ -43,12 +43,23 @@
             android:textSize="20sp"/>
 
         <Button
-            android:id="@+id/main_bt_etc"
+            android:id="@+id/main_bt_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="바텀네비 테스트"
-            android:onClick="@{() -> activity.onClickEtc()}"
+            android:onClick="@{() -> activity.onClickBottomNavigationActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/main_bt_github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="깃헙 rx 테스"
+            android:onClick="@{() -> activity.onClickGithubReposActivity()}"
             android:textColor="@android:color/white"
             android:gravity="center"
             android:textSize="20sp"/>

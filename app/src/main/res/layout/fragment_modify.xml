@@ -9,11 +9,11 @@
 
         <variable
             name="fragment"
-            type="dev.chu.memo.view.activity.memo.read.ModifyFragment" />
+            type="dev.chu.memo.ui.memo_read.ModifyFragment" />
 
         <variable
             name="viewModel"
-            type="dev.chu.memo.view_model.RoomViewModel" />
+            type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +88,7 @@
             android:id="@+id/modify_fl_bt_save"
             style="@style/custom_bt"
             android:enabled="@{!TextUtils.isEmpty(viewModel.title) &amp;&amp; !TextUtils.isEmpty(viewModel.content)}"
-            android:onClick="@{() -> viewModel.updateMemo()}"
+            android:onClick="@{() -> fragment.onClickUpdate()}"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

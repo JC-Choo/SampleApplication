@@ -28,5 +28,6 @@ class StoreRepository(private val api: ApiService) {
                 listener.onSuccess(it)
             }, {
                 Log.e(TAG, "onError = "+it.printStackTrace())
+                listener.onFail(it)
             })
 }
