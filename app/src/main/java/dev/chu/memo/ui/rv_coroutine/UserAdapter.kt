@@ -10,6 +10,14 @@ import dev.chu.memo.entity.User
 
 class UserAdapter : ListAdapter<User, UserAdapter.ViewHolder>(Companion) {
 
+    /**
+     * === 와 == 차이
+     * kotlin의 === 는 java의 ==와 같다. 즉, 주소를 비교한다.
+     *
+     * areItemsTheSame은 "두 객체들이 같은 아이템인지 아닌지를 확인할 때 사용하는 메서드"로 객체들이 각은지에 대해선 주소값을 비교해야 한다.
+     * areContentsTheSame은 "두 아이템들이 같은 데이터인지 아닌지를 확인할 때 사용하는 메서드"로 아이템들이 같은 데이터인지만 확인하니, 아무 데이터나 같은지 확인해주면 된다.
+     */
+
     companion object: DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
             oldItem === newItem
