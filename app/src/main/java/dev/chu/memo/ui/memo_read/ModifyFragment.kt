@@ -23,8 +23,8 @@ import dev.chu.memo.data.local.ImageData
 import dev.chu.memo.databinding.FragmentModifyBinding
 import dev.chu.memo.etc.extension.*
 import dev.chu.memo.etc.listener.OnBackPressedListener
-import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import dev.chu.memo.ui.memo.MemoViewModel
+import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -137,7 +137,7 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
     }
 
     private fun observeViewModel() {
-        memoVM.memo.observe(this, Observer {
+        memoVM.memo.observe(viewLifecycleOwner, Observer {
             title = it.title
             content = it.content
 
@@ -151,7 +151,7 @@ class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListe
             }
         })
 
-        memoVM.isUpdate.observe(this, Observer {
+        memoVM.isUpdate.observe(viewLifecycleOwner, Observer {
             if(it) {
                 memoVM.isUpdate.value = false
                 showToast(R.string.modify_memo)

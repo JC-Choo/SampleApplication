@@ -102,7 +102,7 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
     }
 
     private fun observeViewModel() {
-        memoVM.memo.observe(this, Observer {
+        memoVM.memo.observe(viewLifecycleOwner, Observer {
             data = it
             memoVM.title.value = it.title
             memoVM.content.value = it.content
