@@ -14,7 +14,7 @@ import dev.chu.memo.etc.extension.TAG
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     @LayoutRes
-    override fun layoutRes(): Int = R.layout.fragment_profile
+    override fun getLayoutRes(): Int = R.layout.fragment_profile
 
     companion object {
         fun newInstance(count: Int) = ProfileFragment().apply {

@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="callback"
+            type="dev.chu.memo.ui.rv_coroutine.UserAdapter.ACallback" />
         <variable
             name="user"
             type="dev.chu.memo.entity.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{() -> callback.onClickEvent(user)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

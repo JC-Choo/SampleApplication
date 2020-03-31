@@ -13,7 +13,7 @@ import dev.chu.memo.ui.dialog.UtilDialog
 
 abstract class BaseFragment<T : ViewDataBinding>: Fragment() {
     @LayoutRes
-    abstract fun layoutRes(): Int
+    abstract fun getLayoutRes(): Int
 
     protected lateinit var binding : T
         private set
@@ -23,7 +23,7 @@ abstract class BaseFragment<T : ViewDataBinding>: Fragment() {
     abstract fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutRes(), container, false)
+        binding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
