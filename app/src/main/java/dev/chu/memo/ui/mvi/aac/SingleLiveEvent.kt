@@ -1,4 +1,4 @@
-package dev.chu.memo.ui.mvi.etc
+package dev.chu.memo.ui.mvi.aac
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

@@ -26,6 +26,15 @@ class UserAdapter : ListAdapter<User, UserAdapter.ViewHolder>(Companion) {
             oldItem.id == newItem.id
     }
 
+    interface ACallback {
+        fun onClickEvent(item: User)
+    }
+
+    private var callback: ACallback? = null
+    fun setCallback(callback: ACallback) {
+        this.callback = callback
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(layoutInflater)
@@ -35,6 +44,7 @@ class UserAdapter : ListAdapter<User, UserAdapter.ViewHolder>(Companion) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentUser = getItem(position)
+        holder.binding.callback = callback
         holder.binding.user = currentUser
         holder.binding.executePendingBindings()
     }

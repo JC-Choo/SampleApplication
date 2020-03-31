@@ -13,7 +13,7 @@ import dev.chu.memo.etc.extension.TAG
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @LayoutRes
-    override fun layoutRes(): Int = R.layout.fragment_home
+    override fun getLayoutRes(): Int = R.layout.fragment_home
 
     companion object {
         fun newInstance(count: Int) = HomeFragment().apply {

@@ -34,7 +34,7 @@ import java.util.*
 
 class ModifyFragment : BaseFragment<FragmentModifyBinding>(), OnBackPressedListener {
     @LayoutRes
-    override fun layoutRes(): Int = R.layout.fragment_modify
+    override fun getLayoutRes(): Int = R.layout.fragment_modify
 
     companion object {
         fun newInstance(memoId: Int) = ModifyFragment()

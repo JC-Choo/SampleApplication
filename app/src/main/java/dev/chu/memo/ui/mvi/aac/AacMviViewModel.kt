@@ -8,18 +8,18 @@ import androidx.lifecycle.MutableLiveData
 import dev.chu.memo.base.BaseAndroidViewModel
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.mvi.etc.NoObserverAttachedException
-import dev.chu.memo.ui.mvi.etc.SingleLiveEvent
 import dev.chu.memo.ui.mvi.etc.ViewModelContract
 
 /**
  * AacMviViewModel
- * A generic base class to create ViewModel.
- * It needs three classes STATE, EFFECT, and EVENT.
- * We have already seen an example of these classes above.
+ * ViewModel을 생성할 기본 클래스
+ * 3 클래스(STATE, EFFECT, EVENT)가 필요
  */
 
-open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) : BaseAndroidViewModel(application),
+open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) :
+    BaseAndroidViewModel(application),
     ViewModelContract<EVENT> {
+
     private val _viewStates: MutableLiveData<STATE> = MutableLiveData()
     fun viewStates(): LiveData<STATE> = _viewStates
 
@@ -32,8 +32,8 @@ open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) : Bas
             _viewStates.value = value
         }
 
-
-    private val _viewEffects: SingleLiveEvent<EFFECT> = SingleLiveEvent()
+    private val _viewEffects: SingleLiveEvent<EFFECT> =
+        SingleLiveEvent()
     fun viewEffects(): SingleLiveEvent<EFFECT> = _viewEffects
 
     private var _viewEffect: EFFECT? = null

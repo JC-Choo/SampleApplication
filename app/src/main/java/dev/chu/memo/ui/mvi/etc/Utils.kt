@@ -1,16 +1,15 @@
 package dev.chu.memo.ui.mvi.etc
 
 /**
- * Internal Contract to be implemented by ViewModel
- * Required to intercept and log ViewEvents
+ * ViewModel에 의해 구현될 Internal Contract
+ * ViewEvents를 막거나 기록하는데 필요
  */
 internal interface ViewModelContract<EVENT> {
     fun process(viewEvent: EVENT)
 }
 
 /**
- * This is a custom NoObserverAttachedException and it does what it's name suggests.
- * Constructs a new exception with the specified detail message.
- * This is thrown, if you have not attached any observer to the LiveData.
+ * 특정 상세 메시지를 가진 새 Exception을 구성
+ * LiveData에 대한 어떤 옵저버도 붙지 않는다면, 이걸 던진다.
  */
 class NoObserverAttachedException(message: String) : Exception(message)

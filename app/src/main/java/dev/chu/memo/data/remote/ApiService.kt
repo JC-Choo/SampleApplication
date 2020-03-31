@@ -73,5 +73,8 @@ interface ApiService {
 
     @GET("users")
     suspend fun getUserAsync() : Response<List<User>>
+
+    @GET("/users")
+    fun getUserAsyncRx() : Single<List<User>>
     // endregion
 }

@@ -13,7 +13,7 @@ import dev.chu.memo.etc.extension.TAG
 
 class NotificationFragment : BaseFragment<FragmentNavigationBinding>() {
     @LayoutRes
-    override fun layoutRes(): Int = R.layout.fragment_navigation
+    override fun getLayoutRes(): Int = R.layout.fragment_navigation
 
     companion object {
         fun newInstance(count: Int) = NotificationFragment().apply {

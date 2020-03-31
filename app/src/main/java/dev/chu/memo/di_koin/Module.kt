@@ -17,7 +17,7 @@ import dev.chu.memo.ui.map.CoronaViewModel
 import dev.chu.memo.ui.memo.MemoViewModel
 import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import dev.chu.memo.ui.memo_read.ImageShowAdapter
-import dev.chu.memo.ui.mvi.MviActViewModel
+import dev.chu.memo.ui.mvi.MviViewModel
 import dev.chu.memo.ui.rv_coroutine.UserAdapter
 import dev.chu.memo.ui.rv_coroutine.UserViewModel
 import dev.chu.memo.ui.rx_activity.repo.GithubRepoViewModel
@@ -144,7 +144,7 @@ val viewModelModule = module {
     viewModel { MemoViewModel(get()) }
     viewModel { CoronaViewModel(get()) }
     viewModel { UserViewModel(get(named(GITHUB))) }
-    viewModel { MviActViewModel(androidApplication(), get()) }
+    viewModel { MviViewModel(androidApplication(), get()) }
     factory { GithubReposViewModel(get()) }
     factory { GithubRepoViewModel(get()) }
 }
@@ -154,7 +154,7 @@ val adapterModule = module {
     factory { ImageModifyAdapter(mutableListOf()) }
     factory { GithubReposAdapter() }
     factory { IssuesAdapter() }
-    factory { UserAdapter() }
+    factory { UserAdapter()}
 }
 
 val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)

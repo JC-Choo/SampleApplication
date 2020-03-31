@@ -26,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener {
     @LayoutRes
-    override fun layoutRes(): Int = R.layout.fragment_read
+    override fun getLayoutRes(): Int = R.layout.fragment_read
 
     companion object {
         fun newInstance(memoId: Int) = ReadFragment()
