@@ -10,6 +10,8 @@ import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.map.CoronaActivity
 import dev.chu.memo.ui.memo.MemoActivity
+import dev.chu.memo.ui.mvi.MviActivity
+import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -69,5 +71,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun onClickGithubReposActivity() {
         startActivity(Intent(this, GithubReposActivity::class.java))
+    }
+
+    fun onClickUserActivity() {
+        startActivity(Intent(this, UserActivity::class.java))
+    }
+
+    fun onClickMviActivity() {
+        startActivity(Intent(this, MviActivity::class.java))
     }
 }

@@ -1,13 +1,15 @@
 package dev.chu.memo.data.remote
 
-import dev.chu.memo.data.response.SaleRes
-import dev.chu.memo.data.response.StoreRes
-import dev.chu.memo.data.response.StoresByGeoRes
+import com.google.gson.JsonElement
+import dev.chu.memo.data.request.CreateIssueRequest
+import dev.chu.memo.entity.*
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ApiService {
+    // region corona
     // 약국, 우체국, 농협 등의 마스크 판매처 정보 제공 (마스크 재고 관련 정보는 제공하지 않음)
     // page : 페이지 번호
     // perPage : 한 페이지당 출력할 판매처 수[default: 500, min:500, max:5000]
@@ -29,5 +31,50 @@ interface ApiService {
     // 예- '서울특별시 강남구' or '서울특별시 강남구 논현동'
     // ('서울특별시' 와 같이 '시'단위만 입력하는 것은 불가능합니다.)
     @GET("corona19-masks/v1/storesByAddr/json")
-    fun getStoresByAddr(@Query("address") address: String)
+    fun getStoresByAddr(@Query("address") address: String): Single<StoresByAddrRes>
+    // endregion
+
+    // region github
+    @GET("search/repositories")
+    fun searchRepos(
+        @Query("q") search: String
+    ): Single<JsonElement>
+
+    @GET("user/starred/{owner}/{repo}")
+    fun checkStar(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ): Completable
+
+    @PUT("user/starred/{owner}/{repo}")
+    fun star(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ): Completable
+
+    @DELETE("user/starred/{owner}/{repo}")
+    fun unstar(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ): Completable
+
+    @GET("/repos/{owner}/{repo}/issues")
+    fun issues(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ): Single<List<Issue>>
+
+    @POST("/repos/{owner}/{repo}/issues")
+    fun createIssue(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String,
+        @Body request: CreateIssueRequest
+    ): Single<Issue>
+
+    @GET("users")
+    suspend fun getUserAsync() : Response<List<User>>
+
+    @GET("/users")
+    fun getUserAsyncRx() : Single<List<User>>
+    // endregion
 }
