@@ -439,7 +439,7 @@ public class TestRxJava {
     // region Observable 을 변형하는 Operator
     // 발행되는 아이템을 변환하여 다른 아이템으로 변경
     @Test
-    public void testTransformObservableToOperator() { groupBy(); }
+    public void testTransformObservableToOperator() { buffer(); }
 
     // 발행되는 아이템을 변환하는 가장 기본적인 방법이자 가장 많이 사용되는 연산자.
     // 발행되는 값에 대해 원하는 수식을 적용시키거나, 다른 타입으로 변환시킬 수 있다.
@@ -470,7 +470,7 @@ public class TestRxJava {
         Observable.range(0, 10)
                 .buffer(3)
                 .subscribe(integers -> {
-                    System.out.println("버퍼 데이터 발행");
+                    System.out.println("버퍼 데이터 발행 integers = "+integers);
                     for(Integer i : integers) {
                         System.out.println("#"+i);
                     }
@@ -514,7 +514,19 @@ public class TestRxJava {
 
     @Test
     public void testFiltering() {
-        amb();
+        throttleFirst();
+    }
+
+    private void throttleFirst() {
+        Observable.interval(300, TimeUnit.MILLISECONDS)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(System.out::println);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     // debounce : 특정 시간동안 다른 아이템이 발행되지 않을 때만 아이템을 발행하도록 하는 연산자로 반복적으로 빠르게 발행된 아이템들을 필터링할 때 유용
@@ -522,19 +534,19 @@ public class TestRxJava {
     private void debounce() {
         Observable.create(emitter -> {
             emitter.onNext("1");
-            Thread.sleep(100);
+            Thread.sleep(1000);
             emitter.onNext("2");
             emitter.onNext("3");
             emitter.onNext("4");
             emitter.onNext("5");
-            Thread.sleep(100);
+            Thread.sleep(1000);
             emitter.onNext("6");
         })
-                .debounce(10, TimeUnit.MILLISECONDS)
+                .debounce(100, TimeUnit.MILLISECONDS)
                 .subscribe(System.out::println);
 
         try {
-            Thread.sleep(300);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
