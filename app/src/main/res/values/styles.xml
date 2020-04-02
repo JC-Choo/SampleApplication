@@ -55,4 +55,17 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/color_E0E0E0</item>
     </style>
+
+
+    <!-- region motion layout custom -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- endregion -->
 </resources>
