@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dev.chu.memo.ui.motion_layout.CollapsibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:minHeight="50dp"
+    app:layoutDescription="@xml/scene_09"
+    app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorAccent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/location_some" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SampleApp"
+        android:textColor="#FFF"
+        android:textSize="32sp"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp" />
+
+</dev.chu.memo.ui.motion_layout.CollapsibleToolbar>

@@ -86,5 +86,16 @@
             android:gravity="center"
             android:textSize="20sp"/>
 
+        <Button
+            android:id="@+id/main_bt_motion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Motion layout example"
+            android:onClick="@{() -> activity.onClickMotionActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </layout>

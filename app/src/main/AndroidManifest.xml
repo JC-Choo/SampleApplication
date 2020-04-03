@@ -99,6 +99,10 @@
             android:name=".ui.mvi.MviActivity"
             android:launchMode="singleTop" />
 
+        <activity android:name=".ui.motion_layout.MotionActivity"
+            android:screenOrientation="fullSensor"
+            android:launchMode="singleTop"/>
+
     </application>
 
 </manifest>
