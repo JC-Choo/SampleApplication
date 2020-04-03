@@ -10,6 +10,7 @@ import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.map.CoronaActivity
 import dev.chu.memo.ui.memo.MemoActivity
+import dev.chu.memo.ui.merge_adapter.SearchRepositoriesActivity
 import dev.chu.memo.ui.motion_layout.MotionActivity
 import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
@@ -84,5 +85,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun onClickMotionActivity() {
         startActivity(Intent(this, MotionActivity::class.java))
+    }
+
+    fun onClickSearchRepositoriesActivity() {
+        startActivity(Intent(this, SearchRepositoriesActivity::class.java))
     }
 }

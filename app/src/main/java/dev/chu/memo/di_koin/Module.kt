@@ -6,17 +6,16 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dev.chu.memo.BuildConfig
 import dev.chu.memo.common.Const
-import dev.chu.memo.data.local.AppDatabase
+import dev.chu.memo.data.local.GithubDatabase
 import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
-import dev.chu.memo.data.repository.GithubRepository
-import dev.chu.memo.data.repository.RoomRepository
-import dev.chu.memo.data.repository.StoreRepository
-import dev.chu.memo.data.repository.UsersRepository
+import dev.chu.memo.data.repository.*
 import dev.chu.memo.ui.map.CoronaViewModel
 import dev.chu.memo.ui.memo.MemoViewModel
 import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import dev.chu.memo.ui.memo_read.ImageShowAdapter
+import dev.chu.memo.ui.merge_adapter.ReposAdapter
+import dev.chu.memo.ui.merge_adapter.SearchRepositoriesViewModel
 import dev.chu.memo.ui.mvi.MviViewModel
 import dev.chu.memo.ui.rv_coroutine.UserAdapter
 import dev.chu.memo.ui.rv_coroutine.UserViewModel
@@ -130,7 +129,7 @@ val apiModule = module {
 
 val roomModule = module {
     factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
-    factory { AppDatabase.get().githubDao() }
+    factory { GithubDatabase.get().githubDao() }
 
 }
 val repositoryModule = module {
@@ -138,6 +137,7 @@ val repositoryModule = module {
     factory { StoreRepository(get(named(CORONA))) }
     factory { GithubRepository(get(named(GITHUB_RX)), get()) }
     factory { UsersRepository(get(named(GITHUB))) }
+    factory { MergeRepository(get(named(GITHUB))) }
 }
 
 val viewModelModule = module {
@@ -145,6 +145,7 @@ val viewModelModule = module {
     viewModel { CoronaViewModel(get()) }
     viewModel { UserViewModel(get(named(GITHUB))) }
     viewModel { MviViewModel(androidApplication(), get()) }
+    viewModel { SearchRepositoriesViewModel(get()) }
     factory { GithubReposViewModel(get()) }
     factory { GithubRepoViewModel(get()) }
 }
@@ -155,6 +156,7 @@ val adapterModule = module {
     factory { GithubReposAdapter() }
     factory { IssuesAdapter() }
     factory { UserAdapter()}
+    factory { ReposAdapter() }
 }
 
 val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)

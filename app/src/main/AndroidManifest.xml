@@ -99,9 +99,14 @@
             android:name=".ui.mvi.MviActivity"
             android:launchMode="singleTop" />
 
-        <activity android:name=".ui.motion_layout.MotionActivity"
-            android:screenOrientation="fullSensor"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".ui.motion_layout.MotionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="fullSensor" />
+
+        <activity
+            android:name=".ui.merge_adapter.SearchRepositoriesActivity"
+            android:launchMode="singleTop" />
 
     </application>
 

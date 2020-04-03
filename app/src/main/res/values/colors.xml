@@ -42,4 +42,12 @@
     <color name="grey_700">#434444</color>
     <color name="grey_800">#2b2b2b</color>
     <color name="grey_900">#0b0c0c</color>
+
+    <!-- region merge adapter -->
+    <color name="titleColor">#1F75FE</color>
+    <color name="titleColorAlpha">#551F75FE</color>
+    <color name="greyAlpha">#55999999</color>
+    <color name="separatorBackground">#AAAAAA</color>
+    <color name="separatorText">#FFFFFF</color>
+    <!-- endregion -->
 </resources>
