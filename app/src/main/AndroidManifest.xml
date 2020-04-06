@@ -108,6 +108,10 @@
             android:name=".ui.merge_adapter.SearchRepositoriesActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".ui.fav_tv_shows.FavTvShowsActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

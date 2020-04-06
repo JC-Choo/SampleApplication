@@ -8,6 +8,7 @@ import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
+import dev.chu.memo.ui.fav_tv_shows.FavTvShowsActivity
 import dev.chu.memo.ui.map.CoronaActivity
 import dev.chu.memo.ui.memo.MemoActivity
 import dev.chu.memo.ui.merge_adapter.SearchRepositoriesActivity
@@ -89,5 +90,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun onClickSearchRepositoriesActivity() {
         startActivity(Intent(this, SearchRepositoriesActivity::class.java))
+    }
+
+    fun onClickFavTvShowsActivity() {
+        startActivity(Intent(this, FavTvShowsActivity::class.java))
     }
 }

@@ -6,10 +6,13 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dev.chu.memo.BuildConfig
 import dev.chu.memo.common.Const
+import dev.chu.memo.data.local.FavTvShowsDatabase
 import dev.chu.memo.data.local.GithubDatabase
 import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.data.repository.*
+import dev.chu.memo.ui.fav_tv_shows.FavTvShowsAdapter
+import dev.chu.memo.ui.fav_tv_shows.FavTvShowsViewModel
 import dev.chu.memo.ui.map.CoronaViewModel
 import dev.chu.memo.ui.memo.MemoViewModel
 import dev.chu.memo.ui.memo_add.ImageModifyAdapter
@@ -130,6 +133,7 @@ val apiModule = module {
 val roomModule = module {
     factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
     factory { GithubDatabase.get().githubDao() }
+    factory { FavTvShowsDatabase.getInstance(androidApplication()).getFavTvShowsDao() }
 
 }
 val repositoryModule = module {
@@ -146,6 +150,7 @@ val viewModelModule = module {
     viewModel { UserViewModel(get(named(GITHUB))) }
     viewModel { MviViewModel(androidApplication(), get()) }
     viewModel { SearchRepositoriesViewModel(get()) }
+    viewModel { FavTvShowsViewModel(get()) }
     factory { GithubReposViewModel(get()) }
     factory { GithubRepoViewModel(get()) }
 }
@@ -157,6 +162,7 @@ val adapterModule = module {
     factory { IssuesAdapter() }
     factory { UserAdapter()}
     factory { ReposAdapter() }
+    factory { FavTvShowsAdapter(mutableListOf()) }
 }
 
 val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)
