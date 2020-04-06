@@ -97,5 +97,27 @@
             android:gravity="center"
             android:textSize="20sp"/>
 
+        <Button
+            android:id="@+id/main_bt_search_repositories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="SearchRepositoriesActivity"
+            android:onClick="@{() -> activity.onClickSearchRepositoriesActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/main_bt_fav_tv_shows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="FavTvShowsActivity"
+            android:onClick="@{() -> activity.onClickFavTvShowsActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </layout>

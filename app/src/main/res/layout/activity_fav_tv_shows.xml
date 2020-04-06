@@ -5,42 +5,34 @@
 
     <data>
 
-        <variable
-            name="adapter"
-            type="dev.chu.memo.ui.rv_coroutine.UserAdapter" />
-
-        <variable
-            name="viewModel"
-            type="dev.chu.memo.ui.rv_coroutine.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
+        <TextView
+            android:id="@+id/fav_tv_shows_tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:setupVisibility="@{viewModel.loading}"
-            android:visibility="invisible"
+            android:padding="10dp"
+            android:text="Fav Tv Shows"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fav_tv_shows_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:setAdapter="@{adapter}"
+            android:padding="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:listitem="@layout/item_user" />
+            app:layout_constraintTop_toBottomOf="@id/fav_tv_shows_tv_title"
+            tools:listitem="@layout/item_fav_tv_show" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,21 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-private const val DB_NAME = "Memo.db"
+private const val DB_NAME = "FavTvShows.db"
 private const val DB_VERSION = 1
 
 @Database(
-    entities = [MemoData::class, ImageData::class],
+    entities = [FavTvShows::class],
     version = DB_VERSION
 )
 @TypeConverters(ConverterDate::class, ConverterList::class)
-abstract class MemoDatabase : RoomDatabase() {
-    abstract fun getMemoDao(): MemoDao
+abstract class FavTvShowsDatabase : RoomDatabase() {
+    abstract fun getFavTvShowsDao(): FavTvShowsDao
 
     companion object {
         @Volatile
-        private var instance: MemoDatabase? = null
-        fun getInstance(context: Context): MemoDatabase =
+        private var instance: FavTvShowsDatabase? = null
+        fun getInstance(context: Context): FavTvShowsDatabase =
             instance ?: synchronized(this) {
                 instance ?: buildDatabaseInstance(context).also {
                     instance = it
@@ -28,7 +28,7 @@ abstract class MemoDatabase : RoomDatabase() {
             }
 
         private fun buildDatabaseInstance(context: Context) =
-            Room.databaseBuilder(context, MemoDatabase::class.java, DB_NAME)
+            Room.databaseBuilder(context, FavTvShowsDatabase::class.java, DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
     }

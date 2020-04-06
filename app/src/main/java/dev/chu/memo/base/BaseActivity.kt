@@ -18,6 +18,7 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
     @LayoutRes
     abstract fun getLayoutRes(): Int
     abstract fun initView()
+    open fun initView(savedInstanceState: Bundle?) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
         utilDialog = UtilDialog()
 
         initView()
+        initView(savedInstanceState)
     }
 
     fun showProgress() {

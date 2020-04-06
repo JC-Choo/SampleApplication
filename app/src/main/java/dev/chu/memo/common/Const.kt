@@ -8,6 +8,7 @@ object Const {
 
     const val TABLE_NAME_1 = "MEMO_DATA"
     const val TABLE_NAME_2 = "IMAGE_DATA"
+    const val TABLE_NAME_3 = "repos"
 
     const val REQUEST_CODE_PERMISSIONS = 1000
     const val REQUEST_CODE_CAMERA_PERMISSION = 1001
