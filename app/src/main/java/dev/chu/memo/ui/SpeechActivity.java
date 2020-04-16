@@ -38,7 +38,6 @@ public class SpeechActivity extends AppCompatActivity {
 
     // https://medium.com/wasd/creating-an-android-google-stt-application-4cea24ee97af
     private void firstSpeech() {
-
         if (Build.VERSION.SDK_INT >= 23) {
             // 퍼미션 체크
             ActivityCompat.requestPermissions(this,
@@ -53,12 +52,17 @@ public class SpeechActivity extends AppCompatActivity {
         secondTv = findViewById(R.id.tv_second);
         secondBtn = findViewById(R.id.bt_second);
 
+        String language =
+//                "en-US";
+                "ko-KR";
+
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+        SpeechRecognizer mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        mRecognizer.setRecognitionListener(listener);
+
         sttBtn.setOnClickListener(view -> {
-            SpeechRecognizer mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-            mRecognizer.setRecognitionListener(listener);
             mRecognizer.startListening(intent);
         });
     }
@@ -162,10 +166,9 @@ public class SpeechActivity extends AppCompatActivity {
     private void secondSpeech() {
         secondBtn.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
             startActivityForResult(intent, REQ_CODE_SPEECH);
         });
     }
@@ -176,7 +179,9 @@ public class SpeechActivity extends AppCompatActivity {
         if(requestCode == REQ_CODE_SPEECH) {
             if(resultCode == RESULT_OK && data != null) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                secondTv.setText(result.get(0)); //결과 표시
+                if (result != null) {
+                    secondTv.setText(result.get(0)); //결과 표시
+                }
             }
         }
     }
