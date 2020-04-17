@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/modify_fl_et_title"
             style="@style/custom_et"
             android:hint="@string/title"
@@ -45,13 +45,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modify_fl_et_title" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/modify_fl_et_content"
             style="@style/custom_et"
             android:layout_height="0dp"
             android:gravity="top"
             android:hint="@string/content"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:padding="10dp"
             android:text="@={viewModel.content}"
             app:layout_constraintBottom_toTopOf="@id/modify_fl_view_3"
