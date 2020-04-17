@@ -95,4 +95,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun onClickFavTvShowsActivity() {
         startActivity(Intent(this, FavTvShowsActivity::class.java))
     }
+
+    fun onClickFavTvSpeechActivity() {
+        startActivity(Intent(this, SpeechActivity::class.java))
+    }
 }

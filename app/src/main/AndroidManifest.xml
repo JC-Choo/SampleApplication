@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dev.chu.memo">
 
+    <!--    <uses-permission android:name="android.permission.INTERNET"/>-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -110,6 +113,10 @@
 
         <activity
             android:name=".ui.fav_tv_shows.FavTvShowsActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.SpeechActivity"
             android:launchMode="singleTop" />
 
     </application>
