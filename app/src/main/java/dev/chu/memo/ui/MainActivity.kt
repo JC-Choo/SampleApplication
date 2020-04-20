@@ -16,6 +16,7 @@ import dev.chu.memo.ui.motion_layout.MotionActivity
 import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
+import dev.chu.memo.z_test.SampleCoroutine
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -27,6 +28,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i(TAG, "initView")
 
         binding.activity = this
+
+        val s = SampleCoroutine()
+//        s.main()
     }
 
     override fun onRestart() {
