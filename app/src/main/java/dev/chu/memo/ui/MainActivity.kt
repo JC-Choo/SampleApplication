@@ -9,6 +9,7 @@ import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.fav_tv_shows.FavTvShowsActivity
+import dev.chu.memo.ui.library_image.ImageLibraryComparisonActivity
 import dev.chu.memo.ui.map.CoronaActivity
 import dev.chu.memo.ui.memo.MemoActivity
 import dev.chu.memo.ui.merge_adapter.SearchRepositoriesActivity
@@ -102,5 +103,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun onClickFavTvSpeechActivity() {
         startActivity(Intent(this, SpeechActivity::class.java))
+    }
+
+    fun onClickImageLibraryComparisonActivity() {
+        startActivity(Intent(this, ImageLibraryComparisonActivity::class.java))
     }
 }

@@ -129,5 +129,15 @@
             android:gravity="center"
             android:textSize="20sp"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="ImageLibraryComparisonActivity"
+            android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </layout>

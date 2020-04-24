@@ -119,6 +119,10 @@
             android:name=".ui.SpeechActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".ui.library_image.ImageLibraryComparisonActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

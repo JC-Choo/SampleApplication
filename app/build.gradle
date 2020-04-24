@@ -172,9 +172,12 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:2.27.0'
 
     // glide : https://github.com/bumptech/glide
-    def glideVersion = "4.10.0"
+    def glideVersion = "4.11.0"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    // picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // gson : https://github.com/google/gson
     implementation 'com.google.code.gson:gson:2.8.6'
