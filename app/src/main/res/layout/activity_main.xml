@@ -14,130 +14,196 @@
             type="dev.chu.memo.ui.memo.MemoViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.MainActivity">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/main_bt_memo"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="메모 화면"
-            android:onClick="@{() -> activity.onClickMemo()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/main_bt_corona"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="구글 지도 테스트"
-            android:onClick="@{() -> activity.onClickCorona()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".ui.MainActivity">
 
-        <Button
-            android:id="@+id/main_bt_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="바텀네비 테스트"
-            android:onClick="@{() -> activity.onClickBottomNavigationActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickMemo()}"
+                    android:padding="10dp"
+                    android:text="메모 화면"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_github"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="깃헙 rx 테스"
-            android:onClick="@{() -> activity.onClickGithubReposActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_corona"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickCorona()}"
+                    android:padding="10dp"
+                    android:text="구글 지도 테스트"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="깃헙 유저 화면(코루틴)"
-            android:onClick="@{() -> activity.onClickUserActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_bottom_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickBottomNavigationActivity()}"
+                    android:padding="10dp"
+                    android:text="바텀네비 테스트"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_mvi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="MVI pattern"
-            android:onClick="@{() -> activity.onClickMviActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_github"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickGithubReposActivity()}"
+                    android:padding="10dp"
+                    android:text="깃헙 rx 테스"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_motion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Motion layout example"
-            android:onClick="@{() -> activity.onClickMotionActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickUserActivity()}"
+                    android:padding="10dp"
+                    android:text="깃헙 유저 화면(코루틴)"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_search_repositories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="SearchRepositoriesActivity"
-            android:onClick="@{() -> activity.onClickSearchRepositoriesActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_mvi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickMviActivity()}"
+                    android:padding="10dp"
+                    android:text="MVI pattern"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/main_bt_fav_tv_shows"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="FavTvShowsActivity"
-            android:onClick="@{() -> activity.onClickFavTvShowsActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_motion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickMotionActivity()}"
+                    android:padding="10dp"
+                    android:text="Motion layout example"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="SpeechActivity"
-            android:onClick="@{() -> activity.onClickFavTvSpeechActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_search_repositories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickSearchRepositoriesActivity()}"
+                    android:padding="10dp"
+                    android:text="SearchRepositoriesActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="ImageLibraryComparisonActivity"
-            android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="20sp"/>
+                <Button
+                    android:id="@+id/main_bt_fav_tv_shows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickFavTvShowsActivity()}"
+                    android:padding="10dp"
+                    android:text="FavTvShowsActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-    </LinearLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickFavTvSpeechActivity()}"
+                    android:padding="10dp"
+                    android:text="SpeechActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
+                    android:padding="10dp"
+                    android:text="ImageLibraryComparisonActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btn_bottom_sheet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="@{() -> activity.onClickBottomSheet()}"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Show Bottom Sheet"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_bottom_sheet_dialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="Show Bottom Sheet Dialog" />
+
+                <Button
+                    android:id="@+id/btn_bottom_sheet_dialog_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="Show Bottom Sheet Dialog Fragment" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
+                    android:padding="10dp"
+                    android:text="ImageLibraryComparisonActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
+                    android:padding="10dp"
+                    android:text="ImageLibraryComparisonActivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/main_bs"
+            layout="@layout/bottom_sheet" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

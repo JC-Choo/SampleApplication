@@ -2,12 +2,16 @@ package dev.chu.memo.ui
 
 import android.content.Intent
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
+import dev.chu.memo.ui.bottom_sheet.BottomSheetFragment
 import dev.chu.memo.ui.fav_tv_shows.FavTvShowsActivity
 import dev.chu.memo.ui.library_image.ImageLibraryComparisonActivity
 import dev.chu.memo.ui.map.CoronaActivity
@@ -24,6 +28,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @LayoutRes
     override fun getLayoutRes(): Int = R.layout.activity_main
 
+    private val bottomSheetFragment by lazy { BottomSheetFragment() }
+    private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
+
     // region lifeCycle
     override fun initView() {
         Log.i(TAG, "initView")
@@ -32,6 +39,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         val s = SampleCoroutine()
 //        s.main()
+
+        setBottomSheet()
     }
 
     override fun onRestart() {
@@ -65,6 +74,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
     // endregion
 
+    private fun setBottomSheet() {
+//        val dialogView = layoutInflater.inflate(R.layout.bottom_sheet, null)
+//        val dialog = BottomSheetDialog(this)
+//        dialog.setContentView(dialogView)
+//        dialog.show()
+
+        sheetBehavior = BottomSheetBehavior.from(binding.mainBs.bottomSheet)
+        sheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                //
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        binding.btnBottomSheet.text = "Close Sheet"
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        binding.btnBottomSheet.text = "Expand Sheet"
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+        })
+    }
+
+    // region onClick
     fun onClickMemo() {
         startActivity(Intent(this, MemoActivity::class.java))
     }
@@ -108,4 +151,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun onClickImageLibraryComparisonActivity() {
         startActivity(Intent(this, ImageLibraryComparisonActivity::class.java))
     }
+
+    fun onClickBottomSheet() {
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
+    // endregion
 }
