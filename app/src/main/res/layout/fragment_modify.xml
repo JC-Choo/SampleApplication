@@ -23,17 +23,18 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/include_toolbar"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/modify_fl_et_title"
             style="@style/custom_et"
             android:hint="@string/title"
             android:inputType="text"
             android:padding="10dp"
             android:text="@={viewModel.title}"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/include_toolbar" />
@@ -45,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modify_fl_et_title" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/modify_fl_et_content"
             style="@style/custom_et"
             android:layout_height="0dp"
@@ -54,6 +55,7 @@
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:text="@={viewModel.content}"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/modify_fl_view_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +80,8 @@
         <Button
             android:id="@+id/modify_fl_bt_cancel"
             style="@style/custom_bt"
-            android:text="@string/cancel"
             android:onClick="@{() -> fragment.onClickFinish()}"
+            android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/modify_fl_bt_save"
             app:layout_constraintStart_toStartOf="parent" />

@@ -13,7 +13,7 @@
         android:background="@drawable/badge_view"
         android:backgroundTint="@color/colorAccent"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="12sp"
         tools:text="1" />
 

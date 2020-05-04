@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/image"
-        android:background="@color/black_900"
+        android:background="@color/black"
         android:src="@drawable/location_few"
         app:altSrc="@drawable/location_plenty"
         android:layout_width="64dp"

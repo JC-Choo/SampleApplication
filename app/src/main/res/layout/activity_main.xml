@@ -37,7 +37,7 @@
                     android:onClick="@{() -> activity.onClickMemo()}"
                     android:padding="10dp"
                     android:text="메모 화면"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -48,7 +48,7 @@
                     android:onClick="@{() -> activity.onClickCorona()}"
                     android:padding="10dp"
                     android:text="구글 지도 테스트"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -59,7 +59,7 @@
                     android:onClick="@{() -> activity.onClickBottomNavigationActivity()}"
                     android:padding="10dp"
                     android:text="바텀네비 테스트"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -70,7 +70,7 @@
                     android:onClick="@{() -> activity.onClickGithubReposActivity()}"
                     android:padding="10dp"
                     android:text="깃헙 rx 테스"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -81,7 +81,7 @@
                     android:onClick="@{() -> activity.onClickUserActivity()}"
                     android:padding="10dp"
                     android:text="깃헙 유저 화면(코루틴)"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -92,7 +92,7 @@
                     android:onClick="@{() -> activity.onClickMviActivity()}"
                     android:padding="10dp"
                     android:text="MVI pattern"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -103,7 +103,7 @@
                     android:onClick="@{() -> activity.onClickMotionActivity()}"
                     android:padding="10dp"
                     android:text="Motion layout example"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -114,7 +114,7 @@
                     android:onClick="@{() -> activity.onClickSearchRepositoriesActivity()}"
                     android:padding="10dp"
                     android:text="SearchRepositoriesActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -125,7 +125,7 @@
                     android:onClick="@{() -> activity.onClickFavTvShowsActivity()}"
                     android:padding="10dp"
                     android:text="FavTvShowsActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -135,7 +135,7 @@
                     android:onClick="@{() -> activity.onClickFavTvSpeechActivity()}"
                     android:padding="10dp"
                     android:text="SpeechActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -145,7 +145,7 @@
                     android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
                     android:padding="10dp"
                     android:text="ImageLibraryComparisonActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -159,7 +159,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="Show Bottom Sheet"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/btn_bottom_sheet_dialog"
@@ -184,7 +184,7 @@
                     android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
                     android:padding="10dp"
                     android:text="ImageLibraryComparisonActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <Button
@@ -194,7 +194,7 @@
                     android:onClick="@{() -> activity.onClickImageLibraryComparisonActivity()}"
                     android:padding="10dp"
                     android:text="ImageLibraryComparisonActivity"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
             </LinearLayout>
