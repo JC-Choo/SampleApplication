@@ -239,6 +239,9 @@ dependencies {
 //    def paging_version = '2.1.1'
 //    implementation "androidx.paging:paging-runtime:$paging_version"
     // endregion
+
+    // module
+    implementation project(':BaseModule')
 }
 
 // In order to have parcelize annotation

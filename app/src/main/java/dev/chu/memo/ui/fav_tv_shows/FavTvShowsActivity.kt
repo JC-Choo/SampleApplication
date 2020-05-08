@@ -1,11 +1,12 @@
 package dev.chu.memo.ui.fav_tv_shows
 
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityFavTvShowsBinding
 import dev.chu.memo.etc.extension.TAG
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class FavTvShowsActivity : BaseActivity<ActivityFavTvShowsBinding>() {
     private val viewModel by viewModel<FavTvShowsViewModel>()
     private val adapter by inject<FavTvShowsAdapter>()
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         binding.favTvShowsRv.adapter = this.adapter

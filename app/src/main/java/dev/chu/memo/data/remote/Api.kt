@@ -45,7 +45,7 @@ object Api {
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })   // Retrofit 에서 통신 과정의 로그를 확인하기 위함. 로그의 level 을 지정
         .addInterceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
-                .header("Authorization", "token a81942a386644698dc2a1eb3b6e5a8a2a00bbfe3")
+                .header("Authorization", "token ${Const.TOKEN}")
             chain.proceed(requestBuilder.build())
         }
 //        .connectTimeout(TIMEOUT_MS, TimeUnit.SECONDS)       // 요청을 시작한 후 서버와의 TCP handshake가 완료되기까지 지속되는 시간. 즉, Retrofit이 설정된 연결 시간 제한 내에서 서버에 연결할 수 없는 경우 해당 요청을 실패한 것으로 계산.

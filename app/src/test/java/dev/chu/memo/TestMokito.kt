@@ -22,7 +22,7 @@ class TestMokito {
             .client(OkHttpClient.Builder().apply {
                 addInterceptor( Interceptor { chain ->
                     val requestBuilder = chain.request().newBuilder()
-                        .header("Authorization", "token 8eea78266a101bbea0045361c0017bdc3e574d8a")
+                        .header("Authorization", "token ${Const.TOKEN}")
                     chain.proceed(requestBuilder.build())
                 })
             }.build())

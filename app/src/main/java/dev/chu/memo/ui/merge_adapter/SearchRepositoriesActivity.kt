@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.data.remote.RepoSearchResult
 import dev.chu.memo.databinding.ActivitySearchRepositoriesBinding
 import dev.chu.memo.etc.extension.TAG
@@ -35,12 +35,10 @@ class SearchRepositoriesActivity : BaseActivity<ActivitySearchRepositoriesBindin
     private val adapter by inject<ReposAdapter>()
     private lateinit var loadStateAdapter: ReposLoadStateAdapter
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         setRecyclerView()
         initAdapter()
-    }
 
-    override fun initView(savedInstanceState: Bundle?) {
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         viewModel.searchRepo(query)
         initSearch(query)

@@ -2,7 +2,7 @@ package dev.chu.memo.etc.extension
 
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import dev.chu.memo.base.BaseActivity
+import dev.chu.basemodule.BaseActivity
 
 fun Fragment.replaceFragmentInFragment(@IdRes frameId: Int, fragment: Fragment) {
     childFragmentManager.transact {

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dev.chu.basemodule.BaseViewHolder
 import dev.chu.memo.R
-import dev.chu.memo.base.BindingViewHolder
 import dev.chu.memo.databinding.ItemIssueBinding
 import dev.chu.memo.entity.Issue
 
@@ -30,16 +30,6 @@ class IssuesAdapter : RecyclerView.Adapter<IssuesAdapter.IssueViewHolder>() {
 
     override fun getItemCount(): Int = items.size
 
-    inner class IssueViewHolder(view: View): BindingViewHolder<ItemIssueBinding>(view)
+    inner class IssueViewHolder(view: View): BaseViewHolder<ItemIssueBinding>(view)
 
-//    inner class IssueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//        fun bind(issue: Issue) {
-//            with(itemView) {
-//                val number = "#${issue.number}"
-//                issueNumber.text = number
-//                issueTitle.text = issue.title
-//                setOnClickListener { }
-//            }
-//        }
-//    }
 }

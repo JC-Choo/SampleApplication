@@ -1,13 +1,14 @@
 package dev.chu.memo.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
@@ -32,7 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
 
     // region lifeCycle
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         binding.activity = this

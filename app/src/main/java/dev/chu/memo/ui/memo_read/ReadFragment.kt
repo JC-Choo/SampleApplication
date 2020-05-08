@@ -10,8 +10,8 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.chu.basemodule.BaseFragment
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseFragment
 import dev.chu.memo.common.Const
 import dev.chu.memo.data.local.MemoData
 import dev.chu.memo.databinding.FragmentReadBinding
@@ -60,7 +60,7 @@ class ReadFragment : BaseFragment<FragmentReadBinding>(), OnBackPressedListener 
         }
     }
 
-    override fun setView(view: View?, savedInstanceState: Bundle?, arguments: Bundle?) {
+    override fun setView(view: View, savedInstanceState: Bundle?, arguments: Bundle?) {
         Log.i(TAG, "setView")
 
         binding.viewModel = memoVM

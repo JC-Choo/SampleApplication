@@ -2,10 +2,11 @@ package dev.chu.memo.ui.memo
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityMemoBinding
 import dev.chu.memo.etc.extension.*
@@ -18,7 +19,7 @@ class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_memo
 
     // region lifeCycle
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         binding.activity = this

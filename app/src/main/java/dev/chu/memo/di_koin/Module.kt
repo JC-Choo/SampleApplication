@@ -108,7 +108,7 @@ val networkModule = module {
             .client(OkHttpClient.Builder().apply {
                 addInterceptor( Interceptor { chain ->
                     val requestBuilder = chain.request().newBuilder()
-                        .header("Authorization", "token a81942a386644698dc2a1eb3b6e5a8a2a00bbfe3")
+                        .header("Authorization", "token ${Const.TOKEN}")
                     chain.proceed(requestBuilder.build())
                 })
                 addInterceptor(HttpLoggingInterceptor().apply {

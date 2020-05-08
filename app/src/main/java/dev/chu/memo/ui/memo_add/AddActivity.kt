@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
@@ -12,8 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData
@@ -41,7 +42,7 @@ class AddActivity : BaseActivity<ActivityAddBinding>() {
     private var listImageUrls: MutableList<ImageData> = mutableListOf()
 
     // region lifeCycle
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         binding.activity = this

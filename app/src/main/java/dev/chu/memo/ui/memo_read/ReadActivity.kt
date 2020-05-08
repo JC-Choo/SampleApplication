@@ -1,9 +1,10 @@
 package dev.chu.memo.ui.memo_read
 
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.databinding.ActivityReadBinding
 import dev.chu.memo.etc.extension.TAG
@@ -18,7 +19,7 @@ class ReadActivity : BaseActivity<ActivityReadBinding>(),
 
     private var memoId: Int = 0
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         memoId = intent.getIntExtra(Const.EXTRA.MEMO_ID, 0)

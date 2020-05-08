@@ -7,9 +7,11 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -26,8 +28,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMapsBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.alertDialog
@@ -82,7 +84,7 @@ class CoronaActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
     }
     // endregion
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -109,8 +111,9 @@ class CoronaActivity : BaseActivity<ActivityMapsBinding>(), OnMapReadyCallback {
 
     private fun observeViewModel() {
         coronaVM.refresh.observe(this, Observer {
-            if(it) showProgress()
-            else hideProgress()
+            binding.mapsPb.visibility = if(it) View.VISIBLE else View.GONE
+//            if(it) showProgress()
+//            else hideProgress()
         })
 
         coronaVM.storeByGeoList.observe(this, Observer {
