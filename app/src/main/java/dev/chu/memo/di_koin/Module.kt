@@ -20,6 +20,8 @@ import dev.chu.memo.ui.memo_read.ImageShowAdapter
 import dev.chu.memo.ui.merge_adapter.ReposAdapter
 import dev.chu.memo.ui.merge_adapter.SearchRepositoriesViewModel
 import dev.chu.memo.ui.mvi.MviViewModel
+import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewViewModel
+import dev.chu.memo.ui.recycler_multi_viewtype.etc.ResourceProvider
 import dev.chu.memo.ui.rv_coroutine.UserAdapter
 import dev.chu.memo.ui.rv_coroutine.UserViewModel
 import dev.chu.memo.ui.rx_activity.repo.GithubRepoViewModel
@@ -165,4 +167,13 @@ val adapterModule = module {
     factory { FavTvShowsAdapter(mutableListOf()) }
 }
 
-val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)
+
+
+val recyclerViewActivityModule = module {
+    viewModel { RecyclerViewViewModel(get()) }
+    single { ResourceProvider(androidApplication()) }
+}
+
+
+
+val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule, recyclerViewActivityModule)

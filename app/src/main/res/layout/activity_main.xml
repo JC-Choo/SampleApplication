@@ -161,6 +161,16 @@
                     android:text="Show Bottom Sheet"
                     android:textColor="@color/white" />
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{() -> activity.onClickRecyclerView()}"
+                    android:padding="10dp"
+                    android:text="ImageLibraryComparisonActivity"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

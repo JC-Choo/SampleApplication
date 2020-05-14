@@ -20,6 +20,7 @@ import dev.chu.memo.ui.memo.MemoActivity
 import dev.chu.memo.ui.merge_adapter.SearchRepositoriesActivity
 import dev.chu.memo.ui.motion_layout.MotionActivity
 import dev.chu.memo.ui.mvi.MviActivity
+import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
 import dev.chu.memo.z_test.SampleCoroutine
@@ -155,6 +156,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun onClickBottomSheet() {
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
+
+    fun onClickRecyclerView() {
+        startActivity(Intent(this, RecyclerViewActivity::class.java))
     }
     // endregion
 }

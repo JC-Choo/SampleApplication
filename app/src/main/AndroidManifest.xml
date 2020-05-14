@@ -123,6 +123,10 @@
             android:name=".ui.library_image.ImageLibraryComparisonActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".ui.recycler_multi_viewtype.ui.RecyclerViewActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>
