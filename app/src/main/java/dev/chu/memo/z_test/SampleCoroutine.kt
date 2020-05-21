@@ -1,12 +1,13 @@
 package dev.chu.memo.z_test
 
-import dev.chu.memo.data.remote.Api
+import dev.chu.memo.common.Const
 import dev.chu.memo.data.remote.ApiService
 import dev.chu.memo.entity.User
+import dev.chu.module_network.Api
 import kotlinx.coroutines.*
 
 class SampleCoroutine {
-    val api = Api.createService(ApiService::class.java)
+    val api = Api.createService(ApiService::class.java, Const.URL_GITHUB)
 
     suspend fun fetchUser2(): List<User>? {
         return withContext(Dispatchers.IO) {
