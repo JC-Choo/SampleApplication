@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
 import dev.chu.memo.databinding.ActivityMainBinding
+import dev.chu.memo.etc.click.ClickBindingComponent
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.bottom_sheet.BottomSheetFragment
@@ -23,24 +24,27 @@ import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
-import dev.chu.memo.z_test.SampleCoroutine
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+//class MainActivity : BaseActivity<ActivityMainBinding>() {
+//
+//    @LayoutRes
+//    override fun getLayoutRes(): Int = R.layout.activity_main
 
-    @LayoutRes
-    override fun getLayoutRes(): Int = R.layout.activity_main
+class MainActivity: AppCompatActivity(), View.OnClickListener {
 
     private val bottomSheetFragment by lazy { BottomSheetFragment() }
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
+    private lateinit var binding: ActivityMainBinding
 
     // region lifeCycle
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         Log.i(TAG, "initView")
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main, ClickBindingComponent(lifecycle))
+        binding.lifecycleOwner = this
+        binding.clickListener = this
         binding.activity = this
-
-        val s = SampleCoroutine()
-//        s.main()
 
         setBottomSheet()
     }
@@ -93,12 +97,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     BottomSheetBehavior.STATE_HIDDEN -> {
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
-                        binding.btnBottomSheet.text = "Close Sheet"
+                        binding.mainBtBottomSheet.text = "Close Sheet"
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        binding.btnBottomSheet.text = "Expand Sheet"
+                        binding.mainBtBottomSheet.text = "Expand Sheet"
                     }
                     BottomSheetBehavior.STATE_DRAGGING -> {
                     }
@@ -110,56 +114,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     // region onClick
-    fun onClickMemo() {
-        startActivity(Intent(this, MemoActivity::class.java))
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.main_bt_memo -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.main_bt_corona -> startActivity(Intent(this, CoronaActivity::class.java))
+            R.id.main_bt_bottom_navigation -> startActivity(Intent(this, BottomNavigationActivity::class.java))
+            R.id.main_bt_github -> startActivity(Intent(this, GithubReposActivity::class.java))
+            R.id.main_bt_user -> startActivity(Intent(this, UserActivity::class.java))
+            R.id.main_bt_mvi -> startActivity(Intent(this, MviActivity::class.java))
+            R.id.main_bt_motion -> startActivity(Intent(this, MotionActivity::class.java))
+            R.id.main_bt_search_repositories -> startActivity(Intent(this, SearchRepositoriesActivity::class.java))
+            R.id.main_bt_fav_tv_shows -> startActivity(Intent(this, FavTvShowsActivity::class.java))
+            R.id.main_bt_Fav_tv_speech -> startActivity(Intent(this, SpeechActivity::class.java))
+            R.id.main_bt_image_library -> startActivity(Intent(this, ImageLibraryComparisonActivity::class.java))
+            R.id.main_bt_bottom_sheet -> bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+            R.id.main_bt_rv -> {
+                Log.e(TAG, "rvrvrvrv")
+                startActivity(Intent(this, RecyclerViewActivity::class.java))
+            }
+        }
     }
 
-    fun onClickCorona() {
-        startActivity(Intent(this, CoronaActivity::class.java))
-    }
-
-    fun onClickBottomNavigationActivity() {
-        startActivity(Intent(this, BottomNavigationActivity::class.java))
-    }
-
-    fun onClickGithubReposActivity() {
-        startActivity(Intent(this, GithubReposActivity::class.java))
-    }
-
-    fun onClickUserActivity() {
-        startActivity(Intent(this, UserActivity::class.java))
-    }
-
-    fun onClickMviActivity() {
-        startActivity(Intent(this, MviActivity::class.java))
-    }
-
-    fun onClickMotionActivity() {
-        startActivity(Intent(this, MotionActivity::class.java))
-    }
-
-    fun onClickSearchRepositoriesActivity() {
-        startActivity(Intent(this, SearchRepositoriesActivity::class.java))
-    }
-
-    fun onClickFavTvShowsActivity() {
-        startActivity(Intent(this, FavTvShowsActivity::class.java))
-    }
-
-    fun onClickFavTvSpeechActivity() {
-        startActivity(Intent(this, SpeechActivity::class.java))
-    }
-
-    fun onClickImageLibraryComparisonActivity() {
-        startActivity(Intent(this, ImageLibraryComparisonActivity::class.java))
-    }
-
-    fun onClickBottomSheet() {
-        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-    }
-
-    fun onClickRecyclerView() {
-        startActivity(Intent(this, RecyclerViewActivity::class.java))
-    }
+//    fun onClickRecyclerView() {
+//        Log.e(TAG, "rvrvrvrv")
+//        startActivity(Intent(this, RecyclerViewActivity::class.java))
+//    }
     // endregion
 }
