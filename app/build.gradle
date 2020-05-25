@@ -106,7 +106,7 @@ android {
 
     defaultConfig {
         applicationId "dev.chu.memo"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode readVersionCode()
         versionName readVersionName()
@@ -236,6 +236,8 @@ dependencies {
 //    def paging_version = '2.1.1'
 //    implementation "androidx.paging:paging-runtime:$paging_version"
     // endregion
+
+    implementation "androidx.security:security-crypto:1.0.0-rc01"
 
     // module
     implementation project(':BaseModule')
