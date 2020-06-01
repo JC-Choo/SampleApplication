@@ -6,7 +6,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
         <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+<!--        <item name="android:windowAnimationStyle">-->
+<!--            @style/WindowAnimations-->
+<!--        </item>-->
+    </style>
+
+    <style name="WindowAnimations">
+        <item name="android:activityOpenEnterAnimation">
+            @anim/enter_activity
+        </item>
+        <item name="android:activityOpenExitAnimation">
+            @anim/exit_activity
+        </item>
+        <item name="android:activityCloseEnterAnimation">
+            @anim/enter_activity
+        </item>
+        <item name="android:activityCloseExitAnimation">
+            @anim/exit_activity
+        </item>
     </style>
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
@@ -19,11 +38,9 @@
         <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
     </style>
 
-    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
-    </style>
+    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored"></style>
 
-    <style name="buttonBarButtonStyle.Neutral">
-    </style>
+    <style name="buttonBarButtonStyle.Neutral"></style>
 
     <style name="buttonBarButtonStyle.Negative">
         <item name="android:textColor">@color/black</item>

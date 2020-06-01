@@ -49,6 +49,14 @@ class MemoActivity  : BaseActivity<ActivityMemoBinding>() {
                 removePref(Const.PREF.MEMO_CONTENT)
             })
         }
+
+        // https://levelup.gitconnected.com/animate-android-activities-transition-bf7f89a74b35
+        overridePendingTransition(R.anim.enter_activity, R.anim.exit_activity)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.enter_activity, R.anim.exit_activity)
     }
 
     override fun onRestart() {
