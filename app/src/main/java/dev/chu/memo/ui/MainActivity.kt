@@ -24,6 +24,7 @@ import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
+import dev.chu.memo.ui.single_view_state.SingleViewStateActivity
 
 //class MainActivity : BaseActivity<ActivityMainBinding>() {
 //
@@ -128,10 +129,8 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
             R.id.main_bt_Fav_tv_speech -> startActivity(Intent(this, SpeechActivity::class.java))
             R.id.main_bt_image_library -> startActivity(Intent(this, ImageLibraryComparisonActivity::class.java))
             R.id.main_bt_bottom_sheet -> bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-            R.id.main_bt_rv -> {
-                Log.e(TAG, "rvrvrvrv")
-                startActivity(Intent(this, RecyclerViewActivity::class.java))
-            }
+            R.id.main_bt_rv -> { startActivity(Intent(this, RecyclerViewActivity::class.java)) }
+            R.id.main_bt_single_view_state -> { startActivity(Intent(this, SingleViewStateActivity::class.java)) }
         }
     }
 

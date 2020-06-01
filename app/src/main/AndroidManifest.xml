@@ -23,7 +23,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk tools:overrideLibrary="androidx.security"/>
+    <uses-sdk tools:overrideLibrary="androidx.security" />
 
     <application
         android:name=".GlobalApplication"
@@ -127,6 +127,10 @@
 
         <activity
             android:name=".ui.recycler_multi_viewtype.ui.RecyclerViewActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.single_view_state.SingleViewStateActivity"
             android:launchMode="singleTop" />
 
     </application>
