@@ -21,6 +21,7 @@ import dev.chu.memo.ui.memo.MemoActivity
 import dev.chu.memo.ui.merge_adapter.SearchRepositoriesActivity
 import dev.chu.memo.ui.motion_layout.MotionActivity
 import dev.chu.memo.ui.mvi.MviActivity
+import dev.chu.memo.ui.notification.NotificationActivity
 import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
@@ -131,6 +132,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
             R.id.main_bt_bottom_sheet -> bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
             R.id.main_bt_rv -> { startActivity(Intent(this, RecyclerViewActivity::class.java)) }
             R.id.main_bt_single_view_state -> { startActivity(Intent(this, SingleViewStateActivity::class.java)) }
+            R.id.main_bt_notification -> { startActivity(Intent(this, NotificationActivity::class.java)) }
         }
     }
 
