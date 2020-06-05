@@ -26,6 +26,9 @@ import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
 import dev.chu.memo.ui.single_view_state.SingleViewStateActivity
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 //class MainActivity : BaseActivity<ActivityMainBinding>() {
 //
@@ -49,6 +52,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
         binding.activity = this
 
         setBottomSheet()
+        cancellingCoroutineExecution()
     }
 
     override fun onRestart() {
@@ -113,6 +117,21 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
+    }
+
+    private fun cancellingCoroutineExecution() = runBlocking {
+        val job = launch {
+            repeat(1000) { i ->
+                println("job : I'm sleeping $i...")
+                delay(500L)
+            }
+        }
+
+        delay(1300L)
+        println("main : I'm tired of waiting!")
+        job.cancel()
+        job.join()
+        println("main : Now I can quit.")
     }
 
     // region onClick
