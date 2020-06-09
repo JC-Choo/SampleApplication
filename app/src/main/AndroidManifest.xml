@@ -137,16 +137,18 @@
             android:name=".ui.notification.NotificationActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".ui.AnimationActivity"
+            android:launchMode="singleTop" />
+
         <receiver
             android:name=".ui.notification.receiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="false">
-        </receiver>
+            android:exported="false" />
         <receiver
             android:name=".ui.notification.receiver.SnoozeReceiver"
             android:enabled="true"
-            android:exported="false">
-        </receiver>
+            android:exported="false" />
 
     </application>
 

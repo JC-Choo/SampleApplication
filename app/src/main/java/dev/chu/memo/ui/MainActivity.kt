@@ -152,6 +152,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
             R.id.main_bt_rv -> { startActivity(Intent(this, RecyclerViewActivity::class.java)) }
             R.id.main_bt_single_view_state -> { startActivity(Intent(this, SingleViewStateActivity::class.java)) }
             R.id.main_bt_notification -> { startActivity(Intent(this, NotificationActivity::class.java)) }
+            R.id.main_bt_animation -> { startActivity(Intent(this, AnimationActivity::class.java)) }
         }
     }
 
