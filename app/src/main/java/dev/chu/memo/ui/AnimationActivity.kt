@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import dev.chu.memo.R
 import kotlinx.android.synthetic.main.activity_animation.*
 
+// 코드 및 설명 : https://levelup.gitconnected.com/fun-learning-android-basic-animator-properties-3f96856a6a3
+// 자세한 설명 : https://medium.com/@elye.project/which-android-animator-to-use-ced54e21d317
+
 class AnimationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
