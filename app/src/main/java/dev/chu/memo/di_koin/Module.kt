@@ -6,18 +6,22 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dev.chu.memo.BuildConfig
 import dev.chu.memo.common.Const
-import dev.chu.memo.data.local.AppDatabase
+import dev.chu.memo.data.local.FavTvShowsDatabase
+import dev.chu.memo.data.local.GithubDatabase
 import dev.chu.memo.data.local.MemoDatabase
 import dev.chu.memo.data.remote.ApiService
-import dev.chu.memo.data.repository.GithubRepository
-import dev.chu.memo.data.repository.RoomRepository
-import dev.chu.memo.data.repository.StoreRepository
-import dev.chu.memo.data.repository.UsersRepository
+import dev.chu.memo.data.repository.*
+import dev.chu.memo.ui.fav_tv_shows.FavTvShowsAdapter
+import dev.chu.memo.ui.fav_tv_shows.FavTvShowsViewModel
 import dev.chu.memo.ui.map.CoronaViewModel
 import dev.chu.memo.ui.memo.MemoViewModel
 import dev.chu.memo.ui.memo_add.ImageModifyAdapter
 import dev.chu.memo.ui.memo_read.ImageShowAdapter
+import dev.chu.memo.ui.merge_adapter.ReposAdapter
+import dev.chu.memo.ui.merge_adapter.SearchRepositoriesViewModel
 import dev.chu.memo.ui.mvi.MviViewModel
+import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewViewModel
+import dev.chu.memo.ui.recycler_multi_viewtype.etc.ResourceProvider
 import dev.chu.memo.ui.rv_coroutine.UserAdapter
 import dev.chu.memo.ui.rv_coroutine.UserViewModel
 import dev.chu.memo.ui.rx_activity.repo.GithubRepoViewModel
@@ -106,7 +110,7 @@ val networkModule = module {
             .client(OkHttpClient.Builder().apply {
                 addInterceptor( Interceptor { chain ->
                     val requestBuilder = chain.request().newBuilder()
-                        .header("Authorization", "token a81942a386644698dc2a1eb3b6e5a8a2a00bbfe3")
+                        .header("Authorization", "token ${Const.TOKEN}")
                     chain.proceed(requestBuilder.build())
                 })
                 addInterceptor(HttpLoggingInterceptor().apply {
@@ -130,7 +134,8 @@ val apiModule = module {
 
 val roomModule = module {
     factory { MemoDatabase.getInstance(androidApplication()).getMemoDao() }
-    factory { AppDatabase.get().githubDao() }
+    factory { GithubDatabase.get().githubDao() }
+    factory { FavTvShowsDatabase.getInstance(androidApplication()).getFavTvShowsDao() }
 
 }
 val repositoryModule = module {
@@ -138,6 +143,7 @@ val repositoryModule = module {
     factory { StoreRepository(get(named(CORONA))) }
     factory { GithubRepository(get(named(GITHUB_RX)), get()) }
     factory { UsersRepository(get(named(GITHUB))) }
+    factory { MergeRepository(get(named(GITHUB))) }
 }
 
 val viewModelModule = module {
@@ -145,6 +151,8 @@ val viewModelModule = module {
     viewModel { CoronaViewModel(get()) }
     viewModel { UserViewModel(get(named(GITHUB))) }
     viewModel { MviViewModel(androidApplication(), get()) }
+    viewModel { SearchRepositoriesViewModel(get()) }
+    viewModel { FavTvShowsViewModel(get()) }
     factory { GithubReposViewModel(get()) }
     factory { GithubRepoViewModel(get()) }
 }
@@ -155,6 +163,17 @@ val adapterModule = module {
     factory { GithubReposAdapter() }
     factory { IssuesAdapter() }
     factory { UserAdapter()}
+    factory { ReposAdapter() }
+    factory { FavTvShowsAdapter(mutableListOf()) }
 }
 
-val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule)
+
+
+val recyclerViewActivityModule = module {
+    viewModel { RecyclerViewViewModel(get()) }
+    single { ResourceProvider(androidApplication()) }
+}
+
+
+
+val myDiModule = listOf(networkModule, apiModule, roomModule, repositoryModule, viewModelModule, adapterModule, recyclerViewActivityModule)

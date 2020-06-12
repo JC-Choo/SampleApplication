@@ -71,10 +71,17 @@ interface ApiService {
         @Body request: CreateIssueRequest
     ): Single<Issue>
 
+    @GET("/users")
+    fun getUserAsyncRx() : Single<List<User>>
+
     @GET("users")
     suspend fun getUserAsync() : Response<List<User>>
 
-    @GET("/users")
-    fun getUserAsyncRx() : Single<List<User>>
+    @GET("search/repositories?sort=stars")
+    suspend fun searchRepos(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") itemsPerPage: Int
+    ): Response<RepoSearchResponse>
     // endregion
 }

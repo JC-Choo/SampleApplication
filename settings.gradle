@@ -1,2 +1,4 @@
-include ':app'
 rootProject.name='Memo'
+include ':app', ':BaseModule'
+project(':BaseModule').projectDir = new File('/Users/chu/AndroidStudioProjects/module/BaseModule')
+include ':module_network'

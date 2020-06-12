@@ -88,6 +88,7 @@ object BindingAdapter {
         (adapter as? MemoAdapter)?.apply {
             setItems(data)
         } ?: run {
+            this.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing_250)))
             adapter = MemoAdapter(
                 this.context,
                 data,

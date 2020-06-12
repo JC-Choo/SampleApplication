@@ -1,7 +1,7 @@
 package dev.chu.memo
 
+import dev.chu.memo.etc.hash_map.BasicHashMap
 import org.junit.Test
-import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -10,40 +10,41 @@ import java.util.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        val scan = Scanner(System.`in`)
+    fun testHashMap() {
+        val aHashMap = BasicHashMap<String, String>()
 
-//        val n = scan.nextLine().trim().toInt()
-        val n = 9
+        aHashMap.put("A", "Alpha")
+        aHashMap.put("B", "Bravo")
+        aHashMap.put("C", "Charlie")
+        aHashMap.put("D", "Delta")
+        aHashMap.put("E", "Echo")
+        aHashMap.put("F", "Foxtrot")
+        aHashMap.put("G", "Golf")
+        aHashMap.put("H", "Hotel")
+        aHashMap.put("I", "India")
+        aHashMap.put("J", "July")
+        aHashMap.put("K", "Kilo")
+        aHashMap.put("L", "Lima")
+        aHashMap.put("M", "Mike")
+        aHashMap.put("N", "November")
+        aHashMap.put("O", "Oscar")
+        aHashMap.put("P", "Papa")
+        aHashMap.put("Q", "Quebec")
+        aHashMap.put("R", "Romeo")
+        aHashMap.put("S", "Sierra")
+        aHashMap.put("T", "Tango")
+        aHashMap.put("U", "Uniform")
+        aHashMap.put("V", "Victor")
+        aHashMap.put("W", "Whiskey")
+        aHashMap.put("X", "X-Ray")
+        aHashMap.put("Y", "Yankee")
+        aHashMap.put("Z", "Zulu")
 
-//        val ar = scan.nextLine().split(" ").map{ it.trim().toInt() }.toTypedArray()
-        val ar = arrayOf(10, 20, 10, 20, 10, 50, 30, 10, 20)
+        for (key in 'A'..'Z') {
+            println("Key = [$key] value =[${aHashMap.get(key.toString())}]")
+        }
 
-        val result = sockMerchant(n, ar)
-
-        println(result)
-    }
-
-    private fun sockMerchant(n: Int, ar: Array<Int>): Int {
-        ar.sort()
-        var result = 0
-//        for (i in 0 until n - 1) {
-//            println("ar[$i]= " + ar[i])
-//            if (ar[i] == ar[i + 1]) {
-//                result++
-//            }
-//        }
-//
-//        ar.forEachIndexed { index, i ->
-//            if(ar[i] == ar[i+1]) {
-//                if(result != result)
-//                result ++
-//            }
-//        }
-
-        ar.toHashSet().forEach { println("it = $it") }
-//        ar.forEach { println("it = $it") }
-
-        return result
+        println()
+        println(aHashMap.toString())
     }
 }

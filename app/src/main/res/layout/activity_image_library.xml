@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="dev.chu.memo.ui.library_image.ImageLibraryComparisonActivity" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/image_library_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picasso" />
+
+            <ImageView
+                android:id="@+id/image_library_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/image_library_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> activity.onClickPicasso()}"
+                android:text="이미지 로드(picasso)" />
+
+            <TextView
+                android:id="@+id/image_library_tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Glide" />
+
+            <ImageView
+                android:id="@+id/image_library_iv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> activity.onClickGlide()}"
+                android:text="이미지 로드(picasso)" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

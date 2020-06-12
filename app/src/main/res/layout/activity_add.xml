@@ -50,7 +50,7 @@
             android:layout_height="0dp"
             android:gravity="top"
             android:hint="@string/content"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:padding="10dp"
             android:text="@={viewModel.content}"
             app:layout_constraintBottom_toTopOf="@id/write_view_3"

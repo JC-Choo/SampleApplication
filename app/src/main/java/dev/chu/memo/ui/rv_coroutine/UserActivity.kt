@@ -1,10 +1,11 @@
 package dev.chu.memo.ui.rv_coroutine
 
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityUserBinding
 import dev.chu.memo.etc.extension.TAG
 import org.koin.android.ext.android.inject
@@ -19,7 +20,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>() {
     private val userVM by viewModel<UserViewModel>()
     private val userAdapter by inject<UserAdapter>()
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         binding.adapter = userAdapter

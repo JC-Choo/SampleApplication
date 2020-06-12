@@ -1,11 +1,12 @@
 package dev.chu.memo.ui.bottom
 
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
-import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityBottomNavigationBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.replaceFragment
@@ -17,7 +18,7 @@ class BottomNavigationActivity: BaseActivity<ActivityBottomNavigationBinding>() 
 
     private var count = 10
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         Log.i(TAG, "initView")
 
         replaceFragment(binding.bottomNavigationFl.id, HomeFragment.newInstance(count), HomeFragment.TAG)

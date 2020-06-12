@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dev.chu.memo.ui.motion_layout.ViewpagerHeader xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    app:layoutDescription="@xml/scene_23"
+    app:progress="0">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/walkthrough" />
+
+</dev.chu.memo.ui.motion_layout.ViewpagerHeader>
