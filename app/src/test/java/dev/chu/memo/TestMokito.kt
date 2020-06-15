@@ -40,7 +40,7 @@ class TestMokito {
             .test()
             .awaitDone(3, TimeUnit.SECONDS)
             .assertValue {
-                println(it)
+                println("$it ")
                 it.isNotEmpty()
             }
             .assertComplete()
