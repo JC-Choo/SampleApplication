@@ -38,7 +38,7 @@ class TestMokito {
                 GsonBuilder().setLenient().create().fromJson(it, type) as List<GithubRepo>
             }
             .test()
-            .awaitDone(3, TimeUnit.SECONDS)
+            .awaitDone(4, TimeUnit.SECONDS)
             .assertValue {
                 println("$it ")
                 it.isNotEmpty()
