@@ -16,7 +16,7 @@
 
     <!-- 쓰기 권한은 암시적으로 읽기를 허용하므로 외부 저장소에 쓰려면 다음과 같이 하나의 권한만 요청하면 됩니다. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 애플리케이션의 필수 기능이 사진 촬영이라면 required="true", 사용하기는 하지만 꼭 핑료한 것이 아니라면 "false" 설정 -->
+    <!-- 애플리케이션의 필수 기능이 사진 촬영이라면 required="true", 사용하기는 하지만 꼭 필요한 것이 아니라면 "false" 설정 -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -139,6 +139,10 @@
 
         <activity
             android:name=".ui.AnimationActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.image_crop.ImageCropActivity"
             android:launchMode="singleTop" />
 
         <receiver
