@@ -58,7 +58,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.MainActivity">
+<!--        <activity android:name=".ui.MainActivity">-->
+        <activity android:name=".ui.crop.CropActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -141,9 +142,9 @@
             android:name=".ui.AnimationActivity"
             android:launchMode="singleTop" />
 
-        <activity
-            android:name=".ui.image_crop.ImageCropActivity"
-            android:launchMode="singleTop" />
+<!--        <activity-->
+<!--            android:name=".ui.crop.CropActivity"-->
+<!--            android:launchMode="singleTop" />-->
 
         <receiver
             android:name=".ui.notification.receiver.AlarmReceiver"
