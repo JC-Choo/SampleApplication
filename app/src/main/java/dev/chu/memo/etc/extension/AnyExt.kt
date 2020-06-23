@@ -284,16 +284,35 @@ private fun Activity.centerCrop(
 
                     val bytes = ByteArrayOutputStream()
                     resultBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-                    val path = if(Build.VERSION.SDK_INT < 29) {
+
+                    val path =
+//                        if(Build.VERSION.SDK_INT < 29) {
                         MediaStore.Images.Media.insertImage(
                             this.contentResolver,
                             resultBitmap,
                             "unknown",
                             null
                         )
-                    } else {
-                        MediaStore.MediaColumns.IS_PENDING
-                    }
+                        /**
+                         * insertImage is deprecated.
+                         * -> MediaColumns.IS_PENDING 로 대체
+                         *
+                         * MediaColumns.IS_PENDING
+                         * 미디어 항목이 보류 중이고 여전히 소유자에 의해 삽입되는 중인지를 가리키는 플래그.
+                         * 플래그가 설정되어있는 동안, 항목의 소유자만이 기본 파일을 열 수 있다; 다른 파일로부터 요청은 거절될 것이다.
+                         *
+                         * 보류중인 항목들이 "0"으로 field를 설정함으로써 게시될때 까지, 또는 "DATE_EXPIRES" 에 의해 정의됨으로써 만료될떄 까지 유지될 것이다.
+                         * 이 상수는 ContentValues or Cursor 객체를 통해 ContentProvider와 함께 사용될 수 있는 column(열) 이름을 표현한다.
+                         * 이 열에 저장된 값은 Cursor#FIELD_TYPE_INTEGER 이다.
+                         */
+//                    } else {
+//                        val values = ContentValues().apply {
+//                            put(MediaStore.Images.Media.TITLE, "unknown")
+//                            putNull(MediaStore.Images.Media.DESCRIPTION)
+//                            put(MediaStore.MediaColumns.IS_PENDING, 1)
+//                        }
+//                        contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values).toString()
+//                    }
                     listener.onSuccess(false, Uri.parse(path))
                 }
             } catch (e: FileNotFoundException) {

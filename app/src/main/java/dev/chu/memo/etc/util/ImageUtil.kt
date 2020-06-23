@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
+import kotlin.math.abs
 
 object ImageUtil {
     fun rotateImage(source: Bitmap, angle: Float): Bitmap {
@@ -50,8 +51,8 @@ object ImageUtil {
 
         return Bitmap.createBitmap(
             inBitmap,
-            Math.abs(dx).toInt(),
-            Math.abs(dy).toInt(),
+            abs(dx).toInt(),
+            abs(dy).toInt(),
             width,
             height,
             matrix,
@@ -59,7 +60,7 @@ object ImageUtil {
         )
     }
 
-    fun getImageRealPathFromURI(cr: ContentResolver, contentUri: Uri): String? {
+    fun getImageRealPathFromURI(cr: ContentResolver, contentUri: Uri): String {
         val proj = arrayOf(MediaStore.Images.Media._ID)
         val cursor = cr.query(
             contentUri,
@@ -70,7 +71,7 @@ object ImageUtil {
         ) // Order-by clause (ascending by name)
 
         return if (cursor == null) {
-            contentUri.path
+            contentUri.path!!
         } else {
             val path = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
             cursor.moveToFirst()
