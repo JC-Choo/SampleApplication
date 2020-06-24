@@ -1,4 +1,3 @@
-include ':coroutine_retrofit'
 rootProject.name='Memo'
 include ':app', ':BaseModule'
 project(':BaseModule').projectDir = new File('/Users/chu/AndroidStudioProjects/module/BaseModule')

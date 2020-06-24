@@ -10,11 +10,10 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../../module/BaseModule" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/coroutine_retrofit" />
             <option value="$PROJECT_DIR$/module_network" />
+            <option value="$PROJECT_DIR$/../../module/BaseModule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

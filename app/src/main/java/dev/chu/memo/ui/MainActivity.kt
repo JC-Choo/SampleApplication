@@ -12,8 +12,10 @@ import dev.chu.memo.R
 import dev.chu.memo.databinding.ActivityMainBinding
 import dev.chu.memo.etc.click.ClickBindingComponent
 import dev.chu.memo.etc.extension.TAG
+import dev.chu.memo.ui.base_rv_test.BaseRVActivity
 import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.bottom_sheet.BottomSheetFragment
+import dev.chu.memo.ui.crop.CropActivity
 import dev.chu.memo.ui.fav_tv_shows.FavTvShowsActivity
 import dev.chu.memo.ui.library_image.ImageLibraryComparisonActivity
 import dev.chu.memo.ui.map.CoronaActivity
@@ -153,6 +155,8 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
             R.id.main_bt_single_view_state -> { startActivity(Intent(this, SingleViewStateActivity::class.java)) }
             R.id.main_bt_notification -> { startActivity(Intent(this, NotificationActivity::class.java)) }
             R.id.main_bt_animation -> { startActivity(Intent(this, AnimationActivity::class.java)) }
+            R.id.main_bt_crop -> { startActivity(Intent(this, CropActivity::class.java)) }
+            R.id.main_bt_base_rv -> { startActivity(Intent(this, BaseRVActivity::class.java)) }
         }
     }
 

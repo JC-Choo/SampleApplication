@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="rowMainListObj"
+            type="dev.chu.memo.ui.base_rv_test.ItemModel" />
+    </data>
+
+    <TextView
+        android:id="@+id/rowCategoryListTextViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="8dp"
+        android:text="@{rowMainListObj.name}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+</layout>
