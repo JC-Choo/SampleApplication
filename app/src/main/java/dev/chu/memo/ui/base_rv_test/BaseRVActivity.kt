@@ -13,6 +13,8 @@ import dev.chu.memo.R
 import dev.chu.memo.databinding.ActivityBaseRvBinding
 import dev.chu.memo.etc.extension.showToast
 
+// https://medium.com/dev-genius/creating-a-recyclerview-adapter-which-can-be-used-with-any-data-model-and-any-item-row-view-with-1144ca58f0be
+
 class BaseRVActivity : AppCompatActivity(), ListItemOnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
