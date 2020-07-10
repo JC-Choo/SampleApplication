@@ -34,11 +34,11 @@ object Api {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })   // Retrofit 에서 통신 과정의 로그를 확인하기 위함. 로그의 level 을 지정
-        .addInterceptor { chain ->
-            val requestBuilder = chain.request().newBuilder()
-                .header("Authorization", "token 76dca726488dff0477afcb5ed6d435453a5faf4f")
-            chain.proceed(requestBuilder.build())
-        }
+//        .addInterceptor { chain ->
+//            val requestBuilder = chain.request().newBuilder()
+//                .header("Authorization", "token 76dca726488dff0477afcb5ed6d435453a5faf4f")
+//            chain.proceed(requestBuilder.build())
+//        }
         .build()
 
 

@@ -77,6 +77,9 @@ interface ApiService {
     @GET("users")
     suspend fun getUserAsync() : Response<List<User>>
 
+    @GET("/search/repositories?q=stars:>1&sort=stars&per_page=100")
+    suspend fun getPopularRepos(): Repository
+
     @GET("search/repositories?sort=stars")
     suspend fun searchRepos(
         @Query("q") query: String,
