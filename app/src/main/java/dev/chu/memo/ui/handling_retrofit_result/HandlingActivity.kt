@@ -9,6 +9,8 @@ import dev.chu.memo.databinding.ActivityHandlingBinding
 import dev.chu.memo.etc.extension.showToast
 import dev.chu.memo.ui.rv_coroutine.UserAdapter
 
+// https://medium.com/swlh/kotlin-sealed-class-for-success-and-error-handling-d3054bef0d4e
+
 class HandlingActivity : BaseActivity<ActivityHandlingBinding>() {
 
     // `viewModels` is a extension from fragment-ktx
