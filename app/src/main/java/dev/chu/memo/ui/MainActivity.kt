@@ -17,6 +17,7 @@ import dev.chu.memo.ui.bottom.BottomNavigationActivity
 import dev.chu.memo.ui.bottom_sheet.BottomSheetFragment
 import dev.chu.memo.ui.crop.CropActivity
 import dev.chu.memo.ui.fav_tv_shows.FavTvShowsActivity
+import dev.chu.memo.ui.heart_animation.HeartActivity
 import dev.chu.memo.ui.library_image.ImageLibraryComparisonActivity
 import dev.chu.memo.ui.map.CoronaActivity
 import dev.chu.memo.ui.memo.MemoActivity
@@ -157,6 +158,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
             R.id.main_bt_animation -> { startActivity(Intent(this, AnimationActivity::class.java)) }
             R.id.main_bt_crop -> { startActivity(Intent(this, CropActivity::class.java)) }
             R.id.main_bt_base_rv -> { startActivity(Intent(this, BaseRVActivity::class.java)) }
+            R.id.main_bt_heart -> { startActivity(Intent(this, HeartActivity::class.java)) }
         }
     }
 
