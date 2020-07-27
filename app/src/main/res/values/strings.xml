@@ -232,4 +232,18 @@
     <string name="no">no</string>
     <string name="permission_permanent_denial_video_call">permission_permanent_denial_video_call</string>
     <!-- endregion -->
+
+    <!--region viewpager2-->
+    <string name="doppelganger_image_path">doppelgangers/%d.jpg</string>
+    <string name="image_loading_error">Problem in loading image</string>
+
+    <string-array name="doppelganger_names">
+        <item>Doguel Jackson</item>
+        <item>Llama Lautner</item>
+        <item>Doggison Ford</item>
+        <item>Dogard Barkson</item>
+        <item>Charlie Catlin</item>
+        <item>Frogonna</item>
+    </string-array>
+    <!--    endregion-->
 </resources>
