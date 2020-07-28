@@ -1,75 +1,77 @@
 package dev.chu.memo.ui.view_pager_2
 
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.chu.memo.R
 import kotlinx.android.synthetic.main.activity_view_pager_2.*
 
 class ViewPager2Activity : AppCompatActivity() {
+    val USE_GRID = true
+    //        val USE_GRID = true
+    val ITEMS_PER_PAGE = 4
+    var selectedItemPos = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_pager_2)
 
-        with(viewPager) {
-//            val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.spacing_675)
-//            val pagerWidth = resources.getDimensionPixelOffset(R.dimen.spacing_375)
-//            val screenWidth = resources.displayMetrics.widthPixels
-//            val offsetPx = screenWidth - pageMarginPx - pagerWidth
-//
-//            Log.i(TAG, "offsetPx = $offsetPx, screenWidth = $screenWidth, pageMarginPx = $pageMarginPx, pagerWidth = $pagerWidth")
-//
-//            setPageTransformer { page, position ->
-//                page.translationX = position * -offsetPx
-//                Log.i(TAG, "page.translationX = ${page.translationX}, position = $position, offsetPx = $offsetPx")
-//            }
+        val inflater = LayoutInflater.from(this)
+        list.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+                val textView = holder.itemView as TextView
+                textView.setBackgroundColor(if (position % 2 == 0) 0xffff0000.toInt() else 0xff00ff00.toInt())
+                textView.text = if (selectedItemPos == position) "selected: $position" else position.toString()
+            }
 
-            val list = listOf("A", "B", "C", "D", "E", "A", "B", "C", "D", "E")
-            adapter = ViewPager2Adapter(list as MutableList<String>)
+            override fun getItemCount(): Int {
+                return 15
+            }
+
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): RecyclerView.ViewHolder {
+                val view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
+                view.layoutParams.width =
+                    if (USE_GRID)
+                        list.width / (ITEMS_PER_PAGE / 2)
+                    else
+                        list.width / 4
+                view.layoutParams.height = list.height / (ITEMS_PER_PAGE / 2)
+                view.gravity = Gravity.CENTER
+                return object : RecyclerView.ViewHolder(view) {
+                }
+            }
         }
-    }
+        list.layoutManager =
+            if (USE_GRID)
+                GridLayoutManager(this, ITEMS_PER_PAGE / 2, GridLayoutManager.HORIZONTAL, false)
+            else
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val snapToBlock = SnapToBlock(ITEMS_PER_PAGE)
+        snapToBlock.attachToRecyclerView(list)
+        snapToBlock.setSnapBlockCallback(object : SnapToBlock.SnapBlockCallback {
+            override fun onBlockSnap(snapPosition: Int) {
+                if (selectedItemPos == snapPosition)
+                    return
+                selectedItemPos = snapPosition
+                (list.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>).notifyDataSetChanged()
+            }
 
-//    private lateinit var doppelgangerNamesArray: Array<String>
-//
-//    //TODO:4 Define page change callback here
-//    private var doppelgangerPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-//        override fun onPageSelected(position: Int) {
-//            Toast.makeText(this@ViewPager2Activity, "Selected position: $position", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        // Switch to AppTheme for displaying the activity
-//        setTheme(R.style.AppTheme)
-//
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_view_pager_2)
-//
-//        doppelgangerNamesArray = resources.getStringArray(R.array.doppelganger_names)
-//
-//        //TODO:3 Wire DoppelgangerAdapter with ViewPager2 here
-//        val doppelgangerAdapter = DoppelgangerAdapter(this, doppelgangerNamesArray.size)
-//        doppelgangerViewPager.adapter = doppelgangerAdapter
-//
-//        //TODO:5 Register page change callback here
-//        doppelgangerViewPager.registerOnPageChangeCallback(doppelgangerPageChangeCallback)
-//
-//        //TODO:7 Change ViewPager2 orientation here
-////    doppelgangerViewPager.orientation = ORIENTATION_VERTICAL
-//
-//        //TODO:10 Connect TabLayout and ViewPager2 here
-//        TabLayoutMediator(tabLayout, doppelgangerViewPager) { tab, position ->
-//            //To get the first name of doppelganger celebrities
-//            tab.text = doppelgangerNamesArray[position].substringBefore(' ')
-//        }.attach()
-//
-//        //TODO:11 Force to RTL mode
-////    doppelgangerViewPager.layoutDirection = ViewPager2.LAYOUT_DIRECTION_RTL
-////    tabLayout.layoutDirection = View.LAYOUT_DIRECTION_RTL
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        //TODO:6 Unregister page change callback here
-//        doppelgangerViewPager.unregisterOnPageChangeCallback(doppelgangerPageChangeCallback)
-//    }
+            override fun onBlockSnapped(snapPosition: Int) {
+                if (selectedItemPos == snapPosition)
+                    return
+                selectedItemPos = snapPosition
+                (list.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>).notifyDataSetChanged()
+            }
+
+        })
+    }
 }
