@@ -46,19 +46,21 @@ class RvAdapter : RecyclerView.Adapter<RvViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvViewHolder {
 //        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_pager_2_rv, parent, false)
-//        view.layoutParams.width = parent.width / (ITEMS_PER_PAGE / 2)
-//        view.layoutParams.height = parent.height / (ITEMS_PER_PAGE / 2)
+        view.layoutParams.width = parent.width / (ITEMS_PER_PAGE / 2)
+        view.layoutParams.height = parent.height / (ITEMS_PER_PAGE / 2)
 
         Log.e(TAG, "view.width = ${view.layoutParams.width}")
         Log.e(TAG, "view.height = ${view.layoutParams.height}")
         Log.e(TAG, "parent.width = ${parent.width}")
         Log.e(TAG, "parent.height = ${parent.height}")
+        Log.e(TAG, "parent.measuredWidth = ${parent.measuredWidth}")
+        Log.e(TAG, "parent.measuredHeight = ${parent.measuredHeight}")
 
-        val holder = RvViewHolder(view)
-        holder.itemView.minimumWidth = parent.width / (ITEMS_PER_PAGE / 2)
-        holder.itemView.minimumHeight = parent.height / (ITEMS_PER_PAGE / 2)
+//        val holder = RvViewHolder(view)
+//        holder.itemView.minimumWidth = parent.width / (ITEMS_PER_PAGE / 2)
+//        holder.itemView.minimumHeight = parent.height / (ITEMS_PER_PAGE / 2)
 
-        return holder
+        return RvViewHolder(view)
     }
 
     override fun getItemCount(): Int = items.size

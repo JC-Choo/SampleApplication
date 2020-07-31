@@ -2,6 +2,7 @@ package dev.chu.memo.ui.view_pager_2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.chu.memo.R
 import kotlinx.android.synthetic.main.activity_view_pager_2.*
 
@@ -31,6 +32,10 @@ class ViewPager2Activity: AppCompatActivity() {
         pagerAdapter = PagerAdapter(this)
         viewPager.adapter = pagerAdapter
         pagerAdapter.setNewItems(generatePagerItems())
+
+        TabLayoutMediator(indicator, viewPager) { tab, position ->
+
+        }.attach()
     }
 
     private fun generatePagerItems(): List<PagerItem> {
