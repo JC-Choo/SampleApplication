@@ -3,8 +3,8 @@ package dev.chu.memo.ui.handling_retrofit_result
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityHandlingBinding
 import dev.chu.memo.etc.extension.showToast
 import dev.chu.memo.ui.rv_coroutine.UserAdapter

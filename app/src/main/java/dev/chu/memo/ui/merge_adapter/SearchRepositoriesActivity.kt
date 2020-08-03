@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.data.remote.RepoSearchResult
 import dev.chu.memo.databinding.ActivitySearchRepositoriesBinding
 import dev.chu.memo.etc.extension.TAG

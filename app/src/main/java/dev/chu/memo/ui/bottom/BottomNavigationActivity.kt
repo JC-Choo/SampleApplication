@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.annotation.LayoutRes
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityBottomNavigationBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.replaceFragment

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityImageLibraryBinding
 
 class ImageLibraryComparisonActivity : BaseActivity<ActivityImageLibraryBinding>() {

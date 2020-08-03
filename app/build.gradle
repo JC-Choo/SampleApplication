@@ -244,7 +244,6 @@ dependencies {
     implementation 'com.mikhaellopez:circularprogressbar:2.0.0'
 
     // module
-    implementation project(':BaseModule')
     implementation project(':module_network')
 }
 

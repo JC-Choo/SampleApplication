@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityUserBinding
 import dev.chu.memo.etc.extension.TAG
 import org.koin.android.ext.android.inject
