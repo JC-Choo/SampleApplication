@@ -27,6 +27,7 @@ import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.notification.NotificationActivity
 import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
+import dev.chu.memo.ui.rv_sticky_header.test01.ActivityRecyclerViewSticky
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
 import dev.chu.memo.ui.single_view_state.SingleViewStateActivity
 import dev.chu.memo.ui.view_pager_2.ViewPager2Activity
@@ -142,6 +143,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.main_bt_memo -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.main_bt_rv_sticky -> startActivity(Intent(this, ActivityRecyclerViewSticky::class.java))
             R.id.main_bt_vp2 -> startActivity(Intent(this, ViewPager2Activity::class.java))
             R.id.main_bt_corona -> startActivity(Intent(this, CoronaActivity::class.java))
             R.id.main_bt_bottom_navigation -> startActivity(Intent(this, BottomNavigationActivity::class.java))

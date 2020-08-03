@@ -154,10 +154,14 @@
             android:name=".ui.heart_animation.HeartActivity"
             android:launchMode="singleTop" />
 
-
         <activity
             android:name=".ui.view_pager_2.ViewPager2Activity"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.rv_sticky_header.test01.ActivityRecyclerViewSticky"
+            android:launchMode="singleTop" />
+
 
         <receiver
             android:name=".ui.notification.receiver.AlarmReceiver"

@@ -49,6 +49,17 @@
                     android:textSize="20sp" />
 
                 <Button
+                    android:id="@+id/main_bt_rv_sticky"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{clickListener}"
+                    android:padding="10dp"
+                    android:text="RecyclerView Sticky"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <Button
                     android:id="@+id/main_bt_vp2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
