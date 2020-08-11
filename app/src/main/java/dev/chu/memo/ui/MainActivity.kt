@@ -27,7 +27,7 @@ import dev.chu.memo.ui.mvi.MviActivity
 import dev.chu.memo.ui.notification.NotificationActivity
 import dev.chu.memo.ui.recycler_multi_viewtype.ui.RecyclerViewActivity
 import dev.chu.memo.ui.rv_coroutine.UserActivity
-import dev.chu.memo.ui.rv_sticky_header.test01.ActivityRecyclerViewSticky
+import dev.chu.memo.ui.rv_sticky_header.ActivityRecyclerViewSticky
 import dev.chu.memo.ui.rx_activity.repos.GithubReposActivity
 import dev.chu.memo.ui.single_view_state.SingleViewStateActivity
 import dev.chu.memo.ui.view_pager_2.ViewPager2Activity

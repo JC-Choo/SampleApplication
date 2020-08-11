@@ -2,13 +2,16 @@ package dev.chu.memo.ui.rv_sticky_header.test01
 
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import dev.chu.memo.R
+import dev.chu.memo.etc.extension.TAG
 import kotlin.math.max
 
 interface SectionCallback {
@@ -23,7 +26,7 @@ class RecyclerSectionItemDecoration(
 ) : ItemDecoration() {
 
     private var headerView: View? = null
-//    private var header: TextView? = null
+    private var header: TextView? = null
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -41,24 +44,27 @@ class RecyclerSectionItemDecoration(
         super.onDrawOver(c, parent, state)
         if (headerView == null) {
             headerView = inflateHeaderView(parent)
-//            header = headerView?.findViewById(R.id.list_item_section_text)
+            header = headerView?.findViewById(R.id.list_item_section_text)
             fixLayoutSize(headerView!!, parent)
         }
         var previousHeader: CharSequence = ""
-        for (i in 0 until parent.childCount) {
-            val child: View = parent.getChildAt(i)
-            val position = parent.getChildAdapterPosition(child)
-            val title = sectionCallback.getSectionHeader(position)
-//            header!!.text = title
-            if (previousHeader != title || sectionCallback.isSection(position)) {
-                drawHeader(
-                    c,
-                    child,
-                    headerView
-                )
-                previousHeader = title
+//        for (i in 0 until parent.childCount) {
+            val child: View = parent.getChildAt(3)
+//            val position = parent.getChildAdapterPosition(child)
+            val title = sectionCallback.getSectionHeader(3)
+
+            Log.e(TAG, "parent.childCount = ${parent.childCount}, previousHeader = $previousHeader, position = $3, title = $title, ${sectionCallback.isSection(3)}")
+
+            header!!.text = "title"
+//            if (previousHeader != title || sectionCallback.isSection(position)) {
+//                drawHeader(c, child, headerView)
+//                previousHeader = title
+//            }
+            if (sectionCallback.isSection(3)) {
+                drawHeader(c, child, headerView)
+//                previousHeader = title
             }
-        }
+//        }
     }
 
     private fun drawHeader(c: Canvas, child: View, headerView: View?) {

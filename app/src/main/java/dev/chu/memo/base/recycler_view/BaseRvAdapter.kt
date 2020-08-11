@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import dev.chu.memo.base.recycler_view.BaseDiffUtilItemCallback
 
 class BaseRvAdapter<T : BaseItemModel>(
     private val resourceId: Int,

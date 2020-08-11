@@ -58,7 +58,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.rv_simple.RvSimpleActivity">
             <!--        <activity android:name=".ui.crop.CropActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -159,7 +159,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".ui.rv_sticky_header.test01.ActivityRecyclerViewSticky"
+            android:name=".ui.rv_sticky_header.ActivityRecyclerViewSticky"
             android:launchMode="singleTop" />
 
 

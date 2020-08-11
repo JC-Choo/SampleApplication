@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.chu.basemodule.recycler_view.BaseDiffUtilItemCallback
+import dev.chu.memo.base.recycler_view.BaseDiffUtilItemCallback
 import dev.chu.basemodule.recycler_view.BaseRvAdapter
 import dev.chu.basemodule.recycler_view.ListItemOnClickListener
 import dev.chu.memo.BR
