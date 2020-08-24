@@ -10,7 +10,6 @@ import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.chu.memo.R
 import dev.chu.memo.base.BaseActivity
@@ -72,11 +71,10 @@ class SearchRepositoriesActivity : BaseActivity<ActivitySearchRepositoriesBindin
     private fun initAdapter() {
         loadStateAdapter = ReposLoadStateAdapter { viewModel.retry() }
         binding.searchRv.adapter?.setHasStableIds(true)
-//        binding.searchRv.setHasFixedSize(true)
-        binding.searchRv.adapter = MergeAdapter(
-            adapter,
-            loadStateAdapter
-        )
+//        binding.searchRv.adapter = MergeAdapter(
+//            adapter,
+//            loadStateAdapter
+//        )
 
         viewModel.repoResult.observe(this, Observer { result ->
             when (result) {
