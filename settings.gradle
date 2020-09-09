@@ -1,3 +1,6 @@
 rootProject.name='Memo'
 include ':app'
 include ':module_network'
+include ':arklibrary'
+
+project(':arklibrary').projectDir = new File('arkapp')
