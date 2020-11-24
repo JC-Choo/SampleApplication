@@ -16,7 +16,7 @@
 
     <!-- 쓰기 권한은 암시적으로 읽기를 허용하므로 외부 저장소에 쓰려면 다음과 같이 하나의 권한만 요청하면 됩니다. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 애플리케이션의 필수 기능이 사진 촬영이라면 required="true", 사용하기는 하지만 꼭 핑료한 것이 아니라면 "false" 설정 -->
+    <!-- 애플리케이션의 필수 기능이 사진 촬영이라면 required="true", 사용하기는 하지만 꼭 필요한 것이 아니라면 "false" 설정 -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -58,7 +58,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.MainActivity">
+<!--        <activity android:name=".ui.rv_simple.RvSimpleActivity">-->
+            <!--        <activity android:name=".ui.crop.CropActivity">-->
+        <activity android:name=".ui.activity.StartActivityForResultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -140,6 +142,34 @@
         <activity
             android:name=".ui.AnimationActivity"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.crop.CropActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.base_rv_test.BaseRVActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.heart_animation.HeartActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.view_pager_2.ViewPager2Activity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.rv_sticky_header.ActivityRecyclerViewSticky"
+            android:launchMode="singleTop" />
+
+        <activity android:name=".ui.activity.ResultSecondActivity" />
+        <activity android:name=".ui.activity._new.ActivityResultSampleActivity" />
+        <activity android:name=".ui.activity._new.ActivityResultSampleFragmentActivity" />
+
+        <activity android:name=".ui.activity._old.OldActivityResultSampleActivity" />
+        <activity android:name=".ui.activity._old.OldActivityResultSampleFragmentActivity" />
+
 
         <receiver
             android:name=".ui.notification.receiver.AlarmReceiver"

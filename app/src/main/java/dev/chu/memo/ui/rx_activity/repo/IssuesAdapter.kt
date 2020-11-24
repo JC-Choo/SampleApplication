@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import dev.chu.basemodule.BaseViewHolder
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseViewHolder
 import dev.chu.memo.databinding.ItemIssueBinding
 import dev.chu.memo.entity.Issue
 

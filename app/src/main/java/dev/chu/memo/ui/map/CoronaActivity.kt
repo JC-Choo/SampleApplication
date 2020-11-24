@@ -28,8 +28,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.databinding.ActivityMapsBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.etc.extension.alertDialog

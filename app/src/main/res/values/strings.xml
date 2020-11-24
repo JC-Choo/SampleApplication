@@ -142,9 +142,9 @@
     <string name="action_settings">Settings</string>
     <string name="cat">Cat</string>
     <string name="cat_n">This is Cat: %1$d</string>
-<!--    <string name="title_home">Home</string>-->
+    <!--    <string name="title_home">Home</string>-->
     <string name="title_dashboard">Dashboard</string>
-<!--    <string name="title_notifications">Notifications</string>-->
+    <!--    <string name="title_notifications">Notifications</string>-->
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -199,4 +199,51 @@
     <string name="breakfast_notification_channel_description">Breakfast reminder</string>
     <string name="snooze">Snooze</string>
     <!-- endregion -->
+
+    <!-- region permission -->
+    <string name="permission_title_camera">permission_title_camera</string>
+    <string name="permission_title_storage">permission_title_storage</string>
+    <string name="permission_title_location">permission_title_location</string>
+    <string name="permission_title_application">permission_title_application</string>
+
+    <string name="permission_rationale_add_photo_to_advert_from_camera">permission_rationale_add_photo_to_advert_from_camera</string>
+    <string name="permission_rationale_read_qr_from_camera">permission_rationale_read_qr_from_camera</string>
+    <string name="permission_rationale_take_photo_for_firm_logo_from_camera">permission_rationale_take_photo_for_firm_logo_from_camera</string>
+    <string name="permission_rationale_add_photo_to_advert_from_gallery">permission_rationale_add_photo_to_advert_from_gallery</string>
+    <string name="permission_rationale_pick_photo_for_firm_logo_from_gallery">permission_rationale_pick_photo_for_firm_logo_from_gallery</string>
+    <string name="permission_rationale_location_to_show_on_map">permission_rationale_location_to_show_on_map</string>
+    <string name="permission_rationale_video_call">permission_rationale_video_call</string>
+
+    <string name="permission_permanent_denial_add_photo_to_advert_from_camera">permission_permanent_denial_add_photo_to_advert_from_camera</string>
+    <string name="permission_permanent_denial_read_qr_from_camera">permission_permanent_denial_read_qr_from_camera</string>
+    <string name="permission_permanent_denial_take_photo_for_firm_logo_from_camera">permission_permanent_denial_take_photo_for_firm_logo_from_camera</string>
+    <string name="permission_permanent_denial_add_photo_to_advert_from_gallery">permission_permanent_denial_add_photo_to_advert_from_gallery</string>
+    <string name="permission_permanent_denial_pick_photo_for_firm_logo_from_gallery">permission_permanent_denial_pick_photo_for_firm_logo_from_gallery</string>
+    <string name="permission_permanent_denial_location_to_show_on_map">permission_permanent_denial_location_to_show_on_map</string>
+
+    <string name="storage">storage</string>
+    <string name="location">location</string>
+    <string name="microphone">microphone</string>
+    <string name="phone">phone</string>
+
+    <string name="retry_business">retry_business</string>
+    <string name="settings">settings</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="permission_permanent_denial_video_call">permission_permanent_denial_video_call</string>
+    <!-- endregion -->
+
+    <!--region viewpager2-->
+    <string name="doppelganger_image_path">doppelgangers/%d.jpg</string>
+    <string name="image_loading_error">Problem in loading image</string>
+
+    <string-array name="doppelganger_names">
+        <item>Doguel Jackson</item>
+        <item>Llama Lautner</item>
+        <item>Doggison Ford</item>
+        <item>Dogard Barkson</item>
+        <item>Charlie Catlin</item>
+        <item>Frogonna</item>
+    </string-array>
+    <!--    endregion-->
 </resources>

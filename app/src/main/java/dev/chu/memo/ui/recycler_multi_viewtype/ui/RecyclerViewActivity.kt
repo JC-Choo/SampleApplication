@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.chu.basemodule.BaseActivity2
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity2
 import dev.chu.memo.databinding.ActivityRecyclerViewBinding
 import dev.chu.memo.etc.extension.TAG
 import dev.chu.memo.ui.recycler_multi_viewtype.ViewType

@@ -13,8 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.chu.basemodule.BaseActivity
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseActivity
 import dev.chu.memo.common.Const
 import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData

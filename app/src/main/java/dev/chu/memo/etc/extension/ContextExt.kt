@@ -5,24 +5,39 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
+import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import android.widget.Toast
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-fun Context.getDrawableById(@DrawableRes res: Int): Drawable =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) getDrawable(res)!! else resources.getDrawable(
-        res
-    )
+//fun Context.getDrawableById(@DrawableRes res: Int): Drawable =
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) getDrawable(res)!! else resources.getDrawable(res)
+//
+//fun Context.getColorById(@ColorRes res: Int): Int =
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) getColor(res) else resources.getColor(res)
 
-fun Context.getColorById(@ColorRes res: Int): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) getColor(res) else resources.getColor(res)
+
+@ColorInt
+fun Context.getColorById(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
+fun Context.getDrawableById(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
+fun Context.getDimension(@DimenRes resourceId: Int) = resources.getDimension(resourceId)
+val Context.screenWidth: Int
+    get() = resources.displayMetrics.widthPixels
+
+val Context.screenHeight: Int
+    get() = resources.displayMetrics.heightPixels
+
+fun Context.toast(msg: String, duration: Int = Toast.LENGTH_SHORT) =
+    Toast.makeText(this, msg, duration).show()
+
+fun Context.getPxFromDp(dp: Float) =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics).toInt()
+
 
 //fun Context.showToast(message: String, isLong: Boolean = false) {
 //    Toast.makeText(this, message, if(isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()

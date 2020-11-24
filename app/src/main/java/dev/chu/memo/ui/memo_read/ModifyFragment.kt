@@ -15,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.chu.basemodule.BaseFragment
 import dev.chu.memo.R
+import dev.chu.memo.base.BaseFragment
 import dev.chu.memo.common.Const
 import dev.chu.memo.common.Const.usingPermissions
 import dev.chu.memo.data.local.ImageData

@@ -1,0 +1,3 @@
+[submodule "arkapp"]
+	path = arkapp
+	url = https://mustit-devcjc@github.com/mustit-dev/ark-a-framework.git

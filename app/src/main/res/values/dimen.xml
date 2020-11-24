@@ -95,4 +95,6 @@
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_24">24sp</dimen>
     <!-- endregion -->
+
+    <dimen name="recycler_section_header_height">20dp</dimen>
 </resources>
