@@ -108,8 +108,12 @@ fun Context.createImageFileInternalStorage(): File {
         ".jpg",
         storageDir
     ).apply {
+        Log.i(TAG, "result : name = ${this.name}")
+        Log.i(TAG, "result : path = ${this.path}")
+        Log.i(TAG, "result : storageDir = $storageDir")
+        Log.i(TAG, "result : absolutePath = $absolutePath")
         currentPhotoPath = absolutePath
-        Log.d(TAG, "internal root dir: $currentPhotoPath")
+        Log.i(TAG, "internal root dir: $currentPhotoPath")
     }
 }
 

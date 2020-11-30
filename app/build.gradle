@@ -248,6 +248,7 @@ dependencies {
 
     // module
     implementation project(':module_network')
+    implementation project(':check_language')
 }
 
 // In order to have parcelize annotation

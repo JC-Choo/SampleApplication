@@ -59,8 +59,8 @@
         </provider>
 
 <!--        <activity android:name=".ui.rv_simple.RvSimpleActivity">-->
-            <!--        <activity android:name=".ui.crop.CropActivity">-->
-        <activity android:name=".ui.activity.StartActivityForResultActivity">
+                    <activity android:name=".ui.crop.CropActivity">
+<!--        <activity android:name=".ui.activity.StartActivityForResultActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,9 +143,9 @@
             android:name=".ui.AnimationActivity"
             android:launchMode="singleTop" />
 
-        <activity
-            android:name=".ui.crop.CropActivity"
-            android:launchMode="singleTop" />
+<!--        <activity-->
+<!--            android:name=".ui.crop.CropActivity"-->
+<!--            android:launchMode="singleTop" />-->
 
         <activity
             android:name=".ui.base_rv_test.BaseRVActivity"

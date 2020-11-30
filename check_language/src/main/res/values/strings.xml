@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">언어 확인</string>
+    <string name="my_string_name">스트링 이름</string>
+
+
+    <plurals name="my_cats">
+        <item quantity="one">나는 %s 고양이를 가졌다.</item>
+        <item quantity="other">나는 %s 고양이들 가졌다.</item>
+    </plurals>
+</resources>
