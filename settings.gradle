@@ -1,3 +1,4 @@
+include ':permission'
 include ':check_language'
 rootProject.name='Memo'
 include ':app'
