@@ -8,9 +8,11 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import dev.chu.memo.GlobalApplication
 import dev.chu.memo.R
 import dev.chu.memo.common.Const
 import dev.chu.memo.etc.extension.*
+import dev.chu.memo.etc.shared.Prefs
 import kotlinx.android.synthetic.main.activity_crop.*
 import java.io.File
 import java.io.IOException
@@ -27,10 +29,15 @@ class CropActivity : AppCompatActivity() {
     }
 
     private var photoUri: Uri? = null
+    private val prefs: Prefs by lazy { GlobalApplication.prefs!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
+
+        Log.i(TAG, "prefs.intExamplePref = ${prefs.intExamplePref}")
+        prefs.intExamplePref = 10 + prefs.intExamplePref
+        Log.i(TAG, "prefs.intExamplePref = ${prefs.intExamplePref}")
 
         setOnClickEvent()
     }
