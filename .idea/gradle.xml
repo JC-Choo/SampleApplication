@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/check_language" />
             <option value="$PROJECT_DIR$/module_network" />
             <option value="$PROJECT_DIR$/permission" />
+            <option value="$PROJECT_DIR$/touchevent" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
