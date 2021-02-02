@@ -1,3 +1,4 @@
+include ':timer'
 include ':touchevent'
 include ':permission'
 include ':check_language'
