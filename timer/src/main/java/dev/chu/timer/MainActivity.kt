@@ -5,8 +5,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import dev.chu.timer.Utility.getFormattedStopWatch
 import dev.chu.timer.databinding.ActivityMainBinding
 
@@ -31,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             stopTimer()
             resetTimerView()
         }
+
+        binding!!.root.snack(message = "Test Snack", isAction = true)
+        IconSnackbar.make(window.decorView.rootView as ViewGroup, "Hello World!", Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding!!.root).show()
     }
 
     private fun initStopWatch() {
