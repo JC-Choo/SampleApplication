@@ -104,8 +104,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("timeInSeconds", timeInSeconds.toString())
                 updateStopWatchView(timeInSeconds)
             } finally {
-                // 100% guarantee that this always happens, even if
-                // your update method throws an exception
+                // 100% guarantee that this always happens, even if your update method throws an exception
                 mHandler!!.postDelayed(this, mInterval.toLong())
             }
         }
