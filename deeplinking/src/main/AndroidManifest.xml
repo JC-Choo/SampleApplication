@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="dev.chu.deeplinking">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Memo">
+
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="AppLinkUrlError">
+            <intent-filter>
+                <!--
+                Google Search 에서 인텐트 필터가 도달할 수 있도록 하기 위해 ACTION_VIEW 인텐트 작업을 지정한다.
+                -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <!--
+                [DEFAULT] : 이를 통해 implicit(암시적) 인텐트에 응답하게 허가한다.
+                이것이 없으면, 인텐트가 앱 구성요소 이름을 지정하는 경우에만 액티비티가 시작될 수 있다.
+
+                [BROWSABLE] : 웹 브라우져에서 인텐트 필터에 접근하기 위해 필요하다.
+                이것이 없으면, 브라우저에서 링크를 클릭하면 앱을 확인할 수 없다.
+                -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--
+                액티비티를 결정할 수 있는 URI 형태를 나타낸다.
+                최소한으로, <data> 태그는 android:scheme 속성을 포함해야만 한다.
+
+                유사한 URIs 를 접근하지만, 단순히 경로 이름에 따라 다른 여러 액티비티가 있을 수 있다.
+                이 경우, android:path or pathPattern or pathPrefix 속성을 사용할 수 있다.
+
+                -->
+                <!-- URL : http://Medium.com/activity -->
+                <data
+                    android:host="Medium.com"
+                    android:pathPattern="\\/activity\\/.*"
+                    android:scheme="http" />
+
+                <data
+                    android:host="www.Medium.com"
+                    android:pathPattern="\\/activity\\/.*"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- URL : sample://activity -->
+                <data
+                    android:host="activity"
+                    android:scheme="sample" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/check_language" />
+            <option value="$PROJECT_DIR$/deeplinking" />
+            <option value="$PROJECT_DIR$/drag_and_drop" />
             <option value="$PROJECT_DIR$/module_network" />
             <option value="$PROJECT_DIR$/permission" />
             <option value="$PROJECT_DIR$/timer" />
