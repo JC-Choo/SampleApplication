@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/blue_print" />
             <option value="$PROJECT_DIR$/check_language" />
             <option value="$PROJECT_DIR$/deeplinking" />
             <option value="$PROJECT_DIR$/drag_and_drop" />
