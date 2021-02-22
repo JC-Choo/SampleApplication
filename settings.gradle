@@ -1,3 +1,4 @@
+include ':rv_drag_to_reorder'
 include ':rv_bounce_effect'
 include ':blue_print'
 include ':drag_and_drop'
