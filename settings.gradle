@@ -1,3 +1,4 @@
+include ':vp2_sample'
 include ':rv_drag_to_reorder'
 include ':rv_bounce_effect'
 include ':blue_print'
