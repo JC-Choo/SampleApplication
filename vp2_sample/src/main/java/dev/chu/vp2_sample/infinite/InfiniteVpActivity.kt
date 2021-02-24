@@ -16,7 +16,7 @@ class InfiniteVpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.infiniteViewPager2.apply {
-            setAdapter(InfiniteAdapter(listOf("First", "Second", "Third", "Last")))
+            setAdapter(InfiniteAdapter(listOf("First", "Second", "Third")))
             addScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
