@@ -1,4 +1,4 @@
-package dev.chu.rv_restoring_scroll_position
+package dev.chu.rv_restoring_scroll_position.store_position
 
 import android.os.Parcelable
 import androidx.annotation.CallSuper

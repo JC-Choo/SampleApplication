@@ -3,7 +3,7 @@ package dev.chu.rv_restoring_scroll_position.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dev.chu.rv_restoring_scroll_position.Content
+import dev.chu.rv_restoring_scroll_position.store_position.Content
 
 class MainViewModel : ViewModel() {
 
@@ -17,8 +17,6 @@ class MainViewModel : ViewModel() {
 
     private fun generateContent() {
         val cards = listOf(1..8).flatten()
-        cards.forEach { print("$it ") }
-        println()
         _content.value = listOf(
             Content.Carousel("100", cards),
             Content.Banner("1"),

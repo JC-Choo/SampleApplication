@@ -1,4 +1,4 @@
-package dev.chu.rv_restoring_scroll_position
+package dev.chu.rv_restoring_scroll_position.store_position
 
 import androidx.recyclerview.widget.RecyclerView
 

@@ -1,4 +1,4 @@
-package dev.chu.rv_restoring_scroll_position
+package dev.chu.rv_restoring_scroll_position.store_position
 
 sealed class Content(val id: String) {
     class Banner(id: String) : Content(id)
