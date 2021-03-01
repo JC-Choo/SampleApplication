@@ -10,11 +10,13 @@ import androidx.core.content.ContextCompat
 val Any.TAG: String
     get() = this::class.java.simpleName ?: this.toString()
 
-fun Context.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
+fun Context.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, duration).show()
+}
 
-fun Context.toast(@StringRes redId: Int, duration: Int = Toast.LENGTH_SHORT) =
+fun Context.toast(@StringRes redId: Int, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, redId, duration).show()
+}
 
 fun Context.getColorById(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 fun Context.getDrawableById(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
