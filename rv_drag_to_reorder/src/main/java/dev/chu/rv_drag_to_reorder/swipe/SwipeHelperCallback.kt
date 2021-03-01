@@ -25,7 +25,7 @@ class SwipeHelperCallback(
         source: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-
+        TODO("Not yet implemented")
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

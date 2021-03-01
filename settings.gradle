@@ -1,3 +1,4 @@
+include ':extensions'
 include ':custom_view'
 include ':vp2_sample'
 include ':rv_drag_to_reorder'
