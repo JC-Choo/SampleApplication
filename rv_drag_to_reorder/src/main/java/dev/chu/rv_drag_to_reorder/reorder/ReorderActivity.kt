@@ -10,6 +10,9 @@ import dev.chu.rv_drag_to_reorder.utils.OnStartDragListener
 import dev.chu.rv_drag_to_reorder.utils.TAG
 import dev.chu.rv_drag_to_reorder.utils.getList
 
+/**
+ * https://medium.com/better-programming/drag-to-reorder-android-recyclerview-items-using-kotlin-afcaee1b7fb5
+ */
 class ReorderActivity : AppCompatActivity(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null

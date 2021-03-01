@@ -3,10 +3,12 @@ package dev.chu.rv_drag_to_reorder.swipe
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
-import dev.chu.rv_drag_to_reorder.databinding.ActivityMainBinding
 import dev.chu.rv_drag_to_reorder.databinding.ActivityRvBinding
 import dev.chu.rv_drag_to_reorder.utils.getList
 
+/**
+ * https://betterprogramming.pub/swipe-to-dismiss-android-recyclerview-items-using-kotlin-95ca20cfb812
+ */
 class SwipeToDismissActivity : AppCompatActivity() {
     private var mItemTouchHelper: ItemTouchHelper? = null
     lateinit var swipeToDismissAdapter: SwipeToDismissAdapter

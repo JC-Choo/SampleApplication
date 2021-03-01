@@ -9,7 +9,6 @@ import dev.chu.rv_drag_to_reorder.swipe.SwipeToDismissActivity
 import dev.chu.rv_drag_to_reorder.utils.click
 
 /**
- * https://medium.com/better-programming/drag-to-reorder-android-recyclerview-items-using-kotlin-afcaee1b7fb5
  * https://github.com/SG-K/RecyclerviewWithBenefits
  */
 class MainActivity : AppCompatActivity() {
