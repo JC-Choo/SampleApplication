@@ -1,6 +1,7 @@
 package dev.chu.extensions
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -24,4 +25,8 @@ fun Context.getScreenSize(): Pair<Int, Int> {
     val width = resources.displayMetrics.widthPixels
     val height = resources.displayMetrics.heightPixels
     return Pair(width, height)
+}
+
+fun View.click(block: (View) -> Unit) {
+    this.setOnClickListener(block)
 }

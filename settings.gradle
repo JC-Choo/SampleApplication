@@ -1,3 +1,4 @@
+include ':rv_restoring_scroll_position'
 include ':extensions'
 include ':custom_view'
 include ':vp2_sample'
