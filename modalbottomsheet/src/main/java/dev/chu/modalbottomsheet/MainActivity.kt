@@ -10,6 +10,9 @@ import dev.chu.extensions.click
 import dev.chu.extensions.toast
 import dev.chu.modalbottomsheet.databinding.ActivityMainBinding
 
+/**
+ * https://medium.com/swlh/how-to-create-modal-bottom-sheet-in-android-java-android-studio-b79b046e5674
+ */
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by lazy {
