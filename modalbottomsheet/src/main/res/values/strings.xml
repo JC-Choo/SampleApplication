@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ModalBottomSheet</string>
+
+    <string name="create_new">Create new</string>
+    <string name="folder">folder</string>
+    <string name="upload">upload</string>
+    <string name="scan">scan</string>
+    <string name="google_docs">google_docs</string>
+    <string name="google_sheets">google_sheets</string>
+    <string name="google_slides">google_slides</string>
+</resources>
