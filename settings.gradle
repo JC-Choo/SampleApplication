@@ -1,3 +1,4 @@
+include ':rv_motion_layout'
 include ':modalbottomsheet'
 include ':rv_restoring_scroll_position'
 include ':extensions'
