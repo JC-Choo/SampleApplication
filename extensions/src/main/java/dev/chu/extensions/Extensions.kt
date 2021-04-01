@@ -2,6 +2,7 @@ package dev.chu.extensions
 
 import android.content.Context
 import android.graphics.Color
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
@@ -10,7 +11,8 @@ import android.view.inputmethod.InputMethodManager
 // region [Show or Hide the Keyboard]
 fun View.hideKeyboard(): Boolean {
     try {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     } catch (e: RuntimeException) {
         e.printStackTrace()
@@ -43,3 +45,7 @@ fun Int.colorToHexString(): String {
     return String.format("#%06X", -0x1 and this).replace("#FF", "#")
 }
 // endregion
+
+fun Context.dpToPixel(dp: Float): Float {
+    return dp * (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+}
