@@ -51,5 +51,5 @@ fun Context.dpToPixel(dp: Float): Float {
     return dp * (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
 
-fun isAndroid24() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-fun isAndroid26() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+fun isAndroid24More() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+fun isAndroid26More() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O

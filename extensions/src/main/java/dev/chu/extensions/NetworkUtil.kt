@@ -30,7 +30,7 @@ object NetworkUtil {
             }
         }
 
-        if (isAndroid24()) {
+        if (isAndroid24More()) {
             connectivityManager.registerDefaultNetworkCallback(networkCallback)
         } else {
             val builder = NetworkRequest.Builder()
