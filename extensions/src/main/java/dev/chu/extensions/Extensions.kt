@@ -2,6 +2,7 @@ package dev.chu.extensions
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -49,3 +50,6 @@ fun Int.colorToHexString(): String {
 fun Context.dpToPixel(dp: Float): Float {
     return dp * (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
+
+fun isAndroid24() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+fun isAndroid26() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O

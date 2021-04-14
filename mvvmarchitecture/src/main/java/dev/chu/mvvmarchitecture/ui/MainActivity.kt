@@ -1,9 +1,12 @@
 package dev.chu.mvvmarchitecture.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import dev.chu.extensions.NetworkUtil
+import dev.chu.extensions.TAG
 import dev.chu.mvvmarchitecture.api.Api
 import dev.chu.mvvmarchitecture.data.MainRepository
 import dev.chu.mvvmarchitecture.data.local.CatDatabase
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        handledNetwork()
         setRecyclerView()
         observeViewModel()
 
@@ -63,6 +67,12 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.getAllCats().observe(this) {
             adapter.setNewItems(it)
+        }
+    }
+
+    private fun handledNetwork() {
+        NetworkUtil.getNetworkLiveData(this).observe(this) {
+            Log.i(TAG, "isConnect = $it")
         }
     }
 }
