@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/donut_with_sprinkles"
+        android:shortcutDisabledMessage="@string/static_shortcut_disabled_message"
+        android:shortcutId="NewDonutDialogFragment"
+        android:shortcutLongLabel="@string/static_shortcut_label_long"
+        android:shortcutShortLabel="@string/static_shortcut_label_short"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="myapp://navdonutcreator.com/donutcreator" />
+    </shortcut>
+</shortcuts>

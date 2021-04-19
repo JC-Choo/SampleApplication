@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/primary">
+        <item
+            android:id="@+id/donutList"
+            android:icon="@drawable/donut_with_sprinkles"
+            android:title="@string/donut_name" />
+        <item
+            android:id="@+id/coffeeList"
+            android:icon="@drawable/coffee_cup"
+            android:title="@string/coffee_name" />
+    </group>
+    <item
+        android:id="@+id/selectionFragment"
+        android:title="@string/action_settings" />
+</menu>
