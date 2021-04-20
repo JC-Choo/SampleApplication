@@ -16,6 +16,7 @@ abstract class SnackDatabase : RoomDatabase() {
     abstract fun coffeeDao(): CoffeeDao
 
     companion object {
+
         @Volatile
         private var INSTANCE: SnackDatabase? = null
         fun getDatabase(context: Context): SnackDatabase {
@@ -24,9 +25,11 @@ abstract class SnackDatabase : RoomDatabase() {
                 return tempInstance
             }
             synchronized(this) {
-                val instance =
-                    Room.databaseBuilder(context, SnackDatabase::class.java, "snack_database")
-                        .build()
+                val instance = Room.databaseBuilder(
+                    context,
+                    SnackDatabase::class.java,
+                    "snack_database"
+                ).build()
                 INSTANCE = instance
                 return instance
             }

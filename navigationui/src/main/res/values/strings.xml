@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Donut Tracker</string>
+    <string name="app_name">네비게이션-도넛-커피</string>
 
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->

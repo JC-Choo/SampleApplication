@@ -12,6 +12,7 @@
             android:id="@+id/action_donutList_to_donutEntryDialogFragment"
             app:destination="@id/donutEntryDialog" />
     </fragment>
+
     <dialog
         android:id="@+id/donutEntryDialog"
         android:name="dev.chu.navigationui.donut.entry.DonutEntryDialogFragment"
@@ -22,9 +23,10 @@
             android:defaultValue="-1L"
             app:argType="long" />
     </dialog>
+
     <fragment
         android:id="@+id/selectionFragment"
-        android:name="com.android.samples.donuttracker.setup.SelectionFragment"
+        android:name="dev.chu.navigationui.setup.SelectionFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_selection">
         <action
@@ -33,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/coffeeList"
-        android:name="com.android.samples.donuttracker.coffee.CoffeeList"
+        android:name="dev.chu.navigationui.coffee.list.CoffeeListFragment"
         android:label="@string/coffee_list">
         <action
             android:id="@+id/action_coffeeList_to_coffeeEntryDialogFragment"
@@ -41,7 +43,7 @@
     </fragment>
     <dialog
         android:id="@+id/coffeeEntryDialogFragment"
-        android:name="com.android.samples.donuttracker.coffee.CoffeeEntryDialogFragment"
+        android:name="dev.chu.navigationui.coffee.entry.CoffeeEntryDialogFragment"
         android:label="CoffeeEntryDialogFragment">
         <argument
             android:name="itemId"

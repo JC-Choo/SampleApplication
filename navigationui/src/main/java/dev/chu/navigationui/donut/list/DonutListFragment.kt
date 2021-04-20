@@ -3,7 +3,7 @@ package dev.chu.navigationui.donut.list
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dev.chu.navigationui.R
@@ -18,7 +18,11 @@ import dev.chu.navigationui.storage.SnackDatabase
  */
 class DonutListFragment : BaseFragment<FragmentDonutListBinding>(R.layout.fragment_donut_list) {
 
-    private lateinit var viewModel: DonutListViewModel
+    private val viewModel: DonutListViewModel by viewModels {
+        val donutDao = SnackDatabase.getDatabase(requireContext()).donutDao()
+        DonutViewModelFactory(donutDao)
+    }
+
     private val adapter by lazy {
         DonutListAdapter(onEdit = { donut ->
             findNavController().navigate(
@@ -32,9 +36,9 @@ class DonutListFragment : BaseFragment<FragmentDonutListBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val donutDao = SnackDatabase.getDatabase(requireContext()).donutDao()
-        viewModel = ViewModelProvider(this, DonutViewModelFactory(donutDao))
-            .get(DonutListViewModel::class.java)
+//        val donutDao = SnackDatabase.getDatabase(requireContext()).donutDao()
+//        viewModel = ViewModelProvider(this, DonutViewModelFactory(donutDao))
+//            .get(DonutListViewModel::class.java)
 
         viewModel.donuts.observe(viewLifecycleOwner) { donuts ->
             adapter.submitList(donuts)
