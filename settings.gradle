@@ -1,3 +1,5 @@
+include ':rv_search_view2'
+include ':rv_search_view'
 include ':navigationui'
 include ':rv_checkbox_selection'
 include ':mvvmarchitecture'
