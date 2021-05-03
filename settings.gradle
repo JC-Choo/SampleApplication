@@ -1,3 +1,4 @@
+include ':rv_horizontal_calendar'
 include ':rv_search_view2'
 include ':rv_search_view'
 include ':navigationui'

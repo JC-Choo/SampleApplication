@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="dev.chu.rv_horizontal_calendar.model.CalendarDateModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@{item.isSelected ? @color/colorPrimary : @color/white}"
+        app:cardElevation="@dimen/margin_5">
+
+        <LinearLayout
+            android:layout_width="@dimen/calendar_layout_width"
+            android:layout_height="@dimen/calendar_layout_height"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_calendar_day"
+                style="@style/TextAppearance.MaterialComponents.Overline"
+                android:textColor="@{item.isSelected ? @color/white : @color/black}"
+                android:text="@{item.calendarDay}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_calendar_date"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@{item.isSelected ? @color/white : @color/black}"
+                android:text="@{item.calendarDate}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
