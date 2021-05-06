@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -25,18 +26,22 @@
             <TextView
                 android:id="@+id/tv_calendar_day"
                 style="@style/TextAppearance.MaterialComponents.Overline"
-                android:textColor="@{item.isSelected ? @color/white : @color/black}"
-                android:text="@{item.calendarDay}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@{item.calendarDay}"
+                android:textColor="@{item.isSelected ? @color/white : @color/black}" />
 
             <TextView
                 android:id="@+id/tv_calendar_date"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="@{item.isSelected ? @color/white : @color/black}"
-                android:text="@{item.calendarDate}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:gravity="center_horizontal"
+                android:text="@{item.calendarDate}"
+                android:textColor="@{item.isSelected ? @color/white : @color/black}"
+                tools:text="1" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

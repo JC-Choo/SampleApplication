@@ -8,4 +8,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+
+    <!-- Circle color for number 1 -->
+    <color name="number1">#4A7BA7</color>
+
+    <!-- Circle color for number 2 -->
+    <color name="number2">#04B4B3</color>
+
+    <!-- Circle color for number 3 -->
+    <color name="number3">#F5A623</color>
+
+    <!-- Circle color for default case -->
+    <color name="number_default">#FFCC0000</color>
 </resources>

@@ -42,23 +42,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Set up click listener
-     */
-    private fun setUpClickListener() {
-        binding.ivCalendarNext.setOnClickListener {
-            cal.add(Calendar.MONTH, 1)
-            setUpCalendar()
-        }
-        binding.ivCalendarPrevious.setOnClickListener {
-            cal.add(Calendar.MONTH, -1)
-            if (cal == currentDate)
-                setUpCalendar()
-            else
-                setUpCalendar()
-        }
-    }
-
-    /**
      * Setting up adapter for recyclerview
      */
     private fun setUpAdapter() {
@@ -67,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.list)
+
         adapter = CalendarAdapter { _: CalendarDateModel, position: Int ->
             calendarList2.forEachIndexed { index, calendarModel ->
                 calendarModel.isSelected = index == position
@@ -77,14 +61,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Set up click listener
+     */
+    private fun setUpClickListener() {
+        binding.ivCalendarNext.setOnClickListener {
+            cal.add(Calendar.MONTH, 1)
+            setUpCalendar()
+        }
+        binding.ivCalendarPrevious.setOnClickListener {
+            cal.add(Calendar.MONTH, -1)
+            setUpCalendar()
+        }
+    }
+
+    /**
      * Function to setup calendar for every month
      */
     private fun setUpCalendar() {
-        binding.tvDateMonth.text = sdf.format(cal.time) // 현재 달력의 월과 년을 제공
-        val monthCalendar = cal.clone() as Calendar
-        val maxDaysInMonth =
-            cal.getActualMaximum(Calendar.DAY_OF_MONTH)    // 현재 월에 있는 일들의 최대 수. 즉, 며칠까지 있는지 가져오는 코드.
         dates.clear()
+        binding.tvDateMonth.text = sdf.format(cal.time) // 현재 달력의 월과 년을 제공
+
+        val monthCalendar = cal.clone() as Calendar
+        val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)    // 현재 월에 있는 일들의 최대 수. 즉, 며칠까지 있는지 가져오는 코드.
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1) // 시작하는 현재 달력 월 설정.
 
         // 현재 월의 최대 일의 사이즈까지 계속 루프를 돌아 array 에 dates를 저장한다.
