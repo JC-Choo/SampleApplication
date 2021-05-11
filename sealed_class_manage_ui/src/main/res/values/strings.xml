@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">sealed_class_manage_ui</string>
+
+    <string name="error_msg">Something went wrong. Please try again later.</string>
+</resources>

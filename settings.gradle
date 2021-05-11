@@ -1,3 +1,4 @@
+include ':sealed_class_manage_ui'
 include ':rv_shimmer_effect'
 include ':rv_horizontal_calendar'
 include ':rv_search_view2'
