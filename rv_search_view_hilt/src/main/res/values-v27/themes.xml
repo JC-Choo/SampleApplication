@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryText">@color/colorPrimaryText</item>
+        <item name="colorSecondaryText">@color/colorSecondaryText</item>
+        <item name="colorContainer">@color/colorContainer</item>
+        <item name="colorContainerSecondary">@color/colorContainerSecondary</item>
+        <item name="colorNavigationBottomBackground">@color/colorNavigationBottomBackground</item>
+        <item name="colorBookNowBackground">@color/colorBookNowBackground</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorToolbarTransparent">@color/colorToolbarTransparentDay</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/splash_screen_drawable</item>
+        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">@color/colorAccent</item>
+    </style>
+</resources>

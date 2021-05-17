@@ -1,3 +1,4 @@
+include ':rv_search_view_hilt'
 include ':splash_screen'
 include ':rv_infinite_scroll'
 include ':sealed_class_manage_ui'

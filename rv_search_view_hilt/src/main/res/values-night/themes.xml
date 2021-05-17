@@ -1,0 +1,55 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Memo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Base Dark theme. -->
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+
+        <item name="colorPrimaryText">@color/colorPrimaryTextNight</item>
+        <item name="colorSecondaryText">@color/colorSecondaryTextNight</item>
+        <item name="colorContainer">@color/colorContainerNight</item>
+        <item name="colorContainerSecondary">@color/colorContainerSecondaryNight</item>
+        <item name="colorNavigationBottomBackground">@color/colorNavigationBottomBackgroundNight</item>
+        <item name="colorBookNowBackground">@color/colorBookNowBackgroundNight</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="colorToolbarTransparent">@color/colorToolbarTransparentNight</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="SplashScreenThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/splash_screen_drawable</item>
+        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AlertDialogThemeNight" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorPrimaryText">@color/colorPrimaryTextNight</item>
+        <item name="colorSecondaryText">@color/colorSecondaryTextNight</item>
+        <item name="colorContainer">@color/colorContainerNight</item>
+        <item name="colorContainerSecondary">@color/colorContainerSecondaryNight</item>
+    </style>
+</resources>
