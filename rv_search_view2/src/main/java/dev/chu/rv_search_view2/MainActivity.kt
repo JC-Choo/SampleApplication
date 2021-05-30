@@ -1,13 +1,11 @@
 package dev.chu.rv_search_view2
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
-import dev.chu.extensions.TAG
 import dev.chu.rv_search_view2.databinding.ActivityMainBinding
 import dev.chu.rv_search_view2.dto.City
 import dev.chu.rv_search_view2.dto.MockDataProvider
@@ -26,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
-        Log.i(TAG, "onCreate")
 
         setUpSearchView()
         setUpRecyclerView()
