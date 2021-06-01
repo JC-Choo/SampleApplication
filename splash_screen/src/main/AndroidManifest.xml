@@ -16,10 +16,18 @@
 <!--            </intent-filter>-->
 <!--        </activity>-->
 
-        <activity
-            android:name=".new.SplashActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/SplashScreenTheme">
+<!--        <activity-->
+<!--            android:name=".new_splash.SplashActivity"-->
+<!--            android:launchMode="singleTask"-->
+<!--            android:theme="@style/SplashScreenTheme">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+        <activity android:name=".new_splash_2.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

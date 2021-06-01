@@ -1,4 +1,4 @@
-package dev.chu.splash_screen.old
+package dev.chu.splash_screen.old_splash
 
 import android.content.Intent
 import android.os.Bundle
