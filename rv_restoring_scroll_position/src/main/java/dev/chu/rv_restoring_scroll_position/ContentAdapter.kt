@@ -18,6 +18,7 @@ private enum class ViewType {
 
 class ContentAdapter :
     NestedRecyclerViewStateRecoverAdapter<Content, ContentAdapter.ViewHolder>(ContentAdapterDiffUtil()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             ViewType.BANNER.ordinal -> {
@@ -68,19 +69,18 @@ class ContentAdapter :
         ): ViewHolder(binding.root), NestedRecyclerViewViewHolder {
 
             private lateinit var content: Content.Carousel
+            private val carouseAdapter = CarouselAdapter()
 
             init {
                 binding.carousel.apply {
-                    adapter = CarouselAdapter()
+                    adapter = carouseAdapter
                     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 }
             }
 
             fun bind(item: Content.Carousel) {
                 this.content = item
-                with(binding) {
-                    (carousel.adapter as CarouselAdapter).submitList(content.list)
-                }
+                carouseAdapter.submitList(content.list)
             }
 
             override fun getId() = content.id

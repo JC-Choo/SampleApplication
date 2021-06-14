@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dev.chu.extensions.click
 import dev.chu.rv_restoring_scroll_position.ContentAdapter
 import dev.chu.rv_restoring_scroll_position.R
-import dev.chu.rv_restoring_scroll_position.click
 import dev.chu.rv_restoring_scroll_position.databinding.FragmentMainBinding
 
 class MainFragment: Fragment() {
@@ -37,12 +37,14 @@ class MainFragment: Fragment() {
     }
 
     private fun initComponents(binding: FragmentMainBinding) {
-        binding.content.adapter = contentAdapter
-        binding.openFragment.click {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.container, OtherFragment.newInstance())
-                addToBackStack(OtherFragment::class.java.name)
-            }.commit()
+        with(binding) {
+            content.adapter = contentAdapter
+            openFragment.click {
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.container, OtherFragment.newInstance())
+                    addToBackStack(OtherFragment::class.java.name)
+                }.commit()
+            }
         }
     }
 

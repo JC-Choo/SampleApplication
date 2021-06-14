@@ -1,7 +1,6 @@
 package dev.chu.rv_restoring_scroll_position
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import dev.chu.extensions.toast
 import dev.chu.rv_restoring_scroll_position.databinding.ActivityMainBinding
@@ -26,8 +25,4 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
         toast(R.string.back_pressed_message)
     }
-}
-
-fun View.click(block: (View) -> Unit) {
-    this.setOnClickListener(block)
 }
