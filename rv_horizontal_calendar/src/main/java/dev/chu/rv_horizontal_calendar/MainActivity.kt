@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Setting up adapter for recyclerview
+     * 리싸이클러뷰에 대한 어댑터 설정
      */
     private fun setUpAdapter() {
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.single_calendar_margin)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Set up click listener
+     * click listener 설정
      */
     private fun setUpClickListener() {
         binding.ivCalendarNext.setOnClickListener {
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Function to setup calendar for every month
+     * 각 달에 대한 달력을 설정하는 함수
      */
     private fun setUpCalendar() {
         dates.clear()
