@@ -16,7 +16,7 @@ import dev.chu.rv_drag_to_reorder.utils.getList
 class ReorderActivity : AppCompatActivity(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null
-    lateinit var adapter: ReorderAdapter
+    private lateinit var adapter: ReorderAdapter
     private val binding: ActivityRvBinding by lazy {
         ActivityRvBinding.inflate(layoutInflater)
     }
@@ -39,10 +39,12 @@ class ReorderActivity : AppCompatActivity(), OnStartDragListener {
     }
 
     private fun setUpRecyclerview() {
-        adapter = ReorderAdapter(dragStartListener = this) {
+        adapter = ReorderAdapter(dragStartListener = this, {
             // Execute functionality after reorder
             Log.v(TAG, "reorder completed")
-        }
+        }, { position ->
+            Log.v(TAG, "reorder completed and item_$position dismiss")
+        })
         binding.list.adapter = adapter
 
         val callback: ItemTouchHelper.Callback = ReorderHelperCallback(adapter)

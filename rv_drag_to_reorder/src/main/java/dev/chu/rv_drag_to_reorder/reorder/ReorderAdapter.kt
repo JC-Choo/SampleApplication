@@ -12,7 +12,8 @@ import kotlin.collections.ArrayList
 
 class ReorderAdapter(
     private val dragStartListener: OnStartDragListener,
-    private val reordered: () -> Unit
+    private val reordered: () -> Unit,
+    private val itemDismiss: (Int) -> Unit
 ) : RecyclerView.Adapter<ReorderViewHolder>(), ItemTouchHelperAdapter {
 
     private var items: ArrayList<ItemModel> = ArrayList()
@@ -41,6 +42,6 @@ class ReorderAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
-        TODO("Not yet implemented")
+        itemDismiss.invoke(position)
     }
 }
