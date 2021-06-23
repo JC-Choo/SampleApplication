@@ -18,9 +18,9 @@ class ReorderViewHolder(
 
     @SuppressLint("ClickableViewAccessibility")
     fun bind(item: ItemModel) {
-        itemView.apply {
-            binding.tvAdapter.text = item.title
-            binding.imReorder.setOnTouchListener { _, motionEvent ->
+        with(binding) {
+            tvAdapter.text = item.title
+            imReorder.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
                     dragStartListener?.onStartDrag(this@ReorderViewHolder)
                 }
