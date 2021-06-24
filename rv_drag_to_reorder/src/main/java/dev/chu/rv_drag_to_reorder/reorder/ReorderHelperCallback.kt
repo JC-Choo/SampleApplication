@@ -1,8 +1,10 @@
 package dev.chu.rv_drag_to_reorder.reorder
 
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dev.chu.rv_drag_to_reorder.utils.ItemTouchHelperAdapter
+import dev.chu.rv_drag_to_reorder.utils.TAG
 
 class ReorderHelperCallback(
     private val adapter: ItemTouchHelperAdapter
@@ -43,6 +45,6 @@ class ReorderHelperCallback(
      * RecyclerView item swipe 를 검출하는데 사용되고, 현재는 필요가 없다.
      */
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        TODO("Not yet implemented")
+        Log.i(TAG, "direction = $direction, viewHolder = $viewHolder")
     }
 }
