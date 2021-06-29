@@ -37,6 +37,7 @@ internal class Task(private val name: String) : Runnable {
 object TestThreadPool {
     // Maximum number of threads in thread pool
     const val MAX_THREADS = 5
+
     @JvmStatic
     fun main(args: Array<String>) {
         // creates five tasks
@@ -45,12 +46,14 @@ object TestThreadPool {
         val taskC: Runnable = Task("taskC")
         val taskD: Runnable = Task("taskD")
         val taskE: Runnable = Task("taskE")
+        val taskF: Runnable = Task("taskF")
         val pool: ExecutorService = Executors.newFixedThreadPool(MAX_THREADS)
         pool.execute(taskA)
         pool.execute(taskB)
         pool.execute(taskC)
         pool.execute(taskD)
         pool.execute(taskE)
+        pool.execute(taskF)
 
         // pool shutdown
         pool.shutdown()
