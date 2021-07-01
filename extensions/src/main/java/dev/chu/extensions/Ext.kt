@@ -67,3 +67,4 @@ val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.KOREA)
 fun Date.toISOFormat() : String = isoFormatter.format(this)
 
 fun Any?.isNull() = this == null
+fun Any?.isNotNull() = !this.isNull()
