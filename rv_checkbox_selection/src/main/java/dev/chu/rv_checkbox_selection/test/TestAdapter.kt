@@ -36,10 +36,11 @@ class TestAdapter : RecyclerView.Adapter<TestAdapter.TestViewHolder>() {
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Test) {
-            binding.videoTitle.text = item.title
-            binding.channelName.text = item.name
-
-            binding.executePendingBindings()
+            with(binding) {
+                videoTitle.text = item.title
+                channelName.text = item.name
+                executePendingBindings()
+            }
         }
     }
 }
