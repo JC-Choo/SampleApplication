@@ -1,3 +1,6 @@
 [submodule "arkapp"]
 	path = arkapp
 	url = https://mustit-devcjc@github.com/mustit-dev/ark-a-framework.git
+[submodule "image_editor"]
+	path = image_editor
+	url = https://github.com/JC-Choo/ImageEditor.git

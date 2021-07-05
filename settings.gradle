@@ -1,3 +1,7 @@
+include ':editor'
+include ':core'
+include ':custom_gallery'
+include ':core'
 include ':rv_search_view_hilt'
 include ':splash_screen'
 include ':rv_infinite_scroll'
@@ -26,3 +30,6 @@ include ':check_language'
 rootProject.name='Memo'
 include ':app'
 include ':module_network'
+project(':custom_gallery').projectDir = new File(rootDir, 'image_editor/custom_gallery/')
+project(':core').projectDir = new File(rootDir, 'image_editor/core/')
+project(':editor').projectDir = new File(rootDir, 'image_editor/editor/')
