@@ -1,4 +1,4 @@
-package dev.chu.extensions
+package dev.chu.extensions.test
 
 /**
  * https://erselankhan.medium.com/unit-testing-on-android-for-functions-methods-f526ceab078e

@@ -1,4 +1,4 @@
-package dev.chu.extensions
+package dev.chu.extensions.test
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
