@@ -1,3 +1,4 @@
+include ':twowaybinding'
 include ':editor'
 include ':core'
 include ':custom_gallery'

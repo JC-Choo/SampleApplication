@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="dev.chu.twowaybinding.StringUtils" />
+
+
+        <variable
+            name="viewModel"
+            type="dev.chu.twowaybinding.MainViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edt_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:minHeight="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setData="@{viewModel.userEmailLD}"
+            app:updateVisibility="@{true}" />
+        <!--        android:visibility="@{viewModel.count>0 ? View.VISIBLE : View.GONE}"-->
+        <!--        android:text="@{StringUtils.capitalizeFirstCharacter(viewModel.userEmailLD)}"-->
+        <!--        android:onClick="@{()->viewModel.onEmailChange()}"-->
+        <!--        android:onClick="@{()->viewModel.onUpdateReceived(2)}"-->
+        <!--        android:text="@{@plurals/sample_plural(viewModel.count, viewModel.count)}"-->
+        <!--        android:text="@{edtInput.text}"-->
+        <!--        android:text="@{@string/sample_format(viewModel.userEmailLD,edtInput.text)}"-->
+
+        <include
+            android:id="@+id/includedLayout"
+            layout="@layout/layout_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/text_email"
+            app:viewModelInstance="@{viewModel}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
