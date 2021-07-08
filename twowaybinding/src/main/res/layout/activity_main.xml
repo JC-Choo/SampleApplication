@@ -8,7 +8,6 @@
 
         <import type="dev.chu.twowaybinding.StringUtils" />
 
-
         <variable
             name="viewModel"
             type="dev.chu.twowaybinding.MainViewModel" />
@@ -34,20 +33,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
+            android:text="@{viewModel.userEmailLD}"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setData="@{viewModel.userEmailLD}"
             app:updateVisibility="@{true}" />
-        <!--        android:visibility="@{viewModel.count>0 ? View.VISIBLE : View.GONE}"-->
-        <!--        android:text="@{StringUtils.capitalizeFirstCharacter(viewModel.userEmailLD)}"-->
-        <!--        android:onClick="@{()->viewModel.onEmailChange()}"-->
-        <!--        android:onClick="@{()->viewModel.onUpdateReceived(2)}"-->
-        <!--        android:text="@{@plurals/sample_plural(viewModel.count, viewModel.count)}"-->
-        <!--        android:text="@{edtInput.text}"-->
-        <!--        android:text="@{@string/sample_format(viewModel.userEmailLD,edtInput.text)}"-->
 
         <include
             android:id="@+id/includedLayout"

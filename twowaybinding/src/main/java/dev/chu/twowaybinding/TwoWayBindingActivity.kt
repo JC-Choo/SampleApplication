@@ -12,9 +12,9 @@ class TwoWayBindingActivity  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityTwoWayBindingBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_two_way_binding)
-        binding.lifecycleOwner = this
-        binding.user = SampleUser()
+        DataBindingUtil.setContentView<ActivityTwoWayBindingBinding>(this, R.layout.activity_two_way_binding).run {
+            lifecycleOwner = this@TwoWayBindingActivity
+            user = SampleUser()
+        }
     }
 }

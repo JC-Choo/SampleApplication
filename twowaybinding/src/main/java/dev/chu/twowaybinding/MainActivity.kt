@@ -8,7 +8,7 @@ import dev.chu.twowaybinding.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val mainViewModel: MainViewModel by ViewModelLazy(
+    private val mainViewModel: MainViewModel by ViewModelLazy(
         MainViewModel::class,
         { viewModelStore },
         { defaultViewModelProviderFactory }
@@ -16,11 +16,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.apply {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).run {
             lifecycleOwner = this@MainActivity
             viewModel = mainViewModel
+            setUpBinding(this)
         }
-        binding.includedLayout.textView2.text = mainViewModel.name
+    }
+
+    private fun setUpBinding(binding: ActivityMainBinding) {
+        with(binding) {
+            includedLayout.textView2.text = mainViewModel.name
+        }
     }
 }
