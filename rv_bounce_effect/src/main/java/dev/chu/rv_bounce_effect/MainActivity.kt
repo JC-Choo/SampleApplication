@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNewItemList(): List<String> {
-        val list = mutableListOf<String>()
-        for (i in 0 until 20) {
-            list.add("Item $i")
+        return mutableListOf<String>().apply {
+            (0 until 20).forEach {
+                add("Item $it")
+            }
         }
-        return list
     }
 }
