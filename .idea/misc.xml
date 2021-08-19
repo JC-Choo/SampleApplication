@@ -8,7 +8,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="rv_checkbox_selection/src/main/res/layout/activity_main.xml" value="0.22916666666666666" />
+        <entry key="rv_flexible_mvvm/src/main/res/drawable/background_ad.xml" value="0.4087179487179487" />
         <entry key="rv_flexible_mvvm/src/main/res/layout/activity_main.xml" value="0.18667679837892603" />
+        <entry key="rv_flexible_mvvm/src/main/res/layout/item_car_listing.xml" value="0.22916666666666666" />
+        <entry key="rv_flexible_mvvm/src/main/res/layout/item_car_listing_ad.xml" value="0.22916666666666666" />
+        <entry key="rv_flexible_mvvm/src/main/res/layout/item_header.xml" value="0.31889564336372844" />
       </map>
     </option>
   </component>
