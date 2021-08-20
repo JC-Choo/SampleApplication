@@ -15,7 +15,7 @@ class CarDataProvider {
 
     private val gson = Gson()
 
-    suspend fun getCarListData(): List<CarData> {
+    fun getCarListData(): List<CarData> {
         val typeToken = object : TypeToken<List<CarData>>(){}.type
         return gson.fromJson(getCarDataString(), typeToken)
     }

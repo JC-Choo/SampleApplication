@@ -12,7 +12,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_ad">
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> itemViewModel.onClickCarPrice()}"
+        app:setBackgroundFromId="@{itemViewModel.borderColor}">
+<!--        android:background="@drawable/background_ad_red">-->
 
         <TextView
             android:id="@+id/carMake"

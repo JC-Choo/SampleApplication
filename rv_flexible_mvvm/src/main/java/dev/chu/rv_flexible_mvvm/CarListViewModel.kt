@@ -9,6 +9,11 @@ import kotlinx.coroutines.launch
 class CarListViewModel(
     private val carDataProvider: CarDataProvider = CarDataProvider()
 ): ViewModel() {
+    /**
+     * data
+     * - UI를 위해 필요한 데이터를 갖고 있음
+     * - ItemViewModel 인스턴스의 리스트를 갖고 있음
+     */
     val data: LiveData<List<ItemViewModel>>
         get() = _data
     private val _data = MutableLiveData<List<ItemViewModel>>(emptyList())
@@ -28,6 +33,9 @@ class CarListViewModel(
         }
     }
 
+    /**
+     * [createViewData] 함수를 통해 리스트의 다른 객체(Header / CarAd / CarListing ViewModel)을 추가한다.
+     */
     private fun createViewData(carsByMake: Map<String, List<CarData>>): List<ItemViewModel> {
         val viewData = mutableListOf<ItemViewModel>()
         carsByMake.keys.forEach {
@@ -35,7 +43,7 @@ class CarListViewModel(
             val cars = carsByMake[it]
             cars?.forEach { car: CarData ->
                 val item = if (car.isAd) {
-                    CarAdViewModel(car.make, car.model, car.price)
+                    CarAdViewModel(car.make, car.model, car.price, R.drawable.background_ad_red)
                 } else {
                     CarListingViewModel(car.make, car.model, car.price)
                 }
