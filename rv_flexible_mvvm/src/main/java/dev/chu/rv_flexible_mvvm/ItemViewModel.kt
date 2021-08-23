@@ -15,12 +15,12 @@ interface ItemViewModel {
     @get:LayoutRes
     val layoutId: Int
     val viewType: Int
-        get() = 0
+        get() = layoutId.hashCode()
 }
 
 data class HeaderViewModel(val title: String) : ItemViewModel {
     override val layoutId: Int = R.layout.item_header
-    override val viewType: Int = CarListViewModel.HEADER_ITEM
+//    override val viewType: Int = CarListViewModel.HEADER_ITEM
 }
 
 class CarAdViewModel(
@@ -30,7 +30,7 @@ class CarAdViewModel(
     @get:Bindable var borderColor: Int
 ) : BaseObservable(), ItemViewModel {
     override val layoutId: Int = R.layout.item_car_listing_ad
-    override val viewType: Int = CarListViewModel.AD_ITEM
+//    override val viewType: Int = CarListViewModel.AD_ITEM
 
     fun onClickCarPrice() {
         borderColor = getRandomColor()
@@ -48,5 +48,5 @@ class CarAdViewModel(
 
 class CarListingViewModel(val make: String, val model: String, val price: String) : ItemViewModel {
     override val layoutId: Int = R.layout.item_car_listing
-    override val viewType: Int = CarListViewModel.LISTING_ITEM
+//    override val viewType: Int = CarListViewModel.LISTING_ITEM
 }

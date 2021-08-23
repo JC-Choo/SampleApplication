@@ -54,9 +54,9 @@ class CarListViewModel(
         return viewData
     }
 
-    companion object {
-        const val HEADER_ITEM = 0
-        const val LISTING_ITEM = 1
-        const val AD_ITEM = 2
-    }
+//    companion object {
+//        const val HEADER_ITEM = 0
+//        const val LISTING_ITEM = 1
+//        const val AD_ITEM = 2
+//    }
 }
