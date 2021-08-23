@@ -53,13 +53,22 @@ class ExampleUnitTest {
     @Test
     fun testDate() {
 //        val list = mutableListOf<String>()
-        val testDate = "2021-07-21T03:54:32Z"
+        val testDate = "2021-08-23T03:54:32Z"
         val result00 = testDate.iso8601ToDate()
         println("result = $result00")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-23T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-24T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-25T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-26T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-27T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-28T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-29T03:54:32Z".iso8601ToDate())}")
+        println("${SimpleDateFormat("EE", Locale.US).format("2021-08-30T03:54:32Z".iso8601ToDate())}")
+
 
         testDate.let {
             val dateYYYYMMDD = SimpleDateFormat(
-                "yyyy.MM.dd",
+                "yyyy.MM.dd - EE",
                 Locale.US
             ).format(result00)
             println("dateYYYYMMDD = $dateYYYYMMDD")
