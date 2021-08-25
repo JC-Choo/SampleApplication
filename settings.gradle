@@ -1,5 +1,4 @@
 include ':twowaybinding'
-include ':editor'
 include ':rv_search_view_hilt'
 include ':splash_screen'
 include ':rv_infinite_scroll'
@@ -28,5 +27,4 @@ include ':check_language'
 rootProject.name='Memo'
 include ':app'
 include ':module_network'
-project(':editor').projectDir = new File(rootDir, 'image_editor/editor/')
 include ':rv_flexible_mvvm'
