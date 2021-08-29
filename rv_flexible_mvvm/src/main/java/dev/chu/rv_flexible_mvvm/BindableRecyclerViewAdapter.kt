@@ -43,7 +43,6 @@ class BindableRecyclerViewAdapter : RecyclerView.Adapter<BindableViewHolder>() {
 
     fun updateItems(items: List<ItemViewModel>?) {
         itemViewModels = items ?: emptyList()
-//        notifyDataSetChanged()
         notifyItemRangeChanged(0, itemViewModels.size, itemViewModels)
     }
 }
