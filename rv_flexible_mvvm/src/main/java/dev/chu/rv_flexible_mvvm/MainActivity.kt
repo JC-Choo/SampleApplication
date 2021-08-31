@@ -14,9 +14,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        val binding = ActivityMainBinding.inflate(layoutInflater).apply {
+            lifecycleOwner = this@MainActivity
+            viewModel = this@MainActivity.viewModel
+        }
         setContentView(binding.root)
     }
 }
