@@ -19,6 +19,6 @@ class MainViewModel: ViewModel() {
         get() = _transformedFlow
 
     fun increment() {
-        _sourceFlow.value = _sourceFlow.value + 1
+        _sourceFlow.value += 1
     }
 }
