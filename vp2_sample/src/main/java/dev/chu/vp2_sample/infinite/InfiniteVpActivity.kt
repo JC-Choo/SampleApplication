@@ -16,12 +16,15 @@ class InfiniteVpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.infiniteViewPager2.apply {
-            setAdapter(InfiniteAdapter(listOf("First", "Second", "Third")))
+            setAdapter(InfiniteAdapter(listOf("First", "Second", "Third", "Fourth")))
             addScrollListener(object : RecyclerView.OnScrollListener() {
+                var scrollPoint = 0
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    Log.d("Tracking", "I am at item index ${getCurrentItem()}, state = $newState")
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && scrollPoint != getCurrentItem()) {
                         Log.d("Tracking", "I am at item index ${getCurrentItem()}")
+                        scrollPoint = getCurrentItem()
                     }
                 }
             })

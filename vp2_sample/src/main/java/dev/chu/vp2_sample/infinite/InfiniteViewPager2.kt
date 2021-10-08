@@ -83,7 +83,7 @@ class InfiniteViewPager2 @JvmOverloads constructor(
      */
     fun getCurrentItem(): Int {
         return when (viewPager2.currentItem) {
-            0 -> totalItemCount - 3
+            0 -> totalItemCount - viewPager2.adapter!!.itemCount
             totalItemCount - 1 -> 0
             else -> viewPager2.currentItem - 1
         }

@@ -12,6 +12,9 @@ import kotlinx.coroutines.launch
 /**
  * https://proandroiddev.com/infinite-auto-scrolling-lists-with-recyclerview-lazylists-in-compose-1c3b44448c8
  * ??? 나중에 컴포트로 해보자...
+ *
+ *
+ * 무한 자동 스크롤인데 아이템 마다 튕긴다.. 굳이 ?
  */
 class MainActivity : AppCompatActivity() {
 

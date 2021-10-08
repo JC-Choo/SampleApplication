@@ -25,6 +25,8 @@
         <entry key="rv_restoring_scroll_position/src/main/res/layout/item_carousel.xml" value="0.31889564336372844" />
         <entry key="twowaybinding/src/main/res/layout/activity_two_way_binding.xml" value="0.22554347826086957" />
         <entry key="viewmodelhistory/src/main/res/layout/activity_main.xml" value="0.31889564336372844" />
+        <entry key="vp2_sample/src/main/res/layout/activity_infinite_vp.xml" value="0.427536231884058" />
+        <entry key="vp2_sample/src/main/res/layout/just_viewpager2.xml" value="0.427536231884058" />
       </map>
     </option>
   </component>
