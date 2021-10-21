@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/rv_infinite_scroll" />
             <option value="$PROJECT_DIR$/rv_motion_layout" />
             <option value="$PROJECT_DIR$/rv_restoring_scroll_position" />
+            <option value="$PROJECT_DIR$/rv_scroll_smooth" />
             <option value="$PROJECT_DIR$/rv_search_view2" />
             <option value="$PROJECT_DIR$/rv_search_view_hilt" />
             <option value="$PROJECT_DIR$/rv_shimmer_effect" />
